@@ -1,4 +1,4 @@
-package User.ClassAttributes;
+package CovidPatient.ClassAttributes;
 
 public final class Address {
     // attributes

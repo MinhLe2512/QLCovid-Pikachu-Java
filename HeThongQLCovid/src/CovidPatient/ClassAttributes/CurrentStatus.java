@@ -1,4 +1,4 @@
-package User.ClassAttributes;
+package CovidPatient.ClassAttributes;
 
 public enum CurrentStatus {
     F0,
