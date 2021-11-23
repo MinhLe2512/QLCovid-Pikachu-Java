@@ -1,15 +1,21 @@
 package CovidPatient;
 
 
-import CovidPatient.ClassAttributes.Address;
-import CovidPatient.ClassAttributes.CurrentStatus;
+import ClassAttributes.Address;
+import ClassAttributes.CurrentStatus;
 
 public class CovidPatient {
 
     // attributes
-    String _name;
-    String _citizenID;
-    String _dob;
-    Address _address;
-    CurrentStatus _status;
+    private String _name;
+    private String _citizenID;
+    private String _dob;
+    private Address _address;
+    private CurrentStatus _status;
+    private CovidPatient _patientRelavent;
+
+    // constructor
+    public CovidPatient(){
+
+    }
 }

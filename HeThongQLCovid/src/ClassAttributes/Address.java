@@ -1,4 +1,4 @@
-package CovidPatient.ClassAttributes;
+package ClassAttributes;
 
 public final class Address {
     // attributes
@@ -11,6 +11,7 @@ public final class Address {
 
     }
     Address(String ward, String district, String city){
+
         this.setAddress(ward, district, city);
     }
 
@@ -22,6 +23,7 @@ public final class Address {
     }
 
     public Address getAddress(){
+
         return this;
     }
 
