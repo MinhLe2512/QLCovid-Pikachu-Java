@@ -1,4 +1,4 @@
-package logintest;
+package Login;
 
 import java.awt.EventQueue;
 
@@ -7,12 +7,15 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.event.MenuKeyEvent;
+
+
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
+import javax.print.attribute.standard.JobOriginatingUserName;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -29,32 +32,25 @@ import java.sql.SQLException;
 import java.sql.*;
 import javax.swing.SwingConstants;
 
-public class login {
+public class Login extends JFrame {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField user;
 	private JPasswordField pass;
-
+	private Account thisAccount;
+	private JPanel panel, panel_1;
+	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblNewLabel_3;
+	private JButton btnLogin;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					login window = new login();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//private static Logger Login_Log = LogManager.getLogger(Login.class);
+
 
 	/**
 	 * Create the application.
 	 */
-	public login() {
+	public Login() {
 		initialize();
 	}
 
@@ -68,13 +64,13 @@ public class login {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(new Color(0, 204, 255));
 		panel.setBounds(10, 10, 639, 413);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setBounds(115, 0, 524, 413);
 		panel_1.setBackground(new Color(0, 153, 204));
 		panel.add(panel_1);
@@ -91,25 +87,23 @@ public class login {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					String id = user.getText();
-					String pa = pass.getText();
-					
+					//String id = user.getText();
+					//String pa = pass.getText();
+					thisAccount = new Account(user.getText(), pass.getText());
+					ResultSet rs;
 					try {
-						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Covid","root","hieunghia3107");
-						Statement st = conn.createStatement();
-						ResultSet rs = st.executeQuery("SELECT * FROM patient WHERE ID= '"+id+"'AND Password='"+pa+"'");
-						if(rs.next())
+						rs = SqlQuery.checkLogin(thisAccount);
+						if(rs.next()) {
+							//Login_Log.info( id + ": Login Success");
 							JOptionPane.showMessageDialog(null, "Success!!");
+						}
 						else {
+							//Login_Log.info( id + ": Login Fail");
 							JOptionPane.showMessageDialog(null, "Invalid!!");
 							user.setText("");
 							pass.setText("");
 						}
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ClassNotFoundException e1) {
+					} catch (ClassNotFoundException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -118,61 +112,60 @@ public class login {
 		});
 		panel_1.add(pass);
 		
-		JLabel lblNewLabel = new JLabel("Password");
+		lblNewLabel = new JLabel("Password");
 		lblNewLabel.setBounds(179, 221, 68, 24);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		panel_1.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("ID");
+		lblNewLabel_1 = new JLabel("ID");
 		lblNewLabel_1.setBounds(179, 126, 80, 42);
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBackground(new Color(102, 204, 153));
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		panel_1.add(lblNewLabel_1);
 		
-		JButton btnLogin = new JButton("Enter");
+		btnLogin = new JButton("Enter");
 		btnLogin.setBounds(203, 306, 155, 34);
 		btnLogin.setBackground(Color.LIGHT_GRAY);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String id = user.getText();
-				String pa = pass.getText();
+				//String id = user.getText();
+				//String pa = pass.getText();
+				thisAccount = new Account(user.getText(), pass.getText());
 				
-				
+				ResultSet rs;
 				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Covid","root","hieunghia3107");
-					Statement st = conn.createStatement();
-					ResultSet rs = st.executeQuery("SELECT * FROM patient WHERE ID= '"+id+"'AND Password='"+pa+"'");
-					if(rs.next())
+					rs = SqlQuery.checkLogin(thisAccount);
+					if(rs.next()) {
+						//Login_Log.info( id + ": Login Success");
 						JOptionPane.showMessageDialog(null, "Success!!");
+					}
 					else {
+						//Login_Log.info( id + ": Login Fail");
 						JOptionPane.showMessageDialog(null, "Invalid!!");
 						user.setText("");
 						pass.setText("");
 					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
+				} catch (ClassNotFoundException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			
 			}
 		});
 		btnLogin.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		panel_1.add(btnLogin);
 		
-		JLabel lblNewLabel_2 = new JLabel(" ");
+		lblNewLabel_2 = new JLabel(" ");
 		lblNewLabel_2.setBounds(10, 102, 504, 301);
 		lblNewLabel_2.setForeground(Color.WHITE);
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("/2.jpg"));
 		lblNewLabel_2.setIcon(icon);
 		panel_1.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("COVID MANAGEMENT");
+		lblNewLabel_3 = new JLabel("COVID MANAGEMENT");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lblNewLabel_3.setBounds(10, 10, 504, 91);
