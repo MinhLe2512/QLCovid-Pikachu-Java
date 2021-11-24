@@ -1,5 +1,7 @@
 package com.example.qlcovid.jframe;
 
-public class ViewHistoryFrame {
+import javax.swing.JFrame;
+
+public class ViewHistoryFrame extends JFrame {
 
 }

@@ -7,8 +7,6 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.event.MenuKeyEvent;
-
-
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,7 +30,7 @@ import java.sql.SQLException;
 import java.sql.*;
 import javax.swing.SwingConstants;
 
-public class Login extends JFrame {
+public class LoginFrame extends JFrame {
 
 	JFrame frame;
 	private JTextField user;
@@ -50,7 +48,7 @@ public class Login extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public LoginFrame() {
 		initialize();
 	}
 

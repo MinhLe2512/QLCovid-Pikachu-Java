@@ -15,6 +15,7 @@ public class SqlQuery {
 		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		Connection conn = DriverManager.getConnection(dbURL, user, pass);
 		Statement st = conn.createStatement();
-		return st.executeQuery("SELECT * FROM ql_user WHERE username= '"+account.getUsername()+"'AND user_password='"+account.getPassword()+"'");
+		return st.executeQuery("SELECT * FROM ql_user WHERE username= '" + account.getUsername()
+		+ "'AND user_password='" + account.getPassword()+"'");
 	}
 }
