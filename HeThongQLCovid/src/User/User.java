@@ -1,24 +1,25 @@
 package User;
 
+import ClassAttributes.Role;
 
-import CovidPatient.CovidPatient;
-import DailyNecessityStorage.Storage;
-
-public class User {
-
+public abstract class User {
     // attributes
-    CovidPatient _patient;
-    Storage _product;
-
-
-
+    private String _username;
+    private String _password;
+    private Role _role;
+    private Boolean _validation;
 
     // constructor
-    User(){
+    protected User(){
 
     }
 
-    // methods
 
+    protected User(Role user) {
+    }
 
+    // method
+    protected void changePassword(){
+
+    }
 }
