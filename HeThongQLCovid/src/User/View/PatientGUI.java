@@ -2,21 +2,21 @@ package User.View;
 
 import User.CovidPatient.CovidPatient;
 import User.DatabaseConnection;
-import User.View.Infoview.BasicInfo;
+import User.View.Infoview.InfoAbility;
+import User.View.Infoview.UserAbility.*;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 
 public class PatientGUI extends JFrame {
 
+    // attributes
+    // default width and height
     final int WIDTH =500;
     final int HEIGHT =500;
 
@@ -28,16 +28,18 @@ public class PatientGUI extends JFrame {
     // barPanel
     JPanel _Poption;
     JPanel _Pheader;
-    JPanel _Pinfo;
     JPanel _Pswapping;
-    // screen one Info//////////////////////////////
 
-
-
-
+    // // info panel: INFO//////////////////////////////
+    InfoAbility PinfoAbility ;
+    static InfoUI PbasicInfo ;
+    static ManagementUI PmanagementInfo ;
+    static PackageUI PpackageInfo;
+    static BalanceUI PbalanceInfo;
+    static PaymentUI PpaymentInfo;
 
     // ---------------------------------------
-    ArrayList<CovidPatient> listPatient;
+
 
 
 
@@ -47,15 +49,20 @@ public class PatientGUI extends JFrame {
     JButton button;
 
 
-
+    // constructor
     public PatientGUI(String username) throws SQLException {
+
+        // title
         super("Covid Patient");
+
         // set up frame
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setSize(515,500);
         this.setResizable(false);
+        //--
+
         // init 3 option:
         _BinfoOption = new JButton("Info");
         _BpackageOption = new JButton("Package");
@@ -69,12 +76,18 @@ public class PatientGUI extends JFrame {
         _BinfoOption.setBounds(0,0,100,30);
         _BpackageOption.setBounds(0,30,100,30);
         _BpaymentOption.setBounds(0,60,100,30);
+        //--
 
 
-
-        // info panel: INFO
+        // info panel: INFO ability
         // setup panel
-        BasicInfo PbasicInfo = new BasicInfo();
+        PinfoAbility = new InfoAbility();
+        PbasicInfo = new InfoUI(username);
+        PmanagementInfo = new ManagementUI();
+        PpackageInfo = new PackageUI();
+        PbalanceInfo = new BalanceUI();
+        PpaymentInfo= new PaymentUI();
+        //--
 
 
         //bar 1: OPTION
@@ -83,12 +96,13 @@ public class PatientGUI extends JFrame {
         _Poption.setLayout(null);
         _Poption.setBackground(new Color(0x71DFE7)); // for debug
         _Poption.setBounds(0,30,100,470);
-        //_Poption.setPreferredSize(new Dimension(120,HEIGHT));
+
         // init and add element
         // add 3 option
         _Poption.add(_BinfoOption);
         _Poption.add(_BpackageOption);
         _Poption.add(_BpaymentOption);
+        //--
 
         //bar 2: HEADER
         //setup panel
@@ -96,100 +110,76 @@ public class PatientGUI extends JFrame {
         _Pheader.setLayout(null);
         _Pheader.setBackground(new Color(0x009DAE)); // for debug
         _Pheader.setBounds(0,0,500,30);
+        //--
 
         //bar 3: SWAPPING
         _Pswapping = new JPanel();
         _Pswapping.setLayout(null);
         _Pswapping.setBounds(100,30,400,470);
+        //--
+
+        // info scene
+        // add panel
+        _Pswapping.add(PinfoAbility);
         _Pswapping.add(PbasicInfo);
+        _Pswapping.add(PmanagementInfo);
+        _Pswapping.add(PpackageInfo);
+        _Pswapping.add(PbalanceInfo);
+        _Pswapping.add(PpaymentInfo);
+
+
+//-----------------------------------------
 
 
 
-
-
-        JLabel LID = new JLabel();
-        LID.setBounds(200,0,50,30);
-        JLabel Lname = new JLabel();
-        Lname.setBounds(250,0,50,30);
-        JLabel LDOB = new JLabel();
-        LDOB.setBounds(300,0,50,30);
-        JLabel Ladd = new JLabel();
-        Ladd.setBounds(350,0,50,30);
-        JLabel Ltreatmentplace = new JLabel();
-        Ltreatmentplace.setBounds(400,0,50,30);
-
-        Statement statement = DatabaseConnection.getJDBC().createStatement();
-        String sql = "SELECT * FROM covid_patient\n"+
-                "WHERE citizen_id="+username+";";
-        ResultSet rs = statement.executeQuery(sql);
-
-        listPatient = new ArrayList<CovidPatient>();
-        CovidPatient temp = new CovidPatient();
-        while(rs.next()){
-
-            temp.set_citizen_id(rs.getString("citizen_id"));
-            temp.set_name(rs.getString("full_name"));
-            temp.set_dob(rs.getString("date_of_birth"));
-            temp.set_address(rs.getString("citizen_address"));
-            temp.set_status(rs.getString("_condition"));
-            temp.set_treatmentArea(rs.getString("treatment_place_id"));
-            temp.set_patientRelavent(rs.getString("related_to"));
-
-            listPatient.add(temp);
-        }
-        System.out.println(temp.getInfo());
-
-        LID.setText(temp.get_citizen_id());
-        Lname.setText(temp.get_name());
-        //LDOB.setText(temp.get_dob());
-        Ladd.setText(temp.get_citizen_id());
-        Ltreatmentplace.setText(temp.get_citizen_id());
-
-        //------------------------------------------------
-
-
-        paneltop = new JPanel();
-        paneltop.setLayout(null);
-        paneltop.setBackground(Color.GREEN);
-        paneltop.setBounds(0,0,WIDTH,HEIGHT);
-        //paneltop.setPreferredSize(new Dimension(WIDTH,HEIGHT));
-
-
-
-
-        panelleft = new JPanel();
-        panelleft.setLayout(null);
-        panelleft.setBackground(Color.BLACK);
-
-        //this.setContentPane(_Pswapping);
+        // frame adding panel
         this.add(_Pswapping);
         this.add(_Poption);
         this.add(_Pheader);
 
-        //this.pack();
 
     }
+    //-- end constructor
 
-    public void refresh(){
-        //this.getContentPane().removeAll();
-        //this.add(paneltop);
-        //this.pack();
-        _Pswapping.setVisible(false);
+
+    //method
+
+    // Group of function for switch screen
+    public static void setInfoInvisible() {
+        PbasicInfo.setVisible(false);
+        PmanagementInfo.setVisible(false);
+        PpackageInfo.setVisible(false);
+        PbalanceInfo.setVisible(false);
+        PpaymentInfo.setVisible(false);
+
     }
-
-    public void re(){
-        //this.getContentPane().removeAll();
-        //this.add(paneltop);
-        //this.pack();
-        _Pswapping.setVisible(true);
+    public static void showBasicInfo() {
+        setInfoInvisible();
+        PbasicInfo.setVisible(true);
     }
-
+    public static void showManagementInfo() {
+        setInfoInvisible();
+        PmanagementInfo.setVisible(true);
+    }
+    public static void showPackageInfo() {
+        setInfoInvisible();
+        PpackageInfo.setVisible(true);
+    }
+    public static void showBalanceInfo() {
+        setInfoInvisible();
+        PbalanceInfo.setVisible(true);
+    }
+    public static void showPaymentInfo() {
+        setInfoInvisible();
+        PpaymentInfo.setVisible(true);
+    }
+//-------------------------------------------------------
 
     public static void main(String[] args) throws InterruptedException, SQLException {
         PatientGUI screen = new PatientGUI("0323812311");
         screen.setVisible(true);
-        TimeUnit.SECONDS.sleep(3);
-        screen.refresh();
+//        TimeUnit.SECONDS.sleep(3);
+//        screen.refresh();
         //TimeUnit.SECONDS.sleep(3);
         //screen.re();
 

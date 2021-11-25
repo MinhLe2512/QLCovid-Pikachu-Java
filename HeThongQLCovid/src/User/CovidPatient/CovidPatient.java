@@ -64,6 +64,7 @@ public class CovidPatient extends User {
     }
 
     public LocalDate get_dob() {
+
         return _dob;
     }
 
