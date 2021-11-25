@@ -18,22 +18,6 @@ public class UserAccount extends Account {
 	private int treatmentPlaceId;
 	private String relatedTo;
 	
-	public void viewInfo(String id) {
-		Connection connection;
-		try {
-			connection = DriverManager.getConnection(UtilsString.dbURL, UtilsString.username,
-					UtilsString.password);
-			Statement stm = connection.createStatement();
-			ResultSet rs = stm.executeQuery(UtilsString.selectUserInfo + id);
-			
-			while (rs.next()) {
-				
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	public String getCitizenId() {
 		return citizenId;
 	}

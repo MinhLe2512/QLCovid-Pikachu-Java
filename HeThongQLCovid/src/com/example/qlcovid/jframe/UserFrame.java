@@ -12,7 +12,7 @@ import javax.swing.JButton;
 public class UserFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
-	private JButton btnViewInfo;
+	public JButton btnViewInfo;
 	public UserFrame() {
 		getContentPane().setLayout(null);
 		
@@ -23,13 +23,6 @@ public class UserFrame extends JFrame{
 		
 		btnViewInfo = new JButton("View info");
 		btnViewInfo.setBounds(160, 87, 85, 21);
-		btnViewInfo.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		getContentPane().add(btnViewInfo);
 	}
 	
