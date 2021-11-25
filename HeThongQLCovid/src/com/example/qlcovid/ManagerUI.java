@@ -11,16 +11,19 @@ import javax.swing.*;
  * @author nhonnhon
  */
 public class ManagerUI extends javax.swing.JFrame {
+    int showTab;
     /**
      * Creates new form ManagerUI
      */
     public ManagerUI() {
         initComponents();
+        showTab = 1;
         this.setSize(1600,900);
         this.setResizable(true);
     }
     public ManagerUI(int i) {
         initComponents();
+        showTab = i;
         switch(i){
             case 1:
                 changecard(1);
@@ -71,7 +74,6 @@ public class ManagerUI extends javax.swing.JFrame {
         btn_view_cancel = new javax.swing.JButton();
         btn_view_down = new javax.swing.JButton();
         btn_view_up = new javax.swing.JButton();
-        jlb_search1 = new javax.swing.JLabel();
         jpn_main_necitems = new javax.swing.JPanel();
         jpn_left1 = new javax.swing.JPanel();
         jlb_tabname1 = new javax.swing.JLabel();
@@ -98,7 +100,6 @@ public class ManagerUI extends javax.swing.JFrame {
         btn_view_cancel1 = new javax.swing.JButton();
         btn_view_down1 = new javax.swing.JButton();
         btn_view_up1 = new javax.swing.JButton();
-        jlb_search3 = new javax.swing.JLabel();
         jpn_main_stat = new javax.swing.JPanel();
         jpn_left2 = new javax.swing.JPanel();
         jlb_tabname2 = new javax.swing.JLabel();
@@ -288,42 +289,36 @@ public class ManagerUI extends javax.swing.JFrame {
         btn_view_up.setForeground(new java.awt.Color(204, 204, 204));
         btn_view_up.setText("Up");
 
-        jlb_search1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jlb_search1.setForeground(new java.awt.Color(102, 102, 102));
-        jlb_search1.setText("Statistic");
-
         javax.swing.GroupLayout jpn_rightLayout = new javax.swing.GroupLayout(jpn_right);
         jpn_right.setLayout(jpn_rightLayout);
         jpn_rightLayout.setHorizontalGroup(
             jpn_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpn_rightLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jpn_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlb_search1)
-                    .addGroup(jpn_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jpn_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jpn_rightLayout.createSequentialGroup()
+                        .addComponent(btn_view_up, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_view_down, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_view_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpn_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jlb_search)
+                        .addComponent(jlb_view)
+                        .addComponent(jlb_sort)
+                        .addComponent(cb_key, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jpn_rightLayout.createSequentialGroup()
-                            .addComponent(btn_view_up, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cb_search, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_view_down, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_view_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jpn_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlb_search)
-                            .addComponent(jlb_view)
-                            .addComponent(jlb_sort)
-                            .addComponent(cb_key, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpn_rightLayout.createSequentialGroup()
-                                .addComponent(cb_search, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_searchmore, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpn_rightLayout.createSequentialGroup()
-                                .addComponent(cb_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_sortmore, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(btn_searchmore, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jpn_rightLayout.createSequentialGroup()
+                            .addComponent(cb_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_sortmore, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jpn_rightLayout.setVerticalGroup(
@@ -352,8 +347,6 @@ public class ManagerUI extends javax.swing.JFrame {
                     .addComponent(btn_view_down)
                     .addComponent(btn_view_cancel)
                     .addComponent(btn_view_up))
-                .addGap(18, 18, 18)
-                .addComponent(jlb_search1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -550,42 +543,36 @@ public class ManagerUI extends javax.swing.JFrame {
         btn_view_up1.setForeground(new java.awt.Color(204, 204, 204));
         btn_view_up1.setText("Up");
 
-        jlb_search3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jlb_search3.setForeground(new java.awt.Color(102, 102, 102));
-        jlb_search3.setText("Statistic");
-
         javax.swing.GroupLayout jpn_right3Layout = new javax.swing.GroupLayout(jpn_right3);
         jpn_right3.setLayout(jpn_right3Layout);
         jpn_right3Layout.setHorizontalGroup(
             jpn_right3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpn_right3Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jpn_right3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlb_search3)
-                    .addGroup(jpn_right3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jpn_right3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jpn_right3Layout.createSequentialGroup()
+                        .addComponent(btn_view_up1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_view_down1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_view_cancel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpn_right3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jlb_search2)
+                        .addComponent(jlb_view1)
+                        .addComponent(jlb_sort1)
+                        .addComponent(cb_key1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jpn_right3Layout.createSequentialGroup()
-                            .addComponent(btn_view_up1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cb_search1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_view_down1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_search1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_view_cancel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jpn_right3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlb_search2)
-                            .addComponent(jlb_view1)
-                            .addComponent(jlb_sort1)
-                            .addComponent(cb_key1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpn_right3Layout.createSequentialGroup()
-                                .addComponent(cb_search1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_search1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_searchmore1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpn_right3Layout.createSequentialGroup()
-                                .addComponent(cb_sort1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_sort1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_sortmore1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(btn_searchmore1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jpn_right3Layout.createSequentialGroup()
+                            .addComponent(cb_sort1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_sort1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_sortmore1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jpn_right3Layout.setVerticalGroup(
@@ -614,8 +601,6 @@ public class ManagerUI extends javax.swing.JFrame {
                     .addComponent(btn_view_down1)
                     .addComponent(btn_view_cancel1)
                     .addComponent(btn_view_up1))
-                .addGap(18, 18, 18)
-                .addComponent(jlb_search3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -862,9 +847,7 @@ public class ManagerUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel jlb_search;
-    private javax.swing.JLabel jlb_search1;
     private javax.swing.JLabel jlb_search2;
-    private javax.swing.JLabel jlb_search3;
     private javax.swing.JLabel jlb_search4;
     private javax.swing.JLabel jlb_sort;
     private javax.swing.JLabel jlb_sort1;

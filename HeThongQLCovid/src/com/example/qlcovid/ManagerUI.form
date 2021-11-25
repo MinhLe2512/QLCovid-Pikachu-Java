@@ -354,35 +354,32 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jlb_search1" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="btn_view_up" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="btn_view_up" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btn_view_down" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btn_view_cancel" min="-2" pref="34" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jlb_search" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlb_view" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlb_sort" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cb_key" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cb_search" min="-2" pref="131" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btn_view_down" min="-2" pref="75" max="-2" attributes="0"/>
+                                      <Component id="btn_search" min="-2" pref="75" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btn_view_cancel" min="-2" pref="34" max="-2" attributes="0"/>
+                                      <Component id="btn_searchmore" min="-2" pref="34" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jlb_search" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jlb_view" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jlb_sort" min="-2" max="-2" attributes="0"/>
-                                      <Component id="cb_key" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="cb_search" min="-2" pref="131" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btn_search" min="-2" pref="75" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btn_searchmore" min="-2" pref="34" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="cb_sort" min="-2" pref="131" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btn_sort" min="-2" pref="75" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btn_sortmore" min="-2" pref="34" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cb_sort" min="-2" pref="131" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btn_sort" min="-2" pref="75" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btn_sortmore" min="-2" pref="34" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -419,8 +416,6 @@
                               <Component id="btn_view_cancel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_view_up" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jlb_search1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -588,17 +583,6 @@
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Up"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jlb_search1">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="18" style="1"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="66" green="66" red="66" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Statistic"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -869,35 +853,32 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jlb_search3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="btn_view_up1" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="btn_view_up1" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btn_view_down1" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btn_view_cancel1" min="-2" pref="34" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="jlb_search2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlb_view1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlb_sort1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cb_key1" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cb_search1" min="-2" pref="131" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btn_view_down1" min="-2" pref="75" max="-2" attributes="0"/>
+                                      <Component id="btn_search1" min="-2" pref="75" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btn_view_cancel1" min="-2" pref="34" max="-2" attributes="0"/>
+                                      <Component id="btn_searchmore1" min="-2" pref="34" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Component id="jlb_search2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jlb_view1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jlb_sort1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="cb_key1" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="cb_search1" min="-2" pref="131" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btn_search1" min="-2" pref="75" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btn_searchmore1" min="-2" pref="34" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="cb_sort1" min="-2" pref="131" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btn_sort1" min="-2" pref="75" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btn_sortmore1" min="-2" pref="34" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cb_sort1" min="-2" pref="131" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btn_sort1" min="-2" pref="75" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btn_sortmore1" min="-2" pref="34" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -934,8 +915,6 @@
                               <Component id="btn_view_cancel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_view_up1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jlb_search3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -1103,17 +1082,6 @@
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Up"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jlb_search3">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="18" style="1"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="66" green="66" red="66" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Statistic"/>
                   </Properties>
                 </Component>
               </SubComponents>
