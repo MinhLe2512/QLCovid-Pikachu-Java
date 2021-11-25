@@ -1,15 +1,36 @@
-package User.View.Infoview.UserAbility;
+package User.View.UserAbility.BuyPackage;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PaymentUI extends JPanel{
+public class PackagePurchaseUI extends JPanel{
 
-    public PaymentUI(){
+    public PackagePurchaseUI(){
         this.setLayout(new FlowLayout());/////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
         this.setBackground(new Color(0xC2FFF9)); // for debug
         this.setBounds(0,80,400,390);
-        this.add(new JButton("Payment"));
+        this.add(new JButton("PackagePurchaseUI"));
         this.setVisible(false);
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

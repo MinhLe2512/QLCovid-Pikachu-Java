@@ -1,4 +1,4 @@
-package User.View.Infoview;
+package User.View.UserAbility;
 
 import User.View.PatientGUI;
 
@@ -20,7 +20,7 @@ public class InfoAbility extends JPanel{
         this.setLayout(new FlowLayout(FlowLayout.CENTER,0,10));
         this.setBackground(new Color(0xFFE652)); // for debug
         this.setBounds(0,0,400,80);
-
+        this.setVisible(true);
         // init button
         _Binfo = new JButton("Info");
         _Bmanagement = new JButton("Management");
@@ -80,38 +80,41 @@ public class InfoAbility extends JPanel{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

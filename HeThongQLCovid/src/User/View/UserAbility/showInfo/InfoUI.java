@@ -1,4 +1,4 @@
-package User.View.Infoview.UserAbility;
+package User.View.UserAbility.showInfo;
 
 import User.CovidPatient.CovidPatient;
 import User.DatabaseConnection;

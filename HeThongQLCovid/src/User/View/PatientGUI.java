@@ -1,16 +1,18 @@
 package User.View;
 
-import User.CovidPatient.CovidPatient;
-import User.DatabaseConnection;
-import User.View.Infoview.InfoAbility;
-import User.View.Infoview.UserAbility.*;
+import User.View.UserAbility.BuyPackage.PackageInfoUI;
+import User.View.UserAbility.BuyPackage.PackageLookUpUI;
+import User.View.UserAbility.BuyPackage.PackagePurchaseUI;
+import User.View.UserAbility.InfoAbility;
+import User.View.UserAbility.PackageAbility;
+import User.View.UserAbility.showInfo.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+
+import java.awt.event.ActionListener;
 
 
 public class PatientGUI extends JFrame {
@@ -31,13 +33,18 @@ public class PatientGUI extends JFrame {
     JPanel _Pswapping;
 
     // // info panel: INFO//////////////////////////////
-    InfoAbility PinfoAbility ;
+    static InfoAbility PinfoAbility ;
     static InfoUI PbasicInfo ;
     static ManagementUI PmanagementInfo ;
     static PackageUI PpackageInfo;
     static BalanceUI PbalanceInfo;
     static PaymentUI PpaymentInfo;
-
+    
+    // // package panel: PURCHASE///////////////////////////////
+    static PackageAbility PpackageAbility;
+    static PackageInfoUI PlistPackage;
+    static PackageLookUpUI PlookupPackage;
+    static PackagePurchaseUI PpurchasePackge;
     // ---------------------------------------
 
 
@@ -89,6 +96,15 @@ public class PatientGUI extends JFrame {
         PpaymentInfo= new PaymentUI();
         //--
 
+        // package panel: PURCHASE ability
+        //setup panel
+        PpackageAbility = new PackageAbility();
+        PlistPackage = new PackageInfoUI();
+        PlookupPackage = new PackageLookUpUI();
+        PpurchasePackge = new PackagePurchaseUI();
+        //--
+
+
 
         //bar 1: OPTION
         //setup panel
@@ -119,15 +135,18 @@ public class PatientGUI extends JFrame {
         //--
 
         // info scene
-        // add panel
+        // add INFO panel
         _Pswapping.add(PinfoAbility);
         _Pswapping.add(PbasicInfo);
         _Pswapping.add(PmanagementInfo);
         _Pswapping.add(PpackageInfo);
         _Pswapping.add(PbalanceInfo);
         _Pswapping.add(PpaymentInfo);
-
-
+        // add PURCHASE panel
+        _Pswapping.add(PpackageAbility);
+        _Pswapping.add(PlistPackage);
+        _Pswapping.add(PlookupPackage);
+        _Pswapping.add(PpurchasePackge);
 //-----------------------------------------
 
 
@@ -138,13 +157,32 @@ public class PatientGUI extends JFrame {
         this.add(_Pheader);
 
 
+
+        // Button Listioner
+        _BinfoOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.print("_BinfoOption");
+                showInfoAbility();
+            }
+        });
+
+        _BpackageOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.print("_BpackageOption");
+                showPurchaseAbility();
+            }
+        });
+
+
     }
     //-- end constructor
 
 
     //method
 
-    // Group of function for switch screen
+    // Group of function for switch INFO screen
     public static void setInfoInvisible() {
         PbasicInfo.setVisible(false);
         PmanagementInfo.setVisible(false);
@@ -173,6 +211,73 @@ public class PatientGUI extends JFrame {
         setInfoInvisible();
         PpaymentInfo.setVisible(true);
     }
+
+
+    // Group of function for switch INFO screen
+    public static void setPackageInvisible() {
+        PlistPackage.setVisible(false);
+        PlookupPackage.setVisible(false);
+        PpurchasePackge.setVisible(false);
+
+    }
+    public static void showListPackage() {
+        setPackageInvisible();
+        PlistPackage.setVisible(true);
+    }
+    public static void showLookupPackage() {
+        setPackageInvisible();
+        PlookupPackage.setVisible(true);
+    }
+    public static void showPurchasePackage() {
+        setPackageInvisible();
+        PpurchasePackge.setVisible(true);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Group of function for switch ABILITY screen
+
+    public static void setAbilityInvisible() {
+        setInfoInvisible();
+
+        PinfoAbility.setVisible(false);
+        PpackageAbility.setVisible(false);
+
+    }
+
+    public static void showInfoAbility() {
+        setAbilityInvisible();
+
+        showBasicInfo();
+        PinfoAbility.setVisible(true);
+    }
+
+    public static void showPurchaseAbility() {
+        setAbilityInvisible();
+
+        showListPackage();
+        PpackageAbility.setVisible(true);
+    }
+
+
+
+
+
+
 //-------------------------------------------------------
 
     public static void main(String[] args) throws InterruptedException, SQLException {
