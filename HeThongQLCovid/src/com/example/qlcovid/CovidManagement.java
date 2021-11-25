@@ -16,11 +16,8 @@ public class CovidManagement {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					System.out.println("one");
 					LoginFrame window = new LoginFrame();
 					window.frame.setVisible(true);
-
-					System.out.println("2");
 					//handleCases();
 					
 				} catch (Exception e) {
