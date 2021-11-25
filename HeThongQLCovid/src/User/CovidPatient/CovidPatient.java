@@ -43,6 +43,10 @@ public class CovidPatient extends User {
         this._patientRelavent = _patientRelavent;
     }
 
+    // method
+
+    // setter and getter
+
     public String get_citizen_id() {
         return _citizen_id;
     }
@@ -101,7 +105,14 @@ public class CovidPatient extends User {
         this._patientRelavent = _patientRelavent;
     }
 
-    // method
+    //--
 
+    public String getInfo() {
+        return this.get_citizen_id()+" "+
+                this.get_name()+" "+
+                this.get_dob().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+" "+
+                this.get_address()+" "+
+                this.get_status();
+    }
 
 }
