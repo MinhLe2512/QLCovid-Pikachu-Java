@@ -153,7 +153,7 @@ public class ManagerUI extends javax.swing.JFrame {
                         .addComponent(btn_func1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_func2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                         .addComponent(jlb_tabname))
                     .addComponent(jpn_table, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
@@ -178,7 +178,7 @@ public class ManagerUI extends javax.swing.JFrame {
 
         jpn_right1.setBackground(new java.awt.Color(51, 51, 51));
 
-        jpn_right.setBackground(new java.awt.Color(255, 255, 255));
+        jpn_right.setBackground(new java.awt.Color(204, 204, 204));
 
         jlb_search.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jlb_search.setForeground(new java.awt.Color(102, 102, 102));
@@ -290,7 +290,7 @@ public class ManagerUI extends javax.swing.JFrame {
                     .addComponent(btn_view_down)
                     .addComponent(btn_view_cancel)
                     .addComponent(btn_view_up))
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jpn_right1Layout = new javax.swing.GroupLayout(jpn_right1);
