@@ -32,7 +32,7 @@ import java.sql.SQLException;
 import java.sql.*;
 import javax.swing.SwingConstants;
 
-public class Login extends JFrame {
+public class LoginFrame extends JFrame {
 
 	JFrame frame;
 	private JTextField user;
@@ -50,7 +50,7 @@ public class Login extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public LoginFrame() {
 		initialize();
 	}
 
@@ -131,9 +131,9 @@ public class Login extends JFrame {
 		btnLogin.setBackground(Color.LIGHT_GRAY);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//String id = user.getText();
-				//String pa = pass.getText();
-				thisAccount = new Account(user.getText(), pass.getText());
+				String id = user.getText();
+				String pa = pass.getText();
+				//thisAccount = new Account(user.getText(), pass.getText());
 				
 				ResultSet rs;
 				try {

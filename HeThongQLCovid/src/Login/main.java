@@ -6,7 +6,7 @@ public class main {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						Login window = new Login();
+						LoginFrame window = new LoginFrame();
 						window.frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
