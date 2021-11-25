@@ -11,7 +11,7 @@ package com.example.qlcovid;
 public class Manager {
     ManagerUI mgUI;
     Manager(){
-        mgUI = new ManagerUI();
+        mgUI = new ManagerUI(1);
         mgUI.setLocationRelativeTo(null);
         mgUI.setVisible(true);
         mgUI.setSize(1600, 900);
