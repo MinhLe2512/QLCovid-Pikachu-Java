@@ -7,10 +7,24 @@ public final class Address {
     private String _city;
 
     // constructor
-    Address(){
+    public Address(){
 
     }
-    Address(String ward, String district, String city){
+
+    public Address(String address){
+        try {
+            String[] add = address.split("|");
+            _ward = add[0];
+            _district = add[1];
+            _city = add[2];
+        }
+        catch(IndexOutOfBoundsException e){
+
+        }
+
+    }
+
+     public Address(String ward, String district, String city){
 
         this.setAddress(ward, district, city);
     }
