@@ -343,6 +343,11 @@ public class ManagerUI extends javax.swing.JFrame {
     btn_1_add.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
     btn_1_add.setForeground(new java.awt.Color(204, 204, 204));
     btn_1_add.setText("Add");
+    btn_1_add.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
+            btn_1_addMouseReleased(evt);
+        }
+    });
 
     btn_1_update.setBackground(new java.awt.Color(51, 51, 51));
     btn_1_update.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1206,6 +1211,14 @@ public class ManagerUI extends javax.swing.JFrame {
         setViewButtonOff();
         }
     }//GEN-LAST:event_btn_1_view_cancelMouseReleased
+
+    private void btn_1_addMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_addMouseReleased
+        ManagerPatient mgPt = new ManagerPatient();
+        mgPt.setLocationRelativeTo(null);
+        mgPt.setTitle("Add a new patient");
+        mgPt.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        mgPt.setVisible(true);
+    }//GEN-LAST:event_btn_1_addMouseReleased
 
     /**
      * @param args the command line arguments
