@@ -1,15 +1,38 @@
 package User.View.UserAbility.BuyPackage;
 
+import DailyNecessityStorage.PackageClass;
+import User.CovidPatient.CovidPatient;
+import User.CovidPatient.PatientHistory;
+import User.DatabaseConnection;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class PackageInfoUI extends JPanel{
 
-    public PackageInfoUI(){
-        this.setLayout(new FlowLayout());/////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
+
+    PtablePackage Ptable;
+
+    public PackageInfoUI() throws SQLException {
+        // init panel
+        this.setLayout(null);
         this.setBackground(new Color(0xC2FFF9)); // for debug
         this.setBounds(0,80,400,390);
-        this.add(new JButton("PackageInfo"));
-        this.setVisible(true);
+        //setPreferredSize(new Dimension(500, 250));
+        this.setVisible(false);
+
+        Ptable = new PtablePackage();
+
+
+
+
+        this.add(Ptable);
+
+
     }
 }

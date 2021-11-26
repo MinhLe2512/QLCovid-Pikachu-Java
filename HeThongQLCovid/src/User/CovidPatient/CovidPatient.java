@@ -69,6 +69,7 @@ public class CovidPatient extends User {
     }
 
     public void set_dob(String _dob) {
+
         this._dob = LocalDate.parse(_dob, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 

@@ -90,7 +90,7 @@ public class PatientGUI extends JFrame {
         // setup panel
         PinfoAbility = new InfoAbility();
         PbasicInfo = new InfoUI(username);
-        PmanagementInfo = new ManagementUI();
+        PmanagementInfo = new ManagementUI(username);
         PpackageInfo = new PackageUI();
         PbalanceInfo = new BalanceUI();
         PpaymentInfo= new PaymentUI();
@@ -193,6 +193,7 @@ public class PatientGUI extends JFrame {
     }
     public static void showBasicInfo() {
         setInfoInvisible();
+        setPackageInvisible();
         PbasicInfo.setVisible(true);
     }
     public static void showManagementInfo() {
@@ -222,6 +223,7 @@ public class PatientGUI extends JFrame {
     }
     public static void showListPackage() {
         setPackageInvisible();
+        setInfoInvisible();
         PlistPackage.setVisible(true);
     }
     public static void showLookupPackage() {
