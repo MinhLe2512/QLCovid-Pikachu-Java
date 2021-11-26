@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -143,10 +142,10 @@ public class ManagerUI extends javax.swing.JFrame {
                     query += jt_1.getText();
                     query += "' ";
                 }
-                query += " and condition is not null";
+                query += " and condition is not null ";
             }
             else{
-                query += " where condition is not null";
+                query += " where condition is not null ";
             }
             if(btn_1_sort.isSelected()){
                 query += "order by ";
