@@ -91,7 +91,7 @@ public class PatientGUI extends JFrame {
         PinfoAbility = new InfoAbility();
         PbasicInfo = new InfoUI(username);
         PmanagementInfo = new ManagementUI(username);
-        PpackageInfo = new PackageUI();
+        PpackageInfo = new PackageUI(username);
         PbalanceInfo = new BalanceUI();
         PpaymentInfo= new PaymentUI();
         //--

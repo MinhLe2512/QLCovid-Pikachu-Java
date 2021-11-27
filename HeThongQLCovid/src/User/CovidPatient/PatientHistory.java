@@ -1,6 +1,6 @@
 package User.CovidPatient;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class PatientHistory {
@@ -9,7 +9,7 @@ public class PatientHistory {
     private String _treatment_ID;
     private String _patient_ID;
     private String _patientAction;
-    private LocalDate _startDate;
+    private LocalDateTime _startDate;
     // constructor
     public PatientHistory() {
     }
@@ -45,18 +45,27 @@ public class PatientHistory {
         this._patientAction = _patientAction;
     }
 
-    public LocalDate get_startDate() {
+    public LocalDateTime get_startDate() {
         return _startDate;
     }
 
     public void set_startDate(String _startDate) {
-        this._startDate = LocalDate.parse(_startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this._startDate = LocalDateTime.parse(_startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     }
 
     public String getInfo() {
         return this.get_treatment_ID() +", "+ this.get_patient_ID()+", " +this.get_patientAction() +", "+
-                this.get_startDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                this.get_startDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
+    }
+
+    public Object[] getObject() {
+        return new Object[]{
+                this.get_treatment_ID(),
+                this.get_patient_ID(),
+                this.get_patientAction(),
+                this.get_startDate()
+        };
     }
 }

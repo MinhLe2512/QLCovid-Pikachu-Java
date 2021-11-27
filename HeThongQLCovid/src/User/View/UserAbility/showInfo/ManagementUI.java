@@ -15,12 +15,12 @@ import java.util.ArrayList;
 public class ManagementUI extends JPanel {
 
     ArrayList<PatientHistory> listTreament;
+    PtablePatientHistory PtableHistory;
 
     public ManagementUI(String username) throws SQLException {
-        this.setLayout(new FlowLayout());/////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
+        this.setLayout(null);/////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
         this.setBackground(new Color(0xC2FFF9)); // for debug
         this.setBounds(0,80,400,390);
-        this.add(new JButton("Mana"));
         this.setVisible(false);
 
 
@@ -41,7 +41,11 @@ public class ManagementUI extends JPanel {
 
             listTreament.add(temp);
         }
-        System.out.println(temp.getInfo());
+        System.out.println("Management History "+temp.getInfo());
+
+        PtableHistory = new PtablePatientHistory(username);
+        this.add(PtableHistory);
+
 
     }
 }
