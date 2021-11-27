@@ -1,6 +1,6 @@
 package User.View.UserAbility.showInfo;
 
-import DailyNecessityStorage.PackageClass;
+
 import User.CovidPatient.PatientHistory;
 import User.DatabaseConnection;
 
@@ -19,6 +19,7 @@ public class PtablePatientHistory extends JPanel{
     DefaultTableModel modelListHistory;
 
     public PtablePatientHistory(String username)  throws SQLException {
+
         // getting data from database
         Statement statement = DatabaseConnection.getJDBC().createStatement();
         String sql = "SELECT * FROM patient_history\n"+

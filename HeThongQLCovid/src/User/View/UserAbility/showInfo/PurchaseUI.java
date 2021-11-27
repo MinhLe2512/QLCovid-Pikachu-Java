@@ -3,6 +3,7 @@ package User.View.UserAbility.showInfo;
 import DailyNecessityStorage.PackagePurchase;
 import User.CovidPatient.PatientHistory;
 import User.DatabaseConnection;
+import User.View.UserAbility.BuyPackage.PtablePackage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,11 +12,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class PackageUI extends JPanel {
+public class PurchaseUI extends JPanel {
 
     ArrayList<PackagePurchase> listPurchase;
-    PtablePatientHistory tableHistory;
-    public PackageUI(String username) throws SQLException {
+    PtablePurchase tablePurchase;
+    public PurchaseUI(String username) throws SQLException {
         this.setLayout(null); /////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
         this.setBackground(new Color(0xC2FFF9)); // for debug
         this.setBounds(0, 80, 400, 390);
@@ -41,7 +42,7 @@ public class PackageUI extends JPanel {
         for(PackagePurchase x : listPurchase){
             System.out.println(x.getInfo());
         }
-        tableHistory = new PtablePatientHistory(username);
-        this.add(tableHistory);
+        tablePurchase = new PtablePurchase(username);
+        this.add(tablePurchase);
     }
 }
