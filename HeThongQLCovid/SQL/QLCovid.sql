@@ -10,19 +10,28 @@ ADD CONSTRAINT check_role CHECK (user_role = 'admin' or user_role = 'user' or us
 ALTER TABLE ql_user
 ADD CONSTRAINT check_validation CHECK (user_validation = 'Y' or user_validation = 'N');  
 
+CREATE TABLE treatment_place(
+	treatment_place_name NVARCHAR(100) NOT NULL,
+	treatment_place_id VARCHAR(10) NOT NULL,
+	capacity INT,
+	current_holding INT,
+	PRIMARY KEY(treatment_place_id)
+);
 CREATE TABLE covid_patient(
 	citizen_id VARCHAR(10) NOT NULL,
 	full_name NVARCHAR(50) NOT NULL,
 	date_of_birth DATE NOT NULL,
 	citizen_address NVARCHAR(100) NOT NULL,
 	condition VARCHAR(2),
-	treatment_place_id NVARCHAR(10),
+	treatment_place_id VARCHAR(10),
 	related_to VARCHAR(10),
 	PRIMARY KEY(citizen_id),
 	CONSTRAINT FK_PATIENT_ID FOREIGN KEY(citizen_id) 
 	REFERENCES ql_user(username),
 	CONSTRAINT FK_RELATED_TO FOREIGN KEY(related_to) 
-	REFERENCES covid_patient(citizen_id)
+	REFERENCES covid_patient(citizen_id),
+	CONSTRAINT FK_TREATMENT_PLACE FOREIGN KEY(treatment_place_id)
+	REFERENCES treatment_place(treatment_place_id)
 );
 ALTER TABLE covid_patient ADD CONSTRAINT check_condition CHECK (condition = 'F1' or condition = 'F2'or condition ='F3' or condition = 'F0');  
 
@@ -47,13 +56,9 @@ CREATE TABLE ql_order(
 	REFERENCES package(package_id),
 	PRIMARY KEY(order_id)
 );
-CREATE TABLE treatment_place(
-	treatment_place_name NVARCHAR(100) NOT NULL,
-	treatment_place_id VARCHAR(10) NOT NULL,
-	capacity INT,
-	current_holding INT,
-	PRIMARY KEY(treatment_place_id)
-);
+
+
+
 ALTER TABLE treatment_place ADD CONSTRAINT check_capacity CHECK (current_holding <= capacity);  
 
 CREATE TABLE patient_history(
@@ -112,23 +117,24 @@ CREATE TABLE district_has_ward(
 
 
 
---alter table covid_patient
---drop constraint FK_RELATED_TO, FK_PATIENT_ID
---alter table patient_history
---drop constraint FK_PATIENT_HISTORY_ID 
---alter table edit
---drop FK_SUPEVISOR_HISTORY_ID
---alter table ql_order
---drop FK_CUSTOMER_ORDER, FK_PACKAGE_ORDER
+alter table covid_patient
+drop constraint FK_RELATED_TO, FK_PATIENT_ID, FK_TREATMENT_PLACE
+alter table patient_history
+drop constraint FK_PATIENT_HISTORY_ID 
+alter table edit
+drop FK_SUPEVISOR_HISTORY_ID
+alter table ql_order
+drop FK_CUSTOMER_ORDER, FK_PACKAGE_ORDER
 
---drop table patient_history
---drop table ql_order
---drop table covid_patient
---drop table package
---drop table edit
---drop table treatment_place
---drop table ql_user
---DROP TRIGGER trigger_patient_history
+
+drop table patient_history
+drop table ql_order
+drop table covid_patient
+drop table package
+drop table edit
+drop table treatment_place
+drop table ql_user
+DROP TRIGGER trigger_patient_history
 GO
 CREATE TRIGGER trigger_patient_history
 ON covid_patient
