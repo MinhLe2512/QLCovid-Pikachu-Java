@@ -6,10 +6,12 @@ package com.example.qlcovid.jframe;
 
 import com.example.qlcovid.model.ManagerDB;
 import java.sql.SQLException;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -24,16 +26,17 @@ public class ManagerUI extends javax.swing.JFrame {
     static DefaultTableModel tbmodel_2;
     static DefaultComboBoxModel cbmodel_2_1;
     static DefaultComboBoxModel cbmodel_2_2;
-    public ManagerUI() {
+    static Hashtable<String, String> toname;
+    public ManagerUI() throws SQLException {
         initComponents();
         db=new ManagerDB();
         init();
     }
-    private void init(){
+    private void init() throws SQLException{
         String [] columnNames1 = {"Citizen ID", "Fullname", "Date of birth", "Address", "Condition", "Treatment place", "Related"};
         String [] columnNames2 = {"Package ID", "Name", "Limit", "Start date", "End date", "Price"};
         try {
-            this.tbmodel_1 = new DefaultTableModel(db.getdata(getquery(), 1), columnNames1){
+            this.tbmodel_1 = new DefaultTableModel(db.getdata(getquery()), columnNames1){
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     //all cells false
@@ -48,10 +51,9 @@ public class ManagerUI extends javax.swing.JFrame {
         jtb_1.setModel(tbmodel_1);
         cb_1_search.setModel(cbmodel_1_1);
         cb_1_sort.setModel(cbmodel_1_2);
-        
         try {
             showTab = 2;
-            this.tbmodel_2 = new DefaultTableModel(db.getdata(getquery(), 2), columnNames2){
+            this.tbmodel_2 = new DefaultTableModel(db.getdata(getquery()), columnNames2){
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     //all cells false
@@ -112,7 +114,7 @@ public class ManagerUI extends javax.swing.JFrame {
         String [] columnNames2 = {"Package ID", "Name", "Limit", "Start date", "End date", "Price"};
         if(showTab==1) {
             try {
-                this.tbmodel_1 = new DefaultTableModel(db.getdata(query, 1), columnNames1){
+                this.tbmodel_1 = new DefaultTableModel(db.getdata(query), columnNames1){
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -125,7 +127,7 @@ public class ManagerUI extends javax.swing.JFrame {
         }
         else if(showTab ==2){
             try {
-                this.tbmodel_2 = new DefaultTableModel(db.getdata(query, 2), columnNames2){
+                this.tbmodel_2 = new DefaultTableModel(db.getdata(query), columnNames2){
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -142,8 +144,9 @@ public class ManagerUI extends javax.swing.JFrame {
         String query = "select * from dbo.";
         query += showTab == 1? "covid_patient ":"package ";
         if(showTab==1) {
+            query = "select citizen_id, full_name, date_of_birth, concat(ward_name, ', ' , district_name, ', ', province_name) as citizen_address, condition, treatment_place_name, related_to from covid_patient join ward on ward.ward_id = covid_patient.citizen_address join district_has_ward on ward.ward_id = district_has_ward.ward_id join district on district.district_id = district_has_ward.district_id join province_has_district on province_has_district.district_id = district.district_id join province on province.province_id = province_has_district.province_id join treatment_place on treatment_place.treatment_place_id = covid_patient.treatment_place_id ";
             if(btn_1_search.isSelected()){
-                query += "where ";
+                query += " where covid_patient.";
                 query += tocolname(cb_1_search.getSelectedItem().toString());
                 if("Fullname".equals(cb_1_search.getSelectedItem().toString())||"Date of birth".equals(cb_1_search.getSelectedItem().toString())){
                     query += " like '%";
@@ -155,13 +158,13 @@ public class ManagerUI extends javax.swing.JFrame {
                     query += jt_1.getText();
                     query += "' ";
                 }
-                query += " and condition is not null ";
+                query += " and covid_patient.condition is not null ";
             }
             else{
-                query += " where condition is not null ";
+                query += " where covid_patient.condition is not null ";
             }
             if(btn_1_sort.isSelected()){
-                query += "order by ";
+                query += " order by covid_patient.";
                 query += tocolname(cb_1_sort.getSelectedItem().toString());
                 if(ckb_1_des.isSelected()) query += " desc";
             }
@@ -169,7 +172,7 @@ public class ManagerUI extends javax.swing.JFrame {
         }
         else if(showTab == 2){
             if(btn_2_search.isSelected()){
-                query += "where ";
+                query += " where ";
                 query += tocolname(cb_2_search.getSelectedItem().toString());
                 if("Name".equals(cb_2_search.getSelectedItem().toString())||"Start date".equals(cb_2_search.getSelectedItem().toString())||"Start date".equals(cb_2_search.getSelectedItem().toString())){
                     query += " like '%";
@@ -325,6 +328,9 @@ public class ManagerUI extends javax.swing.JFrame {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             jtb_1MouseClicked(evt);
         }
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
+            jtb_1MouseClicked(evt);
+        }
     });
     jsc_1.setViewportView(jtb_1);
 
@@ -437,6 +443,12 @@ public class ManagerUI extends javax.swing.JFrame {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             cb_1_searchMouseClicked(evt);
         }
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+            cb_1_searchMouseClicked(evt);
+        }
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
+            cb_1_searchMouseClicked(evt);
+        }
     });
 
     jt_1.setBackground(new java.awt.Color(255, 255, 255));
@@ -467,6 +479,9 @@ public class ManagerUI extends javax.swing.JFrame {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             cb_1_sortMouseClicked(evt);
         }
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+            cb_1_sortMouseClicked(evt);
+        }
     });
 
     btn_1_sortmore.setBackground(new java.awt.Color(102, 102, 102));
@@ -486,6 +501,9 @@ public class ManagerUI extends javax.swing.JFrame {
     btn_1_view_cancel.setForeground(new java.awt.Color(204, 204, 204));
     btn_1_view_cancel.setText("X");
     btn_1_view_cancel.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            btn_1_view_cancelMouseReleased(evt);
+        }
         public void mouseReleased(java.awt.event.MouseEvent evt) {
             btn_1_view_cancelMouseReleased(evt);
         }
@@ -768,6 +786,9 @@ public class ManagerUI extends javax.swing.JFrame {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             cb_2_searchMouseClicked(evt);
         }
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+            cb_2_searchMouseClicked(evt);
+        }
     });
 
     jt_2.setBackground(new java.awt.Color(255, 255, 255));
@@ -799,6 +820,9 @@ public class ManagerUI extends javax.swing.JFrame {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             cb_2_sortMouseClicked(evt);
         }
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+            cb_2_sortMouseClicked(evt);
+        }
     });
 
     btn_2_sortmore.setBackground(new java.awt.Color(102, 102, 102));
@@ -811,14 +835,16 @@ public class ManagerUI extends javax.swing.JFrame {
     });
 
     btn_2_sort.setText("Sort");
+    btn_2_sort.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            btn_2_sortMouseClicked(evt);
+        }
+    });
 
     btn_2_search.setText("Search");
     btn_2_search.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             btn_2_searchMouseClicked(evt);
-        }
-        public void mouseReleased(java.awt.event.MouseEvent evt) {
-            btn_2_searchMouseReleased(evt);
         }
     });
 
@@ -1088,6 +1114,7 @@ public class ManagerUI extends javax.swing.JFrame {
     //execute event
     private void jtb_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtb_1MouseClicked
         System.out.println(jtb_1.getSelectedRow());
+        System.out.println(jtb_1.getSelectedColumn());
         setViewButton();
     }//GEN-LAST:event_jtb_1MouseClicked
 
@@ -1104,89 +1131,73 @@ public class ManagerUI extends javax.swing.JFrame {
         btn_1_sort.setEnabled(false);
     }
     private void btn_1_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_searchMouseClicked
-        if(btn_1_search.isEnabled()) resettable();
+        resettable(); 
     }//GEN-LAST:event_btn_1_searchMouseClicked
 
     private void btn_1_sortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_sortMouseClicked
-        if(btn_1_sort.isEnabled())resettable();
+        resettable();
     }//GEN-LAST:event_btn_1_sortMouseClicked
 
     private void jt_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_1MouseClicked
-        if(btn_1_search.isEnabled()){
-        btn_1_search.setSelected(false);
-        resettable();}
+        if(btn_1_search.isEnabled()) {btn_1_search.setSelected(false);resettable();}    
     }//GEN-LAST:event_jt_1MouseClicked
 
     private void cb_1_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_1_searchMouseClicked
-        if(btn_1_search.isEnabled()){
-        btn_1_search.setSelected(false);
-        resettable();}
+        if(btn_1_search.isEnabled()) {btn_1_search.setSelected(false);resettable();}        
     }//GEN-LAST:event_cb_1_searchMouseClicked
 
     private void btn_1_searchmoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_searchmoreMouseClicked
-        if(btn_1_search.isEnabled()){
-            btn_1_search.setSelected(false);
-        resettable();}
+        if(btn_1_search.isEnabled()) {btn_1_search.setSelected(false);resettable();}    
     }//GEN-LAST:event_btn_1_searchmoreMouseClicked
 
     private void btn_1_sortmoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_sortmoreMouseClicked
-        if(btn_1_search.isEnabled()){btn_1_sort.setSelected(false);
-        resettable();}
+        if(btn_1_sort.isEnabled()) {btn_1_sort.setSelected(false);resettable();}    
     }//GEN-LAST:event_btn_1_sortmoreMouseClicked
 
     private void ckb_1_desMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ckb_1_desMouseClicked
-        if(btn_1_search.isEnabled()){btn_1_sort.setSelected(false);
-        resettable();}
+        if(btn_1_sort.isEnabled()) {btn_1_sort.setSelected(false);resettable();}        
     }//GEN-LAST:event_ckb_1_desMouseClicked
 
     private void cb_1_sortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_1_sortMouseClicked
-        if(btn_1_search.isEnabled()){btn_1_sort.setSelected(false);
-        resettable();}
+        if(btn_1_sort.isEnabled()) {btn_1_sort.setSelected(false);resettable();}      
     }//GEN-LAST:event_cb_1_sortMouseClicked
 
     private void btn_2_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2_searchMouseClicked
         resettable();
     }//GEN-LAST:event_btn_2_searchMouseClicked
 
-    private void cb_2_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_2_searchMouseClicked
-        btn_2_search.setSelected(false);
+    private void btn_2_sortMouseClicked(java.awt.event.MouseEvent evt) {                                        
         resettable();
+    }                                       
+
+    private void cb_2_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_2_searchMouseClicked
+        if(btn_2_search.isEnabled()) {btn_2_search.setSelected(false);resettable();}    
     }//GEN-LAST:event_cb_2_searchMouseClicked
 
     private void btn_2_searchmoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2_searchmoreMouseClicked
-        btn_2_search.setSelected(false);
-        resettable();
+        if(btn_2_search.isEnabled()){btn_2_search.setSelected(false);resettable();} 
     }//GEN-LAST:event_btn_2_searchmoreMouseClicked
 
     private void jt_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_2MouseClicked
-        btn_2_search.setSelected(false);
-        resettable();
+        if(btn_2_search.isEnabled()) {btn_2_search.setSelected(false);resettable();} 
     }//GEN-LAST:event_jt_2MouseClicked
 
     private void cb_2_sortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_2_sortMouseClicked
-        btn_2_sort.setSelected(false);
-        resettable();
+        if(btn_2_sort.isEnabled()) {btn_2_sort.setSelected(false);resettable();} 
     }//GEN-LAST:event_cb_2_sortMouseClicked
 
     private void btn_2_sortmoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2_sortmoreMouseClicked
-        btn_2_sort.setSelected(false);
-        resettable();
+        if(btn_2_sort.isEnabled()) {btn_2_sort.setSelected(false);resettable();} 
     }//GEN-LAST:event_btn_2_sortmoreMouseClicked
 
     private void ckb_2_desMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ckb_2_desMouseClicked
-        btn_2_sort.setSelected(false);
-        resettable();
+        if(btn_2_sort.isEnabled()) {btn_2_sort.setSelected(false);resettable();} 
     }//GEN-LAST:event_ckb_2_desMouseClicked
-
-    private void btn_2_searchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2_searchMouseReleased
-        btn_2_search.setSelected(false);
-        resettable();
-    }//GEN-LAST:event_btn_2_searchMouseReleased
 
     private void btn_1_view_upMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_view_upMouseReleased
         if(btn_1_view_up.isEnabled()){
         String upID = tbmodel_1.getValueAt(jtb_1.getSelectedRow(), 6).toString();
-        String query = "select * from dbo.covid_patient where condition is not null and citizen_id = " + upID;
+        String query = "select citizen_id, full_name, date_of_birth, concat(ward_name, ', ' , district_name, ', ', province_name) as citizen_address, condition, treatment_place_name, related_to from covid_patient join ward on ward.ward_id = covid_patient.citizen_address join district_has_ward on ward.ward_id = district_has_ward.ward_id join district on district.district_id = district_has_ward.district_id join province_has_district on province_has_district.district_id = district.district_id join province on province.province_id = province_has_district.province_id join treatment_place on treatment_place.treatment_place_id = covid_patient.treatment_place_id and covid_patient.citizen_id = " + upID;
         resettable(query);
         setViewButtonOff();
         btn_1_view_cancel.setEnabled(true);
@@ -1196,7 +1207,7 @@ public class ManagerUI extends javax.swing.JFrame {
     private void btn_1_view_downMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_view_downMouseReleased
         if(btn_1_view_down.isEnabled()){
         String downID = tbmodel_1.getValueAt(jtb_1.getSelectedRow(), 0).toString();
-        String query = "select * from dbo.covid_patient where condition is not null and related_to = " + downID;
+        String query = "select citizen_id, full_name, date_of_birth, concat(ward_name, ', ' , district_name, ', ', province_name) as citizen_address, condition, treatment_place_name, related_to from covid_patient join ward on ward.ward_id = covid_patient.citizen_address join district_has_ward on ward.ward_id = district_has_ward.ward_id join district on district.district_id = district_has_ward.district_id join province_has_district on province_has_district.district_id = district.district_id join province on province.province_id = province_has_district.province_id join treatment_place on treatment_place.treatment_place_id = covid_patient.treatment_place_id and covid_patient.related_to = " + downID;
         resettable(query);
         setViewButtonOff();
         btn_1_view_cancel.setEnabled(true);
@@ -1206,9 +1217,9 @@ public class ManagerUI extends javax.swing.JFrame {
     private void btn_1_view_cancelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_view_cancelMouseReleased
         if(btn_1_view_cancel.isEnabled()){
         resettable();
+        setViewButtonOff();
         btn_1_search.setEnabled(true);
         btn_1_sort.setEnabled(true);
-        setViewButtonOff();
         }
     }//GEN-LAST:event_btn_1_view_cancelMouseReleased
 
@@ -1219,6 +1230,10 @@ public class ManagerUI extends javax.swing.JFrame {
         mgPt.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         mgPt.setVisible(true);
     }//GEN-LAST:event_btn_1_addMouseReleased
+
+    private void btn_2_sortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2_sortMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_2_sortMouseClicked
 
     /**
      * @param args the command line arguments

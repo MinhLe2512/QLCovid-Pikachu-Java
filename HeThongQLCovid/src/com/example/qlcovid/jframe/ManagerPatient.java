@@ -60,13 +60,11 @@ public class ManagerPatient extends javax.swing.JFrame {
         jLabel1.setText("Citizen ID");
 
         textField1.setForeground(new java.awt.Color(51, 51, 51));
-        textField1.setText("textField1");
 
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setText("Full name");
 
         textField2.setForeground(new java.awt.Color(51, 51, 51));
-        textField2.setText("textField1");
 
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Date of birth");
@@ -84,7 +82,6 @@ public class ManagerPatient extends javax.swing.JFrame {
         jLabel7.setText("Related");
 
         textField7.setForeground(new java.awt.Color(51, 51, 51));
-        textField7.setText("textField1");
 
         choice1.setForeground(new java.awt.Color(51, 51, 51));
 
@@ -107,7 +104,6 @@ public class ManagerPatient extends javax.swing.JFrame {
 
         jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordField1.setForeground(new java.awt.Color(51, 51, 51));
-        jPasswordField1.setText("jPasswordField1");
 
         jButton1.setText("Update/Add");
 
