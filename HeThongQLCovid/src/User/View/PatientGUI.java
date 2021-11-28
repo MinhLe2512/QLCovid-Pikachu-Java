@@ -283,7 +283,7 @@ public class PatientGUI extends JFrame {
 //-------------------------------------------------------
 
     public static void main(String[] args) throws InterruptedException, SQLException {
-        PatientGUI screen = new PatientGUI("0323812311");
+        PatientGUI screen = new PatientGUI("5352325235");
         screen.setVisible(true);
 //        TimeUnit.SECONDS.sleep(3);
 //        screen.refresh();

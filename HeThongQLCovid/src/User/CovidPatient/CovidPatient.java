@@ -1,11 +1,14 @@
 package User.CovidPatient;
-
+import User.DatabaseConnection;
 
 import ClassAttributes.Address;
 import ClassAttributes.Role;
 import TreatmentArea.TreatmentArea;
 import User.User;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -18,7 +21,7 @@ public class CovidPatient extends User {
     private String _name;
     private LocalDate _dob;
     private Address _address;
-    private String _treatmentAreaID;
+    private TreatmentArea _treatmentAreaID;
     private String _status;
     private String _patientRelavent;
 
@@ -30,7 +33,7 @@ public class CovidPatient extends User {
     public CovidPatient(String citizen_id,String _name,
                         String _dob,
                         Address _address,
-                        String _treatmentAreaID,
+                        TreatmentArea _treatmentAreaID,
                         String _status,
                         String _patientRelavent) {
         super(Role.USER);
@@ -77,17 +80,17 @@ public class CovidPatient extends User {
         return _address;
     }
 
-    public void set_address(String _address) {
+    public void set_address(String _address) throws SQLException {
         this._address = new Address(_address);
     }
 
-    public String get_treatmentArea() {
+    public TreatmentArea get_treatmentArea() {
         return this._treatmentAreaID;
     }
 
-    public void set_treatmentArea(String _ID) {
+    public void set_treatmentArea(String _ID) throws SQLException {
 
-        this._treatmentAreaID = _ID;
+        this._treatmentAreaID = new TreatmentArea(_ID);
     }
 
     public String get_status() {
@@ -99,8 +102,55 @@ public class CovidPatient extends User {
         this._status = _status;
     }
 
-    public String get_patientRelavent() {
-        return _patientRelavent;
+    public String get_patientRelavent(String username) throws SQLException {
+        // WILL BE CONFLICT///////////////////////////
+        if(this._patientRelavent == null) {
+            return "Empty";
+        }
+
+        Statement statement = DatabaseConnection.getJDBC().createStatement();
+        String sql = "SELECT relavent.full_name,relavent.date_of_birth,relavent.citizen_address, relavent._condition, treatment.treatment_place_name FROM covid_patient as patient\n" +
+                "JOIN covid_patient as relavent\n" +
+                "ON patient.related_to = relavent.citizen_id\n" +
+                "JOIN treatment_place as treatment\n" +
+                "ON relavent.treatment_place_id = treatment.treatment_place_id\n" +
+                "WHERE patient.citizen_id = "+username+";";
+        ResultSet rs = statement.executeQuery(sql);
+        CovidPatient temp = new CovidPatient();
+        String treatmentName = "";
+        while(rs.next()){
+
+
+            temp.set_name(rs.getString("full_name"));
+            temp.set_dob(rs.getString("date_of_birth"));
+            temp.set_address(rs.getString("citizen_address"));
+            temp.set_status(rs.getString("_condition"));
+            treatmentName = rs.getString("treatment_place_name");
+
+        }
+
+
+        return "<table >\n" +
+                "    <tbody>\n" +
+                "      <tr >\n" +
+                "        <td border-bottom: 1px solid black>Name: " +temp.get_name()+"</td>\n" +
+                "        <td>     DOB: "+temp.get_dob()+"</td>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>Address: "+temp.get_address().getInfo()+"</td>\n"+
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>Condition: "+temp.get_status()+"</td>\n" +
+                "      </tr>\n" +
+                "      <tr  >\n" +
+                "        <td>Treatment Place: "+treatmentName+"</td>\n" +
+                "      </tr>\n" +
+
+                "    </tbody>\n" +
+                "  </table>";
+        //1px 0xC2FFF9
+
+
     }
 
     public void set_patientRelavent(String _patientRelavent) {

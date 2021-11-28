@@ -4,6 +4,7 @@ import User.CovidPatient.CovidPatient;
 import User.DatabaseConnection;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,13 +26,23 @@ public class InfoUI extends JPanel {
         JLabel LID = new JLabel();
         LID.setBounds(10,10,200,30);
         JLabel Lname = new JLabel();
-        Lname.setBounds(10,40,200,30);
+        Lname.setBounds(10,50,200,30);
         JLabel LDOB = new JLabel();
-        LDOB.setBounds(10,70,200,30);
+        LDOB.setBounds(270,50,200,30);
         JLabel Ladd = new JLabel();
-        Ladd.setBounds(10,100,200,30);
-        JLabel Ltreatmentplace = new JLabel();
-        Ltreatmentplace.setBounds(10,130,200,30);
+        Ladd.setBounds(10,90,400,30);
+        JLabel Lstatus = new JLabel();
+        Lstatus.setBounds(10,130,200,30);
+        JLabel Ltreatment = new JLabel();
+        Ltreatment.setBounds(10,170,200,30);
+
+
+        JLabel Lrelevant = new JLabel();
+        Lrelevant.setBounds(10,220,500,200);
+        //Lrelevant.setBackground(Color.red);  for debug
+        //Lrelevant.setOpaque(true);
+
+        DefaultTableModel treatmentInfo = new DefaultTableModel(new String[]{},0);
 
         Statement statement = DatabaseConnection.getJDBC().createStatement();
         String sql = "SELECT * FROM covid_patient\n"+
@@ -56,16 +67,24 @@ public class InfoUI extends JPanel {
 
         LID.setText("ID: "+temp.get_citizen_id());
         Lname.setText("Name: "+temp.get_name());
-        LDOB.setText("DOB: "+temp.get_dob().format(DateTimeFormatter.ofPattern("dd LLLL yyyy")));
-        Ladd.setText("Address:      "+temp.get_address());
-        Ltreatmentplace.setText("Citizen ID: "+temp.get_citizen_id());
+        LDOB.setText("DOB: "+temp.get_dob().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        Ladd.setText("Address:      "+temp.get_address().getInfo());
+        Lstatus.setText("Condition: "+temp.get_status());
+        Ltreatment.setText("Treatment place: "+temp.get_treatmentArea().get_name());
+        Lrelevant.setText("<html><style>tr {\n" +
+                "    border-top: 1px solid black;\n" +
+                "    border-collapse: collapse;\n" +
+                "}\u200B</style><body>Relevant Patient<br>"+temp.get_patientRelavent(username)+"</body></html>");//
+        Lrelevant.setVerticalAlignment(SwingConstants.TOP);
+                         //+temp.get_patientRelavent(username)
+//<html><body>sth<br>"+"</body></html>
 
-        this.add(LID);
         this.add(Lname);
         this.add(LDOB);
         this.add(Ladd);
-        this.add(Ltreatmentplace);
-
+        this.add(Lstatus);
+        this.add(Ltreatment);
+        this.add(Lrelevant);
         //------------------------------------------------
     }
 }

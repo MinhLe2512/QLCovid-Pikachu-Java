@@ -5,10 +5,13 @@ import User.CovidPatient.PatientHistory;
 import User.DatabaseConnection;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -16,6 +19,11 @@ public class ManagementUI extends JPanel {
 
     ArrayList<PatientHistory> listTreament;
     PtablePatientHistory PtableHistory;
+
+    static JLabel Lid;
+    static JLabel Lpatient_ID;
+    static JLabel Ldate;
+    static JLabel Laction;
 
     public ManagementUI(String username) throws SQLException {
         this.setLayout(null);/////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
@@ -44,8 +52,30 @@ public class ManagementUI extends JPanel {
         System.out.println("Management History "+temp.getInfo());
 
         PtableHistory = new PtablePatientHistory(username);
+
+        Lid = new JLabel("ID: ");
+        Lid.setBounds(10,150,200,30);
+        Lpatient_ID = new JLabel("Patient ID: ");
+        Lpatient_ID.setBounds(200,150,300,30);
+        Ldate = new JLabel("Start Date: ");
+        Ldate.setBounds(10,180,300,30);
+        Laction = new JLabel("Action: ");
+        Laction.setBounds(10,210,400,100);
+
+        this.add(Laction);
+        this.add(Ldate);
+        this.add(Lpatient_ID);
+        this.add(Lid);
         this.add(PtableHistory);
 
+
+
+    }
+     public static void selectRowData(PatientHistory x){
+        Lid.setText("ID: "+x.get_treatment_ID());
+        Lpatient_ID.setText("Patient ID: "+x.get_patient_ID());
+        Ldate.setText("Start Date: "+x.get_startDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        Laction.setText("Action: "+x.get_patientAction());
 
     }
 }

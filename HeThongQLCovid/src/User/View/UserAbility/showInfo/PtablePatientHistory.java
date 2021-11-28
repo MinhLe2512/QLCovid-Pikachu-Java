@@ -5,6 +5,8 @@ import User.CovidPatient.PatientHistory;
 import User.DatabaseConnection;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.ResultSet;
@@ -43,10 +45,9 @@ public class PtablePatientHistory extends JPanel{
 
 
         this.setOpaque(true);
-        this.setBounds(50,0,350,100);
+        this.setBounds(50,0,300,100);
 
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(500, 250));
 
         modelListHistory = new DefaultTableModel(
                 new String[] { "ID","Patient ID","Patient action","Date"},
@@ -55,22 +56,42 @@ public class PtablePatientHistory extends JPanel{
         for(PatientHistory x : historyList){
             modelListHistory.addRow(x.getObject());
         }
-        for(PatientHistory x : historyList){
+       /* for(PatientHistory x : historyList){
             modelListHistory.addRow(x.getObject());
         }
         for(PatientHistory x : historyList){
             modelListHistory.addRow(x.getObject());
-        }
+        }*/
 
         PatientHistoryTalbe = new JTable(modelListHistory);//modelListPackage
-        //packageTalbe.setBounds(10,10,400,200);
-        //packageTalbe.setPreferredScrollableViewportSize(new Dimension(300, 10));
+        //PatientHistoryTalbe.setBounds(10,10,400,200);
+        //PatientHistoryTalbe.setPreferredScrollableViewportSize(new Dimension(400, 250));
 
         PatientHistoryTalbe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //PatientHistoryTalbe.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+
+
         JScrollPane pane = new JScrollPane(PatientHistoryTalbe);
         this.add(pane, BorderLayout.CENTER);
         PatientHistoryTalbe.setDefaultEditor(Object.class, null);
         PatientHistoryTalbe.getTableHeader().setReorderingAllowed(false);
+
+        PatientHistoryTalbe.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+
+
+                for(PatientHistory x: historyList){
+                    if(x.get_treatment_ID().equals(PatientHistoryTalbe.getValueAt(PatientHistoryTalbe.getSelectedRow(), 0).toString())){
+                        ManagementUI.selectRowData(x);
+                    }
+
+                }
+                // do some actions here, for example
+                // print first column value from selected row
+                System.out.println(PatientHistoryTalbe.getValueAt(PatientHistoryTalbe.getSelectedRow(), 0).toString());
+
+            }
+        });
 
 
 

@@ -5,6 +5,8 @@ import User.CovidPatient.PatientHistory;
 import User.DatabaseConnection;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.ResultSet;
@@ -43,7 +45,7 @@ public class PtablePurchase extends JPanel{
 
 
         this.setOpaque(true);
-        this.setBounds(50,0,350,100);
+        this.setBounds(50,0,300,100);
 
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(500, 250));
@@ -73,7 +75,22 @@ public class PtablePurchase extends JPanel{
         purchaseTable.getTableHeader().setReorderingAllowed(false);
 
 
+        purchaseTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
 
+
+                for(PackagePurchase x: listPurchase){
+                    if(x.get_ID().equals(purchaseTable.getValueAt(purchaseTable.getSelectedRow(), 0).toString())){
+                        PurchaseUI.selectRowData(x);
+                    }
+
+                }
+                // do some actions here, for example
+                // print first column value from selected row
+                System.out.println(purchaseTable.getValueAt(purchaseTable.getSelectedRow(), 0).toString());
+
+            }
+        });
 
 
 
