@@ -48,7 +48,13 @@ public class ManagerUI extends javax.swing.JFrame {
         }
         this.cbmodel_1_1 = new DefaultComboBoxModel(columnNames1);
         this.cbmodel_1_2 = new DefaultComboBoxModel(columnNames1);
+        
+        Object[] noCol1 = new Object[tbmodel_1.getRowCount()];
+        for(int i = 0; i<tbmodel_1.getRowCount() ; i++) noCol1[i] = i + 1;
+        tbmodel_1.addColumn("No.", noCol1);
         jtb_1.setModel(tbmodel_1);
+        jtb_1.moveColumn(jtb_1.getColumnCount()-1, 0);
+        
         cb_1_search.setModel(cbmodel_1_1);
         cb_1_sort.setModel(cbmodel_1_2);
         try {
@@ -66,7 +72,14 @@ public class ManagerUI extends javax.swing.JFrame {
         }
         this.cbmodel_2_1 = new DefaultComboBoxModel(columnNames2);
         this.cbmodel_2_2 = new DefaultComboBoxModel(columnNames2);
+        
+        
+        Object[]noCol2 = new Object[tbmodel_2.getRowCount()];
+        for(int i = 0; i<tbmodel_2.getRowCount() ; i++) noCol2[i] = i + 1;
+        tbmodel_2.addColumn("No.", noCol2);
         jtb_2.setModel(tbmodel_2);
+        jtb_2.moveColumn(jtb_2.getColumnCount()-1, 0);
+        
         cb_2_search.setModel(cbmodel_2_1);
         cb_2_sort.setModel(cbmodel_2_2);
         this.jpn_main_stat.setVisible(false);
@@ -123,7 +136,11 @@ public class ManagerUI extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ManagerUI.class.getName()).log(Level.SEVERE, null, ex);
             }
+            Object[] noCol1 = new Object[tbmodel_1.getRowCount()];
+            for(int i = 0; i<tbmodel_1.getRowCount() ; i++) noCol1[i] = i + 1;
+            tbmodel_1.addColumn("No.", noCol1);
             jtb_1.setModel(tbmodel_1);
+            jtb_1.moveColumn(jtb_1.getColumnCount()-1, 0);
         }
         else if(showTab ==2){
             try {
@@ -136,13 +153,16 @@ public class ManagerUI extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ManagerUI.class.getName()).log(Level.SEVERE, null, ex);
             }
+            Object[]noCol2 = new Object[tbmodel_2.getRowCount()];
+            for(int i = 0; i<tbmodel_2.getRowCount() ; i++) noCol2[i] = i + 1;
+            tbmodel_2.addColumn("No.", noCol2);
             jtb_2.setModel(tbmodel_2);
+            jtb_2.moveColumn(jtb_2.getColumnCount()-1, 0);
         }
     }
 
     private String getquery() {
-        String query = "select * from dbo.";
-        query += showTab == 1? "covid_patient ":"package ";
+        String query = "";
         if(showTab==1) {
             query = "select citizen_id, full_name, date_of_birth, concat(ward_name, ', ' , district_name, ', ', province_name) as citizen_address, condition, treatment_place_name, related_to from covid_patient join ward on ward.ward_id = covid_patient.citizen_address join district_has_ward on ward.ward_id = district_has_ward.ward_id join district on district.district_id = district_has_ward.district_id join province_has_district on province_has_district.district_id = district.district_id join province on province.province_id = province_has_district.province_id join treatment_place on treatment_place.treatment_place_id = covid_patient.treatment_place_id ";
             if(btn_1_search.isSelected()){
@@ -171,6 +191,7 @@ public class ManagerUI extends javax.swing.JFrame {
             
         }
         else if(showTab == 2){
+            query = "select * from dbo.package ";
             if(btn_2_search.isSelected()){
                 query += " where ";
                 query += tocolname(cb_2_search.getSelectedItem().toString());
@@ -1113,8 +1134,8 @@ public class ManagerUI extends javax.swing.JFrame {
 
     //execute event
     private void jtb_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtb_1MouseClicked
-        System.out.println(jtb_1.getSelectedRow());
-        System.out.println(jtb_1.getSelectedColumn());
+        //System.out.println(jtb_1.getSelectedRow());
+        //System.out.println(jtb_1.getSelectedColumn());
         setViewButton();
     }//GEN-LAST:event_jtb_1MouseClicked
 
@@ -1131,73 +1152,73 @@ public class ManagerUI extends javax.swing.JFrame {
         btn_1_sort.setEnabled(false);
     }
     private void btn_1_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_searchMouseClicked
-        resettable(); 
+        if(btn_1_search.isEnabled()) resettable(); 
     }//GEN-LAST:event_btn_1_searchMouseClicked
 
     private void btn_1_sortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_sortMouseClicked
-        resettable();
+        if(btn_1_sort.isEnabled())resettable();
     }//GEN-LAST:event_btn_1_sortMouseClicked
 
     private void jt_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_1MouseClicked
-        if(btn_1_search.isEnabled()) {btn_1_search.setSelected(false);resettable();}    
+        if(btn_1_search.isEnabled() && btn_1_search.isSelected()) {btn_1_search.setSelected(false);resettable();}    
     }//GEN-LAST:event_jt_1MouseClicked
 
     private void cb_1_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_1_searchMouseClicked
-        if(btn_1_search.isEnabled()) {btn_1_search.setSelected(false);resettable();}        
+        if(btn_1_search.isEnabled() && btn_1_search.isSelected()) {btn_1_search.setSelected(false);resettable();}        
     }//GEN-LAST:event_cb_1_searchMouseClicked
 
     private void btn_1_searchmoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_searchmoreMouseClicked
-        if(btn_1_search.isEnabled()) {btn_1_search.setSelected(false);resettable();}    
+        if(btn_1_search.isEnabled() && btn_1_search.isSelected()) {btn_1_search.setSelected(false);resettable();}    
     }//GEN-LAST:event_btn_1_searchmoreMouseClicked
 
     private void btn_1_sortmoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_sortmoreMouseClicked
-        if(btn_1_sort.isEnabled()) {btn_1_sort.setSelected(false);resettable();}    
+        if(btn_1_sort.isEnabled()&& btn_1_sort.isSelected()) {btn_1_sort.setSelected(false);resettable();}    
     }//GEN-LAST:event_btn_1_sortmoreMouseClicked
 
     private void ckb_1_desMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ckb_1_desMouseClicked
-        if(btn_1_sort.isEnabled()) {btn_1_sort.setSelected(false);resettable();}        
+        if(btn_1_sort.isEnabled()&& btn_1_sort.isSelected()) {btn_1_sort.setSelected(false);resettable();}        
     }//GEN-LAST:event_ckb_1_desMouseClicked
 
     private void cb_1_sortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_1_sortMouseClicked
-        if(btn_1_sort.isEnabled()) {btn_1_sort.setSelected(false);resettable();}      
+        if(btn_1_sort.isEnabled()&& btn_1_sort.isSelected()) {btn_1_sort.setSelected(false);resettable();}      
     }//GEN-LAST:event_cb_1_sortMouseClicked
 
     private void btn_2_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2_searchMouseClicked
-        resettable();
+        if(btn_2_search.isEnabled()) resettable();
     }//GEN-LAST:event_btn_2_searchMouseClicked
 
     private void btn_2_sortMouseClicked(java.awt.event.MouseEvent evt) {                                        
-        resettable();
+        if(btn_2_sort.isEnabled())resettable();
     }                                       
 
     private void cb_2_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_2_searchMouseClicked
-        if(btn_2_search.isEnabled()) {btn_2_search.setSelected(false);resettable();}    
+        if(btn_2_search.isEnabled()&& btn_2_search.isSelected()) {btn_2_search.setSelected(false);resettable();}    
     }//GEN-LAST:event_cb_2_searchMouseClicked
 
     private void btn_2_searchmoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2_searchmoreMouseClicked
-        if(btn_2_search.isEnabled()){btn_2_search.setSelected(false);resettable();} 
+        if(btn_2_search.isEnabled()&& btn_2_search.isSelected()){btn_2_search.setSelected(false);resettable();} 
     }//GEN-LAST:event_btn_2_searchmoreMouseClicked
 
     private void jt_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_2MouseClicked
-        if(btn_2_search.isEnabled()) {btn_2_search.setSelected(false);resettable();} 
+        if(btn_2_search.isEnabled()&& btn_2_search.isSelected()) {btn_2_search.setSelected(false);resettable();} 
     }//GEN-LAST:event_jt_2MouseClicked
 
     private void cb_2_sortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_2_sortMouseClicked
-        if(btn_2_sort.isEnabled()) {btn_2_sort.setSelected(false);resettable();} 
+        if(btn_2_sort.isEnabled()&& btn_2_sort.isSelected()) {btn_2_sort.setSelected(false);resettable();} 
     }//GEN-LAST:event_cb_2_sortMouseClicked
 
     private void btn_2_sortmoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2_sortmoreMouseClicked
-        if(btn_2_sort.isEnabled()) {btn_2_sort.setSelected(false);resettable();} 
+        if(btn_2_sort.isEnabled()&& btn_2_sort.isSelected()) {btn_2_sort.setSelected(false);resettable();} 
     }//GEN-LAST:event_btn_2_sortmoreMouseClicked
 
     private void ckb_2_desMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ckb_2_desMouseClicked
-        if(btn_2_sort.isEnabled()) {btn_2_sort.setSelected(false);resettable();} 
+        if(btn_2_sort.isEnabled()&& btn_2_sort.isSelected()) {btn_2_sort.setSelected(false);resettable();} 
     }//GEN-LAST:event_ckb_2_desMouseClicked
 
     private void btn_1_view_upMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_view_upMouseReleased
         if(btn_1_view_up.isEnabled()){
         String upID = tbmodel_1.getValueAt(jtb_1.getSelectedRow(), 6).toString();
-        String query = "select citizen_id, full_name, date_of_birth, concat(ward_name, ', ' , district_name, ', ', province_name) as citizen_address, condition, treatment_place_name, related_to from covid_patient join ward on ward.ward_id = covid_patient.citizen_address join district_has_ward on ward.ward_id = district_has_ward.ward_id join district on district.district_id = district_has_ward.district_id join province_has_district on province_has_district.district_id = district.district_id join province on province.province_id = province_has_district.province_id join treatment_place on treatment_place.treatment_place_id = covid_patient.treatment_place_id and covid_patient.citizen_id = " + upID;
+        String query = "select citizen_id, full_name, date_of_birth, concat(ward_name, ', ' , district_name, ', ', province_name) as citizen_address, condition, treatment_place_name, related_to from covid_patient join ward on ward.ward_id = covid_patient.citizen_address join district_has_ward on ward.ward_id = district_has_ward.ward_id join district on district.district_id = district_has_ward.district_id join province_has_district on province_has_district.district_id = district.district_id join province on province.province_id = province_has_district.province_id join treatment_place on treatment_place.treatment_place_id = covid_patient.treatment_place_id  where covid_patient.condition is not null and covid_patient.citizen_id = " + upID;
         resettable(query);
         setViewButtonOff();
         btn_1_view_cancel.setEnabled(true);
@@ -1207,7 +1228,7 @@ public class ManagerUI extends javax.swing.JFrame {
     private void btn_1_view_downMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1_view_downMouseReleased
         if(btn_1_view_down.isEnabled()){
         String downID = tbmodel_1.getValueAt(jtb_1.getSelectedRow(), 0).toString();
-        String query = "select citizen_id, full_name, date_of_birth, concat(ward_name, ', ' , district_name, ', ', province_name) as citizen_address, condition, treatment_place_name, related_to from covid_patient join ward on ward.ward_id = covid_patient.citizen_address join district_has_ward on ward.ward_id = district_has_ward.ward_id join district on district.district_id = district_has_ward.district_id join province_has_district on province_has_district.district_id = district.district_id join province on province.province_id = province_has_district.province_id join treatment_place on treatment_place.treatment_place_id = covid_patient.treatment_place_id and covid_patient.related_to = " + downID;
+        String query = "select citizen_id, full_name, date_of_birth, concat(ward_name, ', ' , district_name, ', ', province_name) as citizen_address, condition, treatment_place_name, related_to from covid_patient join ward on ward.ward_id = covid_patient.citizen_address join district_has_ward on ward.ward_id = district_has_ward.ward_id join district on district.district_id = district_has_ward.district_id join province_has_district on province_has_district.district_id = district.district_id join province on province.province_id = province_has_district.province_id join treatment_place on treatment_place.treatment_place_id = covid_patient.treatment_place_id  where covid_patient.condition is not null and covid_patient.related_to = " + downID;
         resettable(query);
         setViewButtonOff();
         btn_1_view_cancel.setEnabled(true);
