@@ -9,8 +9,9 @@ package com.example.qlcovid.string;
  * @author nhonnhon
  */
 public class UtilsString {
-    public static String DBURL = "jdbc:sqlserver://localhost;databaseName=QLCovid;user=sa;password=123456";
-    public static String USERNAME = "sa";
-    public static String PASSWORD = "123456";
+    public String DBURL = "jdbc:sqlserver://localhost";
+    public String USER = "sa";
+    public String PASSWORD = "123456";
+    public String DATABASENAME = "QLCovid";
 }
 
