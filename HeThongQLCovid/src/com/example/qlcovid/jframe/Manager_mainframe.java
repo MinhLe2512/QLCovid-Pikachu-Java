@@ -820,6 +820,11 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btnupdate2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnupdate2.setForeground(new java.awt.Color(255, 255, 255));
         btnupdate2.setText("Update");
+        btnupdate2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnupdate2MouseClicked(evt);
+            }
+        });
 
         btnremove2.setBackground(new java.awt.Color(51, 51, 51));
         btnremove2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1215,6 +1220,14 @@ public class Manager_mainframe extends javax.swing.JFrame {
             resettable2();
         }
     }//GEN-LAST:event_btnremove2MouseClicked
+
+    private void btnupdate2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnupdate2MouseClicked
+        if(tb2.getSelectedRow()!= -1){
+            String pid = tb2.getValueAt(tb2.getSelectedRow(), 1).toString();
+            Manager_updatepackage up = new Manager_updatepackage(pid);
+            resettable2();
+        }
+    }//GEN-LAST:event_btnupdate2MouseClicked
     void resetbtn2(){
         btnupdate2.setEnabled(false);
         btnremove2.setEnabled(false);
