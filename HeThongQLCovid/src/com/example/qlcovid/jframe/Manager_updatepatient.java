@@ -25,7 +25,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     int tplaceindexincombobox;
     String treatmentid, conditionnow;
     Object[][] treatment, condition;
-    String id;
+    String id, oldcondition;
     public Manager_updatepatient(String i) throws SQLException{
         initComponents();
         id = i;
@@ -43,6 +43,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
         else if(conditionnow.equals("F1")) d3con.setSelectedIndex(1);
         else if(conditionnow.equals("F2")) d3con.setSelectedIndex(2);
         else if(conditionnow.equals("F3")) d3con.setSelectedIndex(3);
+        oldcondition = conditionnow;
     }
     void initTreatment() throws SQLException{
         treatmentid = db.get("Select treatment_place_id from covid_patient where citizen_id = " + id);
@@ -194,19 +195,29 @@ public class Manager_updatepatient extends javax.swing.JPanel {
         }
         String newcondition = d3con.getSelectedItem().toString();
         if(!newcondition.equals(conditionnow)){
-            if(newcondition == "F0"){
+            if("F0".equals(newcondition)){
                 setF0(id);
             }
-            if(newcondition == "F1"){
+            else if("F1".equals(newcondition)){
                 setF1(id);
             }
-            if(newcondition == "F2"){
+            else if("F2".equals(newcondition)){
                 setF2(id);
             }
-            if(newcondition == "F3"){
+            else if("F3".equals(newcondition)){
                 setF3(id);
             }
+            else if("null".equals(newcondition)){
+                if(oldcondition.equals("F0")){
+                    String newqr = "INSERT INTO patient_history(patient_id, patient_action, patient_date)\n VALUES (" + id + ", 'cured', CONVERT(char(10), GetDate(),126));";
+                    db.insert(newqr);
+                    newqr = "Update covid_patient set condition = null where citizen_id = " + id;
+                    db.update(newqr);
+                }
+                else setnull(id);
+            }
         }
+        System.out.println(newcondition);
         JDialog d1 = new JDialog(d, "");
         d1.add(new JLabel("   Update patient state successfully!"));
         d1.setSize(200, 100);
@@ -218,6 +229,9 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     void setF0(String x){
         String newqr = "Update covid_patient set condition = 'F0' where citizen_id = " + x;
         db.update(newqr);
+        newqr = "INSERT INTO patient_history(patient_id, patient_action, patient_date)\n" +
+                    "VALUES (" + x + ", 'tof0', CONVERT(char(10), GetDate(),126));";
+        db.insert(newqr);
         newqr = "select citizen_id, condition from covid_patient where related_to = "+ x;
         Object[][] obj = db.getdata(newqr);
         for(int i = 0; i< obj.length; i++){
@@ -249,12 +263,19 @@ public class Manager_updatepatient extends javax.swing.JPanel {
         Object[][] obj = db.getdata(newqr);
         for(int i = 0; i< obj.length; i++){
             if(!"F0".equals(obj[i][1].toString()) || !"F1".equals(obj[i][1].toString())|| !"F2".equals(obj[i][1].toString())|| !"F3".equals(obj[i][1].toString())){
-                newqr = "Update covid_patient set condition = null where citizen_id = " + x;
-                db.update(newqr);
+                setnull(obj[i][0].toString());
             }
         }
     }
-    
+    void setnull(String x){
+        String newqr = "Update covid_patient set condition = null where citizen_id = " + x;
+        db.update(newqr);
+        newqr = "select citizen_id, condition from covid_patient where related_to = "+ x;
+        Object[][] obj = db.getdata(newqr);
+        for(int i = 0; i< obj.length; i++){
+            if(!"F0".equals(obj[i][1].toString()) || !"F1".equals(obj[i][1].toString())|| !"F2".equals(obj[i][1].toString())|| !"F3".equals(obj[i][1].toString()))setnull(obj[i][0].toString());
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField d2id;

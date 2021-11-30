@@ -113,11 +113,12 @@ public class Manager_mainframe extends javax.swing.JFrame {
         f1.setText(db.get("select count(citizen_id) from covid_patient where condition = 'F1'"));
         f2.setText(db.get("select count(citizen_id) from covid_patient where condition = 'F2'"));
         f3.setText(db.get("select count(citizen_id) from covid_patient where condition = 'F3'"));
-        cursed.setText(db.get("select count(citizen_id) from covid_patient where condition is null"));
-        f1tof0.setText(db.get("select count(citizen_id) from covid_patient where condition is null"));
+        cursed.setText(db.get("select count(patient_history_id) from patient_history where patient_action = 'cured'"));
+        f1tof0.setText(db.get("select count(patient_history_id) from patient_history where patient_action = 'tof0'"));
         
     //--------------table2-----------------//
         typeofpackage.setText(db.get("select count(package_id) from package"));
+        debt.setText(db.get("select sum(price) from ql_order join package on package.package_id = ql_order.package_id"));
     //--------------table3-----------------//
         Object[][] objs3;
         DefaultTableModel model3;    
@@ -1171,7 +1172,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(102, 102, 102));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("cursed case");
+        jLabel29.setText("cured case");
 
         jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(102, 102, 102));
@@ -1227,11 +1228,12 @@ public class Manager_mainframe extends javax.swing.JFrame {
                             .addComponent(f1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(debt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                                 .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(48, 48, 48)))
-                        .addGap(61, 61, 61)
+                                .addGap(109, 109, 109))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                                .addComponent(debt, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)))
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(typeofpackage, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
@@ -1492,6 +1494,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         try {
             Manager_addpatient cp = new Manager_addpatient();
             resettable1();
+            initStat();
         } catch (SQLException ex) {
             Logger.getLogger(Manager_mainframe.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1502,6 +1505,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
             try {
                 Manager_updatepatient up = new Manager_updatepatient(tb1.getValueAt(tb1.getSelectedRow(), 1).toString());
                 resettable1();
+                initStat();
             } catch (SQLException ex) {
                 Logger.getLogger(Manager_mainframe.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1511,6 +1515,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
     private void btnadd2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnadd2MouseClicked
         Manager_addpackage ap = new Manager_addpackage();
         resettable2();
+        initStat();
     }//GEN-LAST:event_btnadd2MouseClicked
 
     private void btnremove2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnremove2MouseClicked
@@ -1526,6 +1531,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
             d.setLocationRelativeTo(null);
             d.setVisible(true);
             resettable2();
+            initStat();
         }
     }//GEN-LAST:event_btnremove2MouseClicked
 
@@ -1534,6 +1540,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
             String pid = tb2.getValueAt(tb2.getSelectedRow(), 1).toString();
             Manager_updatepackage up = new Manager_updatepackage(pid);
             resettable2();
+            initStat();
         }
     }//GEN-LAST:event_btnupdate2MouseClicked
     void resetbtn2(){
