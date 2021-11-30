@@ -22,15 +22,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Manager_mainframe extends javax.swing.JFrame {
     Vector<String> Column1 = new Vector<String>();
-    Vector<String> Column2 = new Vector<String>();
+    String [] columnNames2 = {"Package ID", "Name", "Limit", "Start date", "End date", "Price"};
     DefaultTableModel tbmodel1, tbmodel2;
-    DefaultComboBoxModel cbmodel1search, cbmodel1sort, cbmode21search, cbmode21sort;
+    DefaultComboBoxModel cbmodel1search, cbmodel1sort, cbmodel2search, cbmodel2sort;
     ManagerDB db = new ManagerDB();
-    int showingTab;
     String queryOfRelated;
     public Manager_mainframe() {
         initComponents();
-        showingTab=1;
         this.setLocationRelativeTo(null);
         initUI();
         this.setTitle("Covid Management");
@@ -46,7 +44,6 @@ public class Manager_mainframe extends javax.swing.JFrame {
         cbcondition1.setSelected(true);
         cbplace1.setSelected(true);
         cbrelated1.setSelected(true);
-        
         cbid1.setVisible(false);
         cbname1.setVisible(false);
         cbdob1.setVisible(false);
@@ -60,6 +57,8 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btncancel1.setEnabled(false);
         btnupdate1.setEnabled(false);
         btnremove1.setEnabled(false);
+        btnupdate2.setEnabled(false);
+        btnremove2.setEnabled(false);
         
         //init table
         Object[][] data = db.getdata(getSelected1() + " where condition  is not null ");
@@ -84,7 +83,43 @@ public class Manager_mainframe extends javax.swing.JFrame {
         cbsort1.setModel(cbmodel1sort);
         
     //!!!!!TAB 02!!!!!!!//
-        tb3.setModel(tbmodel1);
+        Object[][] data2 = db.getdata(getSelected2());
+        tbmodel2 = new DefaultTableModel(data2, columnNames2){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
+        };
+        tb2.setModel(tbmodel2);
+        Object[] noCol2 = new Object[tbmodel2.getRowCount()];
+        for(int i = 0; i<tbmodel2.getRowCount() ; i++) noCol2[i] = i + 1;
+        tbmodel2.addColumn("No.", noCol2);
+        tb2.setModel(tbmodel2);
+        tb2.moveColumn(tb2.getColumnCount()-1, 0);
+        
+        //init combobox
+        cbmodel2search = new DefaultComboBoxModel(columnNames2);
+        cbmodel2sort = new DefaultComboBoxModel(columnNames2);
+        cbsearch2.setModel(cbmodel2search);
+        cbsort2.setModel(cbmodel2sort);
+    }
+    String getSelected2(){
+        return "select * from package";
+    }
+    void resettable2() throws SQLException{
+        String newqr = "";
+        newqr += getSelected2();
+        newqr += getWhere2();
+        newqr += getSort2();
+        Object[][] data = db.getdata(newqr);
+        tbmodel2 = new DefaultTableModel(data, columnNames2);
+        tb2.setModel(tbmodel2);
+        Object[] noCol1 = new Object[tbmodel2.getRowCount()];
+        for(int i = 0; i<tbmodel2.getRowCount() ; i++) noCol1[i] = i + 1;
+        tbmodel2.addColumn("No.", noCol1);
+        tb2.setModel(tbmodel2);
+        tb2.moveColumn(tb2.getColumnCount()-1, 0);
     }
     void resettable1() throws SQLException{
         String newqr = "";
@@ -116,11 +151,30 @@ public class Manager_mainframe extends javax.swing.JFrame {
         }
         return "";
     }
+    String getSort2(){
+        if(btnsort2.isSelected()){
+            String newqr = " order by ";
+            newqr += tocolname(cbsearch2.getSelectedItem().toString()) + " ";
+            if(cksort2.isSelected()) newqr += "desc ";
+            return newqr;
+        }
+        return "";
+    }
     String getWhere1(){
         String newqr = " where condition  is not null ";
         if(!"".equals(queryOfRelated)) {newqr += " and " + queryOfRelated;}
-        if(tbsearch1.getText().isEmpty() || tbsearch1.getText().length() ==0) tbsearch1.setText(" 0 ");
+        
         if(btnsearch1.isSelected()){
+            if(tbsearch1.getText().isEmpty() || tbsearch1.getText().length() ==0){
+                JDialog d = new JDialog(this, "ERROR!");
+                d.add(new JLabel("      Empty search!"));
+                d.setSize(200, 100);
+                d.setModal(true);
+                d.setLocationRelativeTo(null);
+                d.setVisible(true);
+                this.btnsearch1.setSelected(false);
+                return newqr;
+            }
             newqr += " and ";
             if(tocolname(cbsearch1.getSelectedItem().toString()).equals("full_name")) newqr+= tocolname(cbsearch1.getSelectedItem().toString()) + " like N'%" + tbsearch1.getText()+ "%' ";
             else if(tocolname(cbsearch1.getSelectedItem().toString()).equals("citizen_address")) newqr+= tocolname(cbsearch1.getSelectedItem().toString()) + " like N'%" + tbsearch1.getText()+ "%' ";
@@ -135,8 +189,41 @@ public class Manager_mainframe extends javax.swing.JFrame {
                     JDialog d = new JDialog(this, "ERROR!");
                     d.add(new JLabel("      ID must be integer!"));
                     d.setSize(200, 100);
-                    d.setVisible(true);
+                    d.setModal(true);
                     d.setLocationRelativeTo(null);
+                    d.setVisible(true);
+                }
+        }
+        return newqr;
+    }
+    String getWhere2(){     
+        String newqr = "";
+        if(btnsearch2.isSelected()){
+            if(tbsearch2.getText().isEmpty() || tbsearch2.getText().length() ==0){
+                JDialog d = new JDialog(this, "ERROR!");
+                d.add(new JLabel("      Empty search!"));
+                d.setSize(200, 100);
+                d.setModal(true);
+                d.setLocationRelativeTo(null);
+                d.setVisible(true);
+                this.btnsearch2.setSelected(false);
+                return newqr;
+            }
+            newqr += " where ";
+            if(tocolname(cbsearch2.getSelectedItem().toString()).equals("name")) newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " like N'%" + tbsearch2.getText()+ "%' ";
+            else if(tocolname(cbsearch2.getSelectedItem().toString()).equals("package_start")) newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " like N'%" + tbsearch2.getText()+ "%' ";
+            else if(tocolname(cbsearch2.getSelectedItem().toString()).equals("package_end")) newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " like N'%" + tbsearch2.getText()+ "%' ";
+            else  
+                try{
+                    newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " = '" + String.valueOf(Integer.valueOf(tbsearch2.getText()))+ "' ";
+                }
+                catch (NumberFormatException ex){
+                    JDialog d = new JDialog(this, "ERROR!");
+                    d.add(new JLabel("      ID must be integer!"));
+                    d.setSize(200, 100);
+                    d.setModal(true);
+                    d.setLocationRelativeTo(null);
+                    d.setVisible(true);
                 }
         }
         return newqr;
@@ -176,12 +263,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         if(newqr.equals("selec")) newqr = "select citizen_id";
         newqr += " from covid_patient join treatment_place on covid_patient.treatment_place_id = treatment_place.treatment_place_id ";
         return newqr;
-    }
-    
-    void resettable2(){
-        
-    }
-    
+    }    
     private String tocolname(String name){
         if(name.equals("Citizen ID")) return "citizen_id";
         else if(name.equals("Full name")) return "full_name";
@@ -244,12 +326,12 @@ public class Manager_mainframe extends javax.swing.JFrame {
         panel4 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         sc2 = new javax.swing.JScrollPane();
-        tb3 = new javax.swing.JTable();
+        tb2 = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         btnadd2 = new javax.swing.JButton();
         btnupdate2 = new javax.swing.JButton();
         btnremove2 = new javax.swing.JButton();
-        btnback3 = new javax.swing.JButton();
+        btnback2 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         cbsearch2 = new javax.swing.JComboBox<>();
@@ -260,14 +342,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         cksort2 = new javax.swing.JRadioButton();
         btnsort2 = new javax.swing.JToggleButton();
         btnsearch2 = new javax.swing.JToggleButton();
-        jLabel15 = new javax.swing.JLabel();
         tbsearch2 = new javax.swing.JTextField();
-        cbid2 = new javax.swing.JCheckBox();
-        cbstart2 = new javax.swing.JCheckBox();
-        cbend2 = new javax.swing.JCheckBox();
-        cbprice2 = new javax.swing.JCheckBox();
-        cblimit2 = new javax.swing.JCheckBox();
-        cbname2 = new javax.swing.JCheckBox();
         panel6 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -353,6 +428,11 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btnadd1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnadd1.setForeground(new java.awt.Color(255, 255, 255));
         btnadd1.setText("Add");
+        btnadd1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnadd1MouseClicked(evt);
+            }
+        });
 
         btnupdate1.setBackground(new java.awt.Color(51, 51, 51));
         btnupdate1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -368,9 +448,9 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btnback1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnback1.setForeground(new java.awt.Color(255, 255, 255));
         btnback1.setText("Reset");
-        btnback1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnback1KeyPressed(evt);
+        btnback1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnback1MouseClicked(evt);
             }
         });
 
@@ -673,9 +753,9 @@ public class Manager_mainframe extends javax.swing.JFrame {
         sc2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         sc2.setForeground(new java.awt.Color(255, 255, 255));
 
-        tb3.setBackground(new java.awt.Color(255, 255, 255));
-        tb3.setForeground(new java.awt.Color(102, 102, 102));
-        tb3.setModel(new javax.swing.table.DefaultTableModel(
+        tb2.setBackground(new java.awt.Color(255, 255, 255));
+        tb2.setForeground(new java.awt.Color(102, 102, 102));
+        tb2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -713,10 +793,18 @@ public class Manager_mainframe extends javax.swing.JFrame {
             }
 
         ){public boolean isCellEditable(int row, int column){return false;}});
-        tb3.setAutoscrolls(false);
-        tb3.setCellSelectionEnabled(true);
-        tb3.setRequestFocusEnabled(false);
-        sc2.setViewportView(tb3);
+        tb2.setAutoscrolls(false);
+        tb2.setCellSelectionEnabled(true);
+        tb2.setRequestFocusEnabled(false);
+        tb2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb2MouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tb2MouseReleased(evt);
+            }
+        });
+        sc2.setViewportView(tb2);
 
         jLabel10.setBackground(new java.awt.Color(51, 51, 51));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
@@ -738,10 +826,15 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btnremove2.setForeground(new java.awt.Color(255, 255, 255));
         btnremove2.setText("Remove");
 
-        btnback3.setBackground(new java.awt.Color(51, 51, 51));
-        btnback3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnback3.setForeground(new java.awt.Color(255, 255, 255));
-        btnback3.setText("Reset");
+        btnback2.setBackground(new java.awt.Color(51, 51, 51));
+        btnback2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnback2.setForeground(new java.awt.Color(255, 255, 255));
+        btnback2.setText("Reset");
+        btnback2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnback2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -759,7 +852,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnadd2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(btnback3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnback2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10)))
                 .addGap(35, 35, 35))
@@ -770,7 +863,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(btnback3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnback2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel10)))
@@ -826,43 +919,24 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btnsort2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnsort2.setForeground(new java.awt.Color(255, 255, 255));
         btnsort2.setText("Sort");
+        btnsort2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnsort2MouseClicked(evt);
+            }
+        });
 
         btnsearch2.setBackground(new java.awt.Color(51, 51, 51));
         btnsearch2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnsearch2.setForeground(new java.awt.Color(255, 255, 255));
         btnsearch2.setText("Search");
-
-        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel15.setText("Show columns");
+        btnsearch2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnsearch2MouseClicked(evt);
+            }
+        });
 
         tbsearch2.setBackground(new java.awt.Color(255, 255, 255));
         tbsearch2.setForeground(new java.awt.Color(102, 102, 102));
-
-        cbid2.setBackground(new java.awt.Color(0, 255, 255));
-        cbid2.setForeground(new java.awt.Color(102, 102, 102));
-        cbid2.setText("Package ID");
-
-        cbstart2.setBackground(new java.awt.Color(0, 255, 255));
-        cbstart2.setForeground(new java.awt.Color(102, 102, 102));
-        cbstart2.setText("Start date");
-
-        cbend2.setBackground(new java.awt.Color(0, 255, 255));
-        cbend2.setForeground(new java.awt.Color(102, 102, 102));
-        cbend2.setText("End date");
-
-        cbprice2.setBackground(new java.awt.Color(0, 255, 255));
-        cbprice2.setForeground(new java.awt.Color(102, 102, 102));
-        cbprice2.setText("Price");
-
-        cblimit2.setBackground(new java.awt.Color(0, 255, 255));
-        cblimit2.setForeground(new java.awt.Color(102, 102, 102));
-        cblimit2.setText("Limit");
-
-        cbname2.setBackground(new java.awt.Color(0, 255, 255));
-        cbname2.setForeground(new java.awt.Color(102, 102, 102));
-        cbname2.setText("Package name");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -875,23 +949,12 @@ public class Manager_mainframe extends javax.swing.JFrame {
                         .addComponent(tbsearch2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(cbsort2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnsort2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnsortmore2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cblimit2)
-                                .addComponent(cbid2)
-                                .addComponent(cbname2))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cbstart2)
-                                .addComponent(cbend2)
-                                .addComponent(cbprice2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnsortmore2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel8Layout.createSequentialGroup()
                             .addComponent(jLabel13)
@@ -926,25 +989,6 @@ public class Manager_mainframe extends javax.swing.JFrame {
                     .addComponent(cbsort2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnsort2)
                     .addComponent(btnsortmore2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addComponent(cbstart2)
-                            .addGap(52, 52, 52))
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addComponent(cbend2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cbprice2)))
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(cblimit2)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addComponent(cbid2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cbname2)
-                            .addGap(26, 26, 26))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1020,7 +1064,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        tabbedpane.addTab("Covid patients", panel6);
+        tabbedpane.addTab("System statistics", panel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1085,7 +1129,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnsearch1MouseClicked
 
-    private void btnback1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnback1KeyPressed
+    private void btnback1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnback1MouseClicked
         if(btnback1.isEnabled()){
             this.queryOfRelated="";
             btnsearch1.setSelected(false);
@@ -1093,8 +1137,54 @@ public class Manager_mainframe extends javax.swing.JFrame {
             resettable1();
             resetbtn1();
         }
-    }//GEN-LAST:event_btnback1KeyPressed
+    }//GEN-LAST:event_btnback1MouseClicked
 
+    private void btnsearch2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsearch2MouseClicked
+       if(btnsearch2.isEnabled()){
+            resettable2();
+            resetbtn2();
+        }
+    }//GEN-LAST:event_btnsearch2MouseClicked
+
+    private void btnsort2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsort2MouseClicked
+        if(btnsort2.isEnabled()){
+            resettable2();
+            resetbtn2();
+        }
+    }//GEN-LAST:event_btnsort2MouseClicked
+
+    private void btnback2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnback2MouseClicked
+        if(btnback2.isEnabled()){
+            btnsearch2.setSelected(false);
+            btnsort2.setSelected(false);
+            resettable2();
+            resetbtn2();
+        }
+    }//GEN-LAST:event_btnback2MouseClicked
+
+    private void tb2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb2MouseClicked
+        resetbtn2();
+    }//GEN-LAST:event_tb2MouseClicked
+
+    private void tb2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb2MouseReleased
+        resetbtn2();
+    }//GEN-LAST:event_tb2MouseReleased
+
+    private void btnadd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnadd1MouseClicked
+        try {
+            Manager_addpatient cp = new Manager_addpatient();
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager_mainframe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnadd1MouseClicked
+    void resetbtn2(){
+        btnupdate2.setEnabled(false);
+        btnremove2.setEnabled(false);
+        if(tb2.getSelectedRow()!=-1){
+            btnupdate2.setEnabled(true);
+            btnremove2.setEnabled(true);
+        }
+    }
     void resetbtn1(){
         btnup1.setEnabled(false);
         btndown1.setEnabled(false);
@@ -1152,7 +1242,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
     private javax.swing.JButton btnadd1;
     private javax.swing.JButton btnadd2;
     private javax.swing.JButton btnback1;
-    private javax.swing.JButton btnback3;
+    private javax.swing.JButton btnback2;
     private javax.swing.JButton btncancel1;
     private javax.swing.JButton btndown1;
     private javax.swing.JButton btnremove1;
@@ -1171,27 +1261,20 @@ public class Manager_mainframe extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbaddress1;
     private javax.swing.JCheckBox cbcondition1;
     private javax.swing.JCheckBox cbdob1;
-    private javax.swing.JCheckBox cbend2;
     private javax.swing.JCheckBox cbid1;
-    private javax.swing.JCheckBox cbid2;
-    private javax.swing.JCheckBox cblimit2;
     private javax.swing.JCheckBox cbname1;
-    private javax.swing.JCheckBox cbname2;
     private javax.swing.JCheckBox cbplace1;
-    private javax.swing.JCheckBox cbprice2;
     private javax.swing.JCheckBox cbrelated1;
     private javax.swing.JComboBox<String> cbsearch1;
     private javax.swing.JComboBox<String> cbsearch2;
     private javax.swing.JComboBox<String> cbsort1;
     private javax.swing.JComboBox<String> cbsort2;
-    private javax.swing.JCheckBox cbstart2;
     private javax.swing.JRadioButton cksort1;
     private javax.swing.JRadioButton cksort2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1210,7 +1293,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
     private javax.swing.JScrollPane sc2;
     private javax.swing.JTabbedPane tabbedpane;
     private javax.swing.JTable tb1;
-    private javax.swing.JTable tb3;
+    private javax.swing.JTable tb2;
     private javax.swing.JTextField tbsearch1;
     private javax.swing.JTextField tbsearch2;
     // End of variables declaration//GEN-END:variables
