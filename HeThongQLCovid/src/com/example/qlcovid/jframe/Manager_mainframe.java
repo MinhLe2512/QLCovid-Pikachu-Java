@@ -56,7 +56,6 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btndown1.setEnabled(false);
         btncancel1.setEnabled(false);
         btnupdate1.setEnabled(false);
-        btnremove1.setEnabled(false);
         btnupdate2.setEnabled(false);
         btnremove2.setEnabled(false);
         
@@ -145,7 +144,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
     String getSort1(){
         if(btnsort1.isSelected()){
             String newqr = " order by ";
-            newqr += tocolname(cbsearch1.getSelectedItem().toString()) + " ";
+            newqr += tocolname(cbsort1.getSelectedItem().toString()) + " ";
             if(cksort1.isSelected()) newqr += "desc ";
             return newqr;
         }
@@ -154,7 +153,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
     String getSort2(){
         if(btnsort2.isSelected()){
             String newqr = " order by ";
-            newqr += tocolname(cbsearch2.getSelectedItem().toString()) + " ";
+            newqr += tocolname(cbsort2.getSelectedItem().toString()) + " ";
             if(cksort2.isSelected()) newqr += "desc ";
             return newqr;
         }
@@ -298,7 +297,6 @@ public class Manager_mainframe extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnadd1 = new javax.swing.JButton();
         btnupdate1 = new javax.swing.JButton();
-        btnremove1 = new javax.swing.JButton();
         btnback1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -438,11 +436,11 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btnupdate1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnupdate1.setForeground(new java.awt.Color(255, 255, 255));
         btnupdate1.setText("Update");
-
-        btnremove1.setBackground(new java.awt.Color(51, 51, 51));
-        btnremove1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnremove1.setForeground(new java.awt.Color(255, 255, 255));
-        btnremove1.setText("Remove");
+        btnupdate1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnupdate1MouseClicked(evt);
+            }
+        });
 
         btnback1.setBackground(new java.awt.Color(51, 51, 51));
         btnback1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -464,8 +462,6 @@ public class Manager_mainframe extends javax.swing.JFrame {
                     .addComponent(sc1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnremove1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnupdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnadd1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -488,11 +484,9 @@ public class Manager_mainframe extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sc1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnadd1, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                        .addComponent(btnupdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnremove1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnadd1, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(btnupdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -561,8 +555,9 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btncancel1.setBackground(new java.awt.Color(204, 204, 204));
         btncancel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btncancel1.setForeground(new java.awt.Color(102, 102, 102));
-        btncancel1.setText("X");
+        btncancel1.setText("x");
         btncancel1.setToolTipText("");
+        btncancel1.setMargin(new java.awt.Insets(2, 0, 2, 0));
         btncancel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btncancel1MouseClicked(evt);
@@ -815,6 +810,11 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btnadd2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnadd2.setForeground(new java.awt.Color(255, 255, 255));
         btnadd2.setText("Add");
+        btnadd2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnadd2MouseClicked(evt);
+            }
+        });
 
         btnupdate2.setBackground(new java.awt.Color(51, 51, 51));
         btnupdate2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1177,6 +1177,20 @@ public class Manager_mainframe extends javax.swing.JFrame {
             Logger.getLogger(Manager_mainframe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnadd1MouseClicked
+
+    private void btnupdate1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnupdate1MouseClicked
+        if(tb1.getSelectedRow()!= -1){
+            try {
+                Manager_updatepatient up = new Manager_updatepatient(tb1.getValueAt(tb1.getSelectedRow(), 1).toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(Manager_mainframe.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnupdate1MouseClicked
+
+    private void btnadd2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnadd2MouseClicked
+        Manager_addpackage ap = new Manager_addpackage();
+    }//GEN-LAST:event_btnadd2MouseClicked
     void resetbtn2(){
         btnupdate2.setEnabled(false);
         btnremove2.setEnabled(false);
@@ -1190,13 +1204,11 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btndown1.setEnabled(false);
         btncancel1.setEnabled(false);
         btnupdate1.setEnabled(false);
-        btnremove1.setEnabled(false);
         //for updown, remove, update
         if(tb1.getSelectedRow()!=-1){
             if(!"F0".equals(tb1.getValueAt(tb1.getSelectedRow(), 5).toString())) btnup1.setEnabled(true);
             if(!"F3".equals(tb1.getValueAt(tb1.getSelectedRow(), 5).toString())) btndown1.setEnabled(true);
             btnupdate1.setEnabled(true);
-            btnremove1.setEnabled(true);
         }
         if(!this.queryOfRelated.equals("")) btncancel1.setEnabled(true);
     }
@@ -1245,7 +1257,6 @@ public class Manager_mainframe extends javax.swing.JFrame {
     private javax.swing.JButton btnback2;
     private javax.swing.JButton btncancel1;
     private javax.swing.JButton btndown1;
-    private javax.swing.JButton btnremove1;
     private javax.swing.JButton btnremove2;
     private javax.swing.JToggleButton btnsearch1;
     private javax.swing.JToggleButton btnsearch2;

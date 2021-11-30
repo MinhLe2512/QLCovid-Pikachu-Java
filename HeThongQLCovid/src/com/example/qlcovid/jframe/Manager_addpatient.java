@@ -268,6 +268,9 @@ public class Manager_addpatient extends javax.swing.JPanel {
         jLabel17.setForeground(new java.awt.Color(102, 102, 102));
         jLabel17.setText("Treatment place");
 
+        d1add.setBackground(new java.awt.Color(51, 51, 51));
+        d1add.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        d1add.setForeground(new java.awt.Color(255, 255, 255));
         d1add.setText("Add patient");
         d1add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -398,7 +401,7 @@ public class Manager_addpatient extends javax.swing.JPanel {
     }//GEN-LAST:event_d1addMouseClicked
   
     private void close() throws SQLException{
-        JDialog d1 = new JDialog(d, "ERROR!");
+        JDialog d1 = new JDialog(d, "");
         d1.add(new JLabel("      "+"Add patient successfully!"));
         d1.setSize(200, 100);
         d1.setModal(true);
@@ -424,12 +427,12 @@ public class Manager_addpatient extends javax.swing.JPanel {
         String utplace = tplace[d1tplace.getSelectedIndex()][0].toString();
         String uaddress = d1as.getText()+ ward[d1ward.getSelectedIndex()][1].toString() + ", " + district[d1dis.getSelectedIndex()][1].toString()+ ", " +province[d1pro.getSelectedIndex()][1].toString();
         String query = "insert into ql_user \n values ("+ uID +", CONVERT(binary, HashBytes('MD5', '" + uPw +"'), 2), 'patient', NULL) \n";
-        db.update(query);
+        db.insert(query);
         query = "insert into covid_patient(citizen_id, full_name, date_of_birth, condition, treatment_place_id, related_to, citizen_address) \n" +
                         "values ("+ uID +", N'" + uName + "', '" + uYear + "-" +uMonth + "-" + uDay +"', '"+condition+"', " +  utplace+ ", "+ related+", N'"+ uaddress+"') ";
-        db.update(query);
+        db.insert(query);
         query = "update treatment_place set current_holding = current_holding+ 1 where treatment_place_id = " + utplace;
-        db.update(query);
+        db.insert(query);
     }
     private boolean check() throws SQLException {
         Object[][] data = this.db.getdata(" select * from covid_patient join treatment_place on covid_patient.treatment_place_id = treatment_place.treatment_place_id ");

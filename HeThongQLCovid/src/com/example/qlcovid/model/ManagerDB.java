@@ -108,8 +108,19 @@ public class ManagerDB {
             System.out.println("Connected DB.");
         }
         Statement stmt = conn.createStatement();
-        stmt.executeUpdate(query);
+        ResultSet rs = stmt.executeQuery(query);
         System.out.println("Updated");
+        conn.close();
+    }
+    public void insert(String query){
+        System.out.println(query);
+        conn = DriverManager.getConnection(dburl+";databaseName=" + databaseName + ";user=" + user +";password=" + password);
+        if (conn != null) {
+            System.out.println("Connected DB.");
+        }
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate(query);
+        System.out.println("Inserted");
         conn.close();
     }
 }
