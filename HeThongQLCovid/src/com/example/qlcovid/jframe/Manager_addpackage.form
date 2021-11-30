@@ -41,10 +41,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" pref="194" max="-2" attributes="0"/>
+                          <Component id="button" min="-2" pref="194" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="d1user" alignment="0" min="-2" pref="243" max="-2" attributes="0"/>
+                      <Component id="d1error" alignment="0" min="-2" pref="243" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -68,11 +68,11 @@
                                   <Component id="d1name" alignment="0" max="32767" attributes="0"/>
                                   <Component id="d1id" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="d1pro" min="-2" pref="112" max="-2" attributes="0"/>
+                                      <Component id="d2year" min="-2" pref="112" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="d1dis" min="-2" pref="102" max="-2" attributes="0"/>
+                                      <Component id="d2month" min="-2" pref="102" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="d1ward" max="32767" attributes="0"/>
+                                      <Component id="d2day" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -82,14 +82,14 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="d1relate" alignment="0" min="-2" pref="322" max="-2" attributes="0"/>
+                              <Component id="d1limit" alignment="0" min="-2" pref="322" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace pref="9" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="d1pw" alignment="0" min="-2" pref="322" max="-2" attributes="0"/>
+                              <Component id="d1price" alignment="0" min="-2" pref="322" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -120,22 +120,22 @@
                   <Component id="Address" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="d1pro" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="d1ward" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="d1dis" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="d2year" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="d2day" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="d2month" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="d1relate" min="-2" max="-2" attributes="0"/>
+                  <Component id="d1limit" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="d1pw" min="-2" max="-2" attributes="0"/>
+                  <Component id="d1price" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="d1user" min="-2" max="-2" attributes="0"/>
+                  <Component id="d1error" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" pref="41" max="-2" attributes="0"/>
+                  <Component id="button" min="-2" pref="41" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -258,7 +258,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="d1pro">
+        <Component class="javax.swing.JComboBox" name="d2year">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -290,7 +290,7 @@
             <Property name="text" type="java.lang.String" value="End date"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="d1dis">
+        <Component class="javax.swing.JComboBox" name="d2month">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -311,7 +311,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="d1ward">
+        <Component class="javax.swing.JComboBox" name="d2day">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -343,7 +343,7 @@
             <Property name="text" type="java.lang.String" value="Limit"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="d1relate">
+        <Component class="javax.swing.JTextField" name="d1limit">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -353,18 +353,21 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="button">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton1"/>
+            <Property name="text" type="java.lang.String" value="Add package"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonMouseClicked"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="d1user">
+        <Component class="javax.swing.JLabel" name="d1error">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value=" "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="d1pw">
+        <Component class="javax.swing.JTextField" name="d1price">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>

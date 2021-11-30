@@ -13,5 +13,6 @@ public class UtilsString {
     public String USER = "sa";
     public String PASSWORD = "123456";
     public String DATABASENAME = "QLCovid";
+    public int maxyear=2022, minyear = 2021;
 }
 

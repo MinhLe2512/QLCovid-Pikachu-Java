@@ -1,5 +1,18 @@
 package com.example.qlcovid.jframe;
 
+import com.example.qlcovid.model.ManagerDB;
+import com.example.qlcovid.string.UtilsString;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
@@ -14,10 +27,149 @@ public class Manager_addpackage extends javax.swing.JPanel {
     /**
      * Creates new form Manager_createpackage
      */
+    int minyear;
+    int maxyear;
+    JDialog d;
+    ManagerDB db;
+    DefaultComboBoxModel cbmodel_year1, cbmodel_month1, cbmodel_day1, cbmodel_year2, cbmodel_month2, cbmodel_day2;
     public Manager_addpackage() {
         initComponents();
+        UtilsString s = new UtilsString();
+        minyear = s.minyear;
+        maxyear = s.maxyear;
+        db = new ManagerDB();
+        initDate();
+        initDialog();
     }
-
+    void initDate(){
+        
+        initDate1();
+        initDate2();
+    }
+    void initDate1(){
+        int curyearindex = curyear() - minyear;
+        Vector<String> year = new Vector<String>();
+        for(int i = minyear; i<= maxyear; i++){
+            year.add(String.valueOf(i));
+        }
+        cbmodel_year1 = new DefaultComboBoxModel(year);
+        d1year.setModel(cbmodel_year1);
+        d1year.setSelectedIndex(curyearindex);
+        
+        Vector<String> month1 = new Vector<String>();
+        for(int i = 1; i<= 12; i++){
+            month1.add(String.valueOf(i));
+        }
+        cbmodel_month1 = new DefaultComboBoxModel(month1);
+        d1month.setModel(cbmodel_month1);
+        d1month.setSelectedIndex(curmonth()-1);
+        
+        Vector<String> day1 = new Vector<String>();
+        for(int i = 1; i<= maxday(Integer.valueOf(d1month.getSelectedItem().toString()) ,Integer.valueOf(d1year.getSelectedItem().toString())); i++){
+            day1.add(String.valueOf(i));
+        }
+        cbmodel_day1 = new DefaultComboBoxModel(day1);
+        d1day.setModel(cbmodel_day1);
+        d1day.setSelectedIndex(curday()-1);
+        
+        d1year.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                Vector<String> month1 = new Vector<String>();
+                for(int i = 1; i<= 12; i++){
+                    month1.add(String.valueOf(i));
+                }
+                cbmodel_month1 = new DefaultComboBoxModel(month1);
+                d1month.setModel(cbmodel_month1);
+            }
+        });
+        d1month.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                Vector<String> day1 = new Vector<String>();
+                for(int i = 1; i<= maxday(Integer.valueOf(d1month.getSelectedItem().toString()) ,Integer.valueOf(d1year.getSelectedItem().toString())); i++){
+                    day1.add(String.valueOf(i));
+                }
+                cbmodel_day1 = new DefaultComboBoxModel(day1);
+                d1day.setModel(cbmodel_day1);
+            }
+        });
+    }
+    
+    void initDate2(){
+        int curyearindex = curyear() - minyear;
+        Vector<String> year = new Vector<String>();
+        for(int i = minyear; i<= maxyear; i++){
+            year.add(String.valueOf(i));
+        }
+        cbmodel_year2 = new DefaultComboBoxModel(year);
+        d2year.setModel(cbmodel_year2);
+        d2year.setSelectedIndex(curyearindex);
+        
+        Vector<String> month1 = new Vector<String>();
+        for(int i = 1; i<= 12; i++){
+            month1.add(String.valueOf(i));
+        }
+        cbmodel_month2 = new DefaultComboBoxModel(month1);
+        d2month.setModel(cbmodel_month2);
+        d2month.setSelectedIndex(curmonth()-1);
+        
+        Vector<String> day1 = new Vector<String>();
+        for(int i = 1; i<= maxday(Integer.valueOf(d2month.getSelectedItem().toString()) ,Integer.valueOf(d2year.getSelectedItem().toString())); i++){
+            day1.add(String.valueOf(i));
+        }
+        cbmodel_day2 = new DefaultComboBoxModel(day1);
+        d2day.setModel(cbmodel_day2);
+        d2day.setSelectedIndex(curday()-1);
+        
+        d2year.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                Vector<String> month1 = new Vector<String>();
+                for(int i = 1; i<= 12; i++){
+                    month1.add(String.valueOf(i));
+                }
+                cbmodel_month2 = new DefaultComboBoxModel(month1);
+                d2month.setModel(cbmodel_month2);
+            }
+        });
+        d2month.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                Vector<String> day1 = new Vector<String>();
+                for(int i = 1; i<= maxday(Integer.valueOf(d2month.getSelectedItem().toString()) ,Integer.valueOf(d2year.getSelectedItem().toString())); i++){
+                    day1.add(String.valueOf(i));
+                }
+                cbmodel_day2 = new DefaultComboBoxModel(day1);
+                d2day.setModel(cbmodel_day2);
+            }
+        });
+    }
+    int curyear(){
+        return Calendar.getInstance().get(Calendar.YEAR);
+    }
+    int curmonth(){
+        return Calendar.getInstance().get(Calendar.MONTH)+1;
+    }
+    int curday(){
+        return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    }
+    int maxday(int month, int year){
+        int maxday = 31;
+        if(month == 2){
+            if(year%4 ==0 && year%100!=0)  maxday = 29;
+            else maxday = 28;
+        }
+        else if(month == 4 || month == 6 || month == 9 || month == 11)maxday = 30;
+        return maxday;
+    }
+    
+    void initDialog(){
+        d = new JDialog();
+        d.setSize(360, 470);
+        d.add(this);
+        d.setResizable(false);
+        d.setModal(true);
+        d.setLocationRelativeTo(null);
+        d.setTitle("Add package");
+        d.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,15 +188,15 @@ public class Manager_addpackage extends javax.swing.JPanel {
         d1year = new javax.swing.JComboBox<>();
         d1day = new javax.swing.JComboBox<>();
         d1month = new javax.swing.JComboBox<>();
-        d1pro = new javax.swing.JComboBox<>();
+        d2year = new javax.swing.JComboBox<>();
         Address = new javax.swing.JLabel();
-        d1dis = new javax.swing.JComboBox<>();
-        d1ward = new javax.swing.JComboBox<>();
+        d2month = new javax.swing.JComboBox<>();
+        d2day = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
-        d1relate = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        d1user = new javax.swing.JLabel();
-        d1pw = new javax.swing.JTextField();
+        d1limit = new javax.swing.JTextField();
+        button = new javax.swing.JButton();
+        d1error = new javax.swing.JLabel();
+        d1price = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
 
         jPanel3.setBackground(new java.awt.Color(0, 255, 255));
@@ -79,36 +231,41 @@ public class Manager_addpackage extends javax.swing.JPanel {
         d1month.setForeground(new java.awt.Color(102, 102, 102));
         d1month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        d1pro.setBackground(java.awt.Color.white);
-        d1pro.setForeground(new java.awt.Color(102, 102, 102));
-        d1pro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        d2year.setBackground(java.awt.Color.white);
+        d2year.setForeground(new java.awt.Color(102, 102, 102));
+        d2year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         Address.setBackground(java.awt.Color.white);
         Address.setForeground(new java.awt.Color(102, 102, 102));
         Address.setText("End date");
 
-        d1dis.setBackground(java.awt.Color.white);
-        d1dis.setForeground(new java.awt.Color(102, 102, 102));
-        d1dis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        d2month.setBackground(java.awt.Color.white);
+        d2month.setForeground(new java.awt.Color(102, 102, 102));
+        d2month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        d1ward.setBackground(java.awt.Color.white);
-        d1ward.setForeground(new java.awt.Color(102, 102, 102));
-        d1ward.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        d2day.setBackground(java.awt.Color.white);
+        d2day.setForeground(new java.awt.Color(102, 102, 102));
+        d2day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel14.setBackground(java.awt.Color.white);
         jLabel14.setForeground(new java.awt.Color(102, 102, 102));
         jLabel14.setText("Limit");
 
-        d1relate.setBackground(java.awt.Color.white);
-        d1relate.setForeground(new java.awt.Color(102, 102, 102));
+        d1limit.setBackground(java.awt.Color.white);
+        d1limit.setForeground(new java.awt.Color(102, 102, 102));
 
-        jButton1.setText("jButton1");
+        button.setText("Add package");
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonMouseClicked(evt);
+            }
+        });
 
-        d1user.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        d1user.setText(" ");
+        d1error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        d1error.setText(" ");
 
-        d1pw.setBackground(java.awt.Color.white);
-        d1pw.setForeground(new java.awt.Color(102, 102, 102));
+        d1price.setBackground(java.awt.Color.white);
+        d1price.setForeground(new java.awt.Color(102, 102, 102));
 
         jLabel18.setBackground(java.awt.Color.white);
         jLabel18.setForeground(new java.awt.Color(102, 102, 102));
@@ -123,9 +280,9 @@ public class Manager_addpackage extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21))
-                    .addComponent(d1user, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(d1error, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,22 +303,22 @@ public class Manager_addpackage extends javax.swing.JPanel {
                                 .addComponent(d1name, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(d1id, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                    .addComponent(d1pro, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(d2year, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(d1dis, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(d2month, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(d1ward, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(d2day, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
-                            .addComponent(d1relate, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(d1limit, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap(9, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
-                            .addComponent(d1pw, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(d1price, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -186,21 +343,21 @@ public class Manager_addpackage extends javax.swing.JPanel {
                 .addComponent(Address)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(d1pro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(d1ward, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(d1dis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(d2year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(d2day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(d2month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(d1relate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(d1limit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(d1pw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(d1price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(d1user)
+                .addComponent(d1error)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(button, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -216,20 +373,80 @@ public class Manager_addpackage extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseClicked
+        try {
+            if(check() == true){
+                close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager_addpackage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonMouseClicked
+
+    private boolean check() throws SQLException{
+        //check id
+        if(d1id.getText().isEmpty()||d1id.getText().length()==0) {d1error.setText("Empty package ID!"); return false;}
+        Object[][] obj = db.getdata("select package_id from package");
+        for(int i =0;i <obj.length; i++){
+            if(d1id.getText().equals(obj[i][0])){d1error.setText("Existed package ID"); return false;}
+        }
+        //check date
+        int startdate = Integer.parseInt(d1day.getSelectedItem().toString()) + Integer.parseInt(d1month.getSelectedItem().toString())*31 + (Integer.parseInt(d1year.getSelectedItem().toString())-2000) *366;
+        int enddate = Integer.parseInt(d2day.getSelectedItem().toString()) + Integer.parseInt(d2month.getSelectedItem().toString())*31 + (Integer.parseInt(d2year.getSelectedItem().toString())-2000) *366;
+        if(startdate>enddate){d1error.setText("Invalid date: End date > Start date"); return false;}
+        
+        //check limit, price
+        if(d1limit.getText().isEmpty() || d1limit.getText().length()==0){
+            d1error.setText("Empty limit!"); return false;
+        }
+        else try{
+                int limit = Integer.parseInt(d1limit.getText());
+            }
+            catch (NumberFormatException ex){
+                d1error.setText("Limit must be integer"); return false;
+            }
+        
+        //check limit, price
+        if(d1price.getText().isEmpty() || d1limit.getText().length()==0) d1price.setText("0");
+        try{
+            int price = Integer.parseInt(d1price.getText());
+        }
+        catch (NumberFormatException ex){
+            d1error.setText("Price must be integer"); return false;
+        }
+        d1error.setText("Successfully!");
+        return true;
+        //
+    }
+    void close(){
+        String startdate = d1year.getSelectedItem().toString() + "-"  + d1month.getSelectedItem().toString() +"-" + d1day.getSelectedItem().toString();
+        String enddate = d2year.getSelectedItem().toString() + "-"  + d2month.getSelectedItem().toString() +"-" + d2day.getSelectedItem().toString();
+        String newqr = "insert into package(package_id, name, limit, package_start, package_end, price) values( ";
+        newqr += d1id.getText() + " , '" + d1name.getText() +"' , " + d1limit.getText() + " , '" +startdate +"', '" + enddate +"',"+ d1price.getText() + ")";
+        db.insert(newqr);
+        
+        d.setVisible(false);
+        JDialog d1 = new JDialog(d, "");
+        d1.add(new JLabel("      "+"Add package successfully!"));
+        d1.setSize(200, 100);
+        d1.setModal(true);
+        d1.setLocationRelativeTo(null);
+        d1.setVisible(true);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Address;
+    private javax.swing.JButton button;
     private javax.swing.JComboBox<String> d1day;
-    private javax.swing.JComboBox<String> d1dis;
+    private javax.swing.JLabel d1error;
     private javax.swing.JTextField d1id;
+    private javax.swing.JTextField d1limit;
     private javax.swing.JComboBox<String> d1month;
     private javax.swing.JTextField d1name;
-    private javax.swing.JComboBox<String> d1pro;
-    private javax.swing.JTextField d1pw;
-    private javax.swing.JTextField d1relate;
-    private javax.swing.JLabel d1user;
-    private javax.swing.JComboBox<String> d1ward;
+    private javax.swing.JTextField d1price;
     private javax.swing.JComboBox<String> d1year;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> d2day;
+    private javax.swing.JComboBox<String> d2month;
+    private javax.swing.JComboBox<String> d2year;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel3;
