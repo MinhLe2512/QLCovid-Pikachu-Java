@@ -825,6 +825,11 @@ public class Manager_mainframe extends javax.swing.JFrame {
         btnremove2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnremove2.setForeground(new java.awt.Color(255, 255, 255));
         btnremove2.setText("Remove");
+        btnremove2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnremove2MouseClicked(evt);
+            }
+        });
 
         btnback2.setBackground(new java.awt.Color(51, 51, 51));
         btnback2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1173,6 +1178,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
     private void btnadd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnadd1MouseClicked
         try {
             Manager_addpatient cp = new Manager_addpatient();
+            resettable1();
         } catch (SQLException ex) {
             Logger.getLogger(Manager_mainframe.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1182,6 +1188,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         if(tb1.getSelectedRow()!= -1){
             try {
                 Manager_updatepatient up = new Manager_updatepatient(tb1.getValueAt(tb1.getSelectedRow(), 1).toString());
+                resettable1();
             } catch (SQLException ex) {
                 Logger.getLogger(Manager_mainframe.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1190,7 +1197,24 @@ public class Manager_mainframe extends javax.swing.JFrame {
 
     private void btnadd2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnadd2MouseClicked
         Manager_addpackage ap = new Manager_addpackage();
+        resettable2();
     }//GEN-LAST:event_btnadd2MouseClicked
+
+    private void btnremove2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnremove2MouseClicked
+        if(tb2.getSelectedRow()!= -1){
+            String pid = tb2.getValueAt(tb2.getSelectedRow(), 1).toString();
+            String newqr = "delete from package where package_id = '" + pid +"'";
+            db.insert(newqr);
+            
+            JDialog d = new JDialog(this, "");
+            d.add(new JLabel("    Package removed!"));
+            d.setSize(200, 100);
+            d.setModal(true);
+            d.setLocationRelativeTo(null);
+            d.setVisible(true);
+            resettable2();
+        }
+    }//GEN-LAST:event_btnremove2MouseClicked
     void resetbtn2(){
         btnupdate2.setEnabled(false);
         btnremove2.setEnabled(false);
@@ -1198,6 +1222,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
             btnupdate2.setEnabled(true);
             btnremove2.setEnabled(true);
         }
+        
     }
     void resetbtn1(){
         btnup1.setEnabled(false);

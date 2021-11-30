@@ -36,13 +36,13 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     void initCondition() throws SQLException{
         conditionnow = db.get("Select condition from covid_patient where citizen_id = " + id);
         Vector<String> vt = new Vector<String>();
-        vt.add("F0"); vt.add("F1"); vt.add("F2"); vt.add("F3");
+        vt.add("F0"); vt.add("F1"); vt.add("F2"); vt.add("F3"); vt.add("null");
         cbmodelconditon = new DefaultComboBoxModel(vt);
         d3con.setModel(cbmodelconditon);
         if(conditionnow.equals("F0")) d3con.setSelectedIndex(0);
         else if(conditionnow.equals("F1")) d3con.setSelectedIndex(1);
         else if(conditionnow.equals("F2")) d3con.setSelectedIndex(2);
-        else if(conditionnow.equals("F2")) d3con.setSelectedIndex(3);
+        else if(conditionnow.equals("F3")) d3con.setSelectedIndex(3);
     }
     void initTreatment() throws SQLException{
         treatmentid = db.get("Select treatment_place_id from covid_patient where citizen_id = " + id);
@@ -192,7 +192,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
             newqr += "update treatment_place set current_holding = current_holding - 1 where treatment_place_id = " +treatmentid;
             db.update(newqr);
         }
-        String newcondition = d3con.getSelectedItem().toString()
+        String newcondition = d3con.getSelectedItem().toString();
         if(!newcondition.equals(conditionnow)){
             if(newcondition == "F0"){
                 setF0(id);
