@@ -195,7 +195,7 @@ public class LoginFrame extends JFrame {
 	
 	public ResultSet checkLogin() {
 		String usr = user.getText();
-		String pas = pass.getText();
+		String pas = Hashing.getHash(pass.getText());
 		UtilsString dtb = new UtilsString();
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
