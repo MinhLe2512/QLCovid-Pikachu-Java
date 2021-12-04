@@ -5,8 +5,13 @@
 package com.example.qlcovid.jframe;
 
 import com.example.qlcovid.model.ManagerDB;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -25,7 +30,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     int tplaceindexincombobox;
     String treatmentid, conditionnow;
     Object[][] treatment, condition;
-    String id, oldcondition;
+    String id, oldcondition, oldrelated;
     public Manager_updatepatient(String i) throws SQLException{
         initComponents();
         id = i;
@@ -36,14 +41,37 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     void initCondition() throws SQLException{
         conditionnow = db.get("Select condition from covid_patient where citizen_id = " + id);
         Vector<String> vt = new Vector<String>();
-        vt.add("F0"); vt.add("F1"); vt.add("F2"); vt.add("F3"); vt.add("null");
+        if(conditionnow.equals("F0")){
+            vt.add("No change");
+            vt.add("Set related to");
+            vt.add("Cured");
+        }
+        if(conditionnow.equals("F1")||conditionnow.equals("F2")||conditionnow.equals("F3")){
+            vt.add("No change");
+            vt.add("Change related");
+            vt.add("Remove related");
+        }
         cbmodelconditon = new DefaultComboBoxModel(vt);
         d3con.setModel(cbmodelconditon);
-        if(conditionnow.equals("F0")) d3con.setSelectedIndex(0);
-        else if(conditionnow.equals("F1")) d3con.setSelectedIndex(1);
-        else if(conditionnow.equals("F2")) d3con.setSelectedIndex(2);
-        else if(conditionnow.equals("F3")) d3con.setSelectedIndex(3);
+        d3con.setSelectedIndex(0);
+        String relatedId = db.get("Select related_to from covid_patient where citizen_id = " + id);
+        d2related.setText("");
+        d2related.setEditable(false);
         oldcondition = conditionnow;
+        oldrelated = relatedId;
+        
+        d3con.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                if(d3con.getSelectedIndex()== 1){
+                    d2related.setText(oldrelated);
+                    d2related.setEditable(true);
+                }
+                else {
+                    d2related.setText("");
+                    d2related.setEditable(false);
+                }
+            }
+        });
     }
     void initTreatment() throws SQLException{
         treatmentid = db.get("Select treatment_place_id from covid_patient where citizen_id = " + id);
@@ -59,7 +87,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     }
     void initDialog() throws SQLException{
         String name = db.get("Select full_name from covid_patient where citizen_id = " + id);
-        d2id.setText(name);
+        d2id.setText(id);
         d2id.setEditable(false);
         d = new JDialog();
         d.setSize(360, 220);
@@ -87,6 +115,8 @@ public class Manager_updatepatient extends javax.swing.JPanel {
         d3place = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
         d2update = new javax.swing.JButton();
+        d2related = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
 
         jPanel3.setBackground(new java.awt.Color(0, 255, 255));
 
@@ -103,7 +133,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
 
         jLabel14.setBackground(java.awt.Color.white);
         jLabel14.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel14.setText("Condition");
+        jLabel14.setText("Change case");
 
         d3place.setBackground(java.awt.Color.white);
         d3place.setForeground(new java.awt.Color(102, 102, 102));
@@ -123,6 +153,13 @@ public class Manager_updatepatient extends javax.swing.JPanel {
             }
         });
 
+        d2related.setBackground(java.awt.Color.white);
+        d2related.setForeground(new java.awt.Color(102, 102, 102));
+
+        jLabel15.setBackground(java.awt.Color.white);
+        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel15.setText("Related Id");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -131,46 +168,50 @@ public class Manager_updatepatient extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(textlabel)
-                        .addGap(0, 284, Short.MAX_VALUE))
+                        .addComponent(textlabel))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel17)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(d3place, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(d3con, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(d2id))))
+                        .addComponent(jLabel17))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel14))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel15)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(d3place, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(d2id)
+                    .addComponent(d2related)
+                    .addComponent(d3con, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(82, 82, 82)
                 .addComponent(d2update, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(textlabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(d2id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textlabel)
+                    .addComponent(d2id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
+                    .addComponent(d3place, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(d3con, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(d3place, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(d2related, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
                 .addGap(18, 18, 18)
                 .addComponent(d2update, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -188,33 +229,80 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     private void d2updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_d2updateMouseClicked
         String newtreatmentid = treatment[d3place.getSelectedIndex()][0].toString();
         if(!newtreatmentid.equals(treatmentid)){
-            String newqr = "update covid_patient set treatment_place_id = " + newtreatmentid +" where citizen_id = " +id;
-            newqr += "update treatment_place set current_holding = current_holding + 1 where treatment_place_id = " +newtreatmentid;
-            newqr += "update treatment_place set current_holding = current_holding - 1 where treatment_place_id = " +treatmentid;
-            db.update(newqr);
+            
+            try {
+                String newqr = " update covid_patient set treatment_place_id = " + newtreatmentid +" where citizen_id = " +id;
+                newqr += " update treatment_place set current_holding = current_holding + 1 where treatment_place_id = " +newtreatmentid;
+                newqr += " update treatment_place set current_holding = current_holding - 1 where treatment_place_id = " +treatmentid;
+                db.insert(newqr);
+            } catch (SQLException ex) {
+                Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         String newcondition = d3con.getSelectedItem().toString();
-        if(!newcondition.equals(conditionnow)){
-            if("F0".equals(newcondition)){
-                setF0(id);
-            }
-            else if("F1".equals(newcondition)){
-                setF1(id);
-            }
-            else if("F2".equals(newcondition)){
-                setF2(id);
-            }
-            else if("F3".equals(newcondition)){
-                setF3(id);
-            }
-            else if("null".equals(newcondition)){
-                if(oldcondition.equals("F0")){
-                    String newqr = "INSERT INTO patient_history(patient_id, patient_action, patient_date)\n VALUES (" + id + ", 'cured', CONVERT(char(10), GetDate(),126));";
-                    db.insert(newqr);
-                    newqr = "Update covid_patient set condition = null where citizen_id = " + id;
-                    db.update(newqr);
+        if(d3con.getSelectedIndex()!=0){
+            if("F0".equals(oldcondition)){
+                if(d3con.getSelectedIndex()==1){//change related : change all people related to
+                    if(d2related.getText().isEmpty() || d2related.getText().length()==0){
+                        setF0(id);
+                    }
+                    else{
+                        String relatedid = d2related.getText();
+                        String relatedcondition = db.get("select condition from covid_patient where citizen_id = " + relatedid);
+                        if(relatedcondition.equals("F0")){
+                            setF1(id);
+                        }
+                        else if(relatedcondition.equals("F1")){
+                            setF2(id);
+                        }
+                        else if(relatedcondition.equals("F2")){
+                            setF3(id);
+                        }
+                        else{
+                            d2related.setText("Unexisted ID!");
+                        }
+                    }
                 }
-                else setnull(id);
+                if(d3con.getSelectedIndex()==2){//cured
+                    String newqr = " update treatment_place set current_holding = current_holding - 1 where treatment_place_id = " +treatmentid;
+                    newqr += " update covid_patient set condition = null, treatment_place_id = null where citizen_id = " +id;
+                    newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+id+"', 'cured', GETDATE()) ";
+                    try {
+                        db.insert(newqr);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            else{
+                if(d3con.getSelectedIndex()==1){//change related : change all people related to
+                    if(d2related.getText().isEmpty() || d2related.getText().length()==0){
+                        setF0(id);
+                    }
+                    else{
+                        String relatedid = d2related.getText();
+                        String relatedcondition = db.get("select condition from covid_patient where citizen_id = " + relatedid);
+                        if(relatedcondition.equals("F0")){
+                            setF1(id);
+                        }
+                        else if(relatedcondition.equals("F1")){
+                            setF2(id);
+                        }
+                        else if(relatedcondition.equals("F2")){
+                            setF3(id);
+                        }
+                        else{
+                            d2related.setText("Unexisted ID!");
+                        }
+                    }
+                }
+                if(d3con.getSelectedIndex()==2){try {
+                    //remove related : remove all people related to
+                    removepatient(id);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         }
         System.out.println(newcondition);
@@ -226,63 +314,83 @@ public class Manager_updatepatient extends javax.swing.JPanel {
         d1.setVisible(true);
         d.setVisible(false);
     }//GEN-LAST:event_d2updateMouseClicked
-    void setF0(String x){
-        String newqr = "Update covid_patient set condition = 'F0' where citizen_id = " + x;
-        db.update(newqr);
-        newqr = "INSERT INTO patient_history(patient_id, patient_action, patient_date)\n" +
-                    "VALUES (" + x + ", 'tof0', CONVERT(char(10), GetDate(),126));";
-        db.insert(newqr);
-        newqr = "select citizen_id, condition from covid_patient where related_to = "+ x;
-        Object[][] obj = db.getdata(newqr);
-        for(int i = 0; i< obj.length; i++){
-            if(!"F0".equals(obj[i][1].toString())) setF1(obj[i][0].toString());
+    
+    void removepatient(String thisid) throws SQLException{
+        String tid = db.get("select treatment_place_id from covid_patient where citizen_id = " + thisid);
+        String newqr = " update treatment_place set current_holding = current_holding - 1 where treatment_place_id = " +tid;
+        newqr += " update covid_patient set condition = null, treatment_place_id = null where citizen_id = " +thisid;
+        newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'removerelated', GETDATE()) ";
+        try {
+            db.insert(newqr);
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object[][] ob = db.getdata("select citizen_id from covid_patient where related_to = " + thisid);
+        for(int i=0; i<ob.length; i++){
+            removepatient(ob[i][0].toString());
         }
     }
-    void setF1(String x){
-        String newqr = "Update covid_patient set condition = 'F1' where citizen_id = " + x;
-        db.update(newqr);
-        newqr = "select citizen_id, condition from covid_patient where related_to = "+ x;
-        Object[][] obj = db.getdata(newqr);
-        for(int i = 0; i< obj.length; i++){
-            if(!"F0".equals(obj[i][1].toString()) || !"F1".equals(obj[i][1].toString())) setF2(obj[i][0].toString());
+    void setF0(String thisid){
+        String newqr = " update covid_patient set condition = 'F0', where citizen_id = " + thisid;
+        newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF0', GETDATE()) ";
+        try {
+            db.insert(newqr);
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object[][] ob = db.getdata("select citizen_id from covid_patient where related_to = " + thisid);
+        for(int i=0; i<ob.length; i++){
+            setF1(ob[i][0].toString());
         }
     }
-    void setF2(String x){
-        String newqr = "Update covid_patient set condition = 'F2' where citizen_id = " + x;
-        db.update(newqr);
-        newqr = "select citizen_id, condition from covid_patient where related_to = "+ x;
-        Object[][] obj = db.getdata(newqr);
-        for(int i = 0; i< obj.length; i++){
-            if(!"F0".equals(obj[i][1].toString()) || !"F1".equals(obj[i][1].toString())|| !"F2".equals(obj[i][1].toString())) setF3(obj[i][0].toString());
+    void setF1(String thisid){
+        String newqr = " update covid_patient set condition = 'F1', where citizen_id = " + thisid;
+        newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF1', GETDATE()) ";
+        try {
+            db.insert(newqr);
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object[][] ob = db.getdata("select citizen_id from covid_patient where related_to = " + thisid);
+        for(int i=0; i<ob.length; i++){
+            setF2(ob[i][0].toString());
         }
     }
-    void setF3(String x){
-        String newqr = "Update covid_patient set condition = 'F3' where citizen_id = " + x;
-        db.update(newqr);
-        newqr = "select citizen_id, condition from covid_patient where related_to = "+ x;
-        Object[][] obj = db.getdata(newqr);
-        for(int i = 0; i< obj.length; i++){
-            if(!"F0".equals(obj[i][1].toString()) || !"F1".equals(obj[i][1].toString())|| !"F2".equals(obj[i][1].toString())|| !"F3".equals(obj[i][1].toString())){
-                setnull(obj[i][0].toString());
-            }
+    void setF2(String thisid){
+        String newqr = " update covid_patient set condition = 'F2', where citizen_id = " + thisid;
+        newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF2', GETDATE()) ";
+        try {
+            db.insert(newqr);
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object[][] ob = db.getdata("select citizen_id from covid_patient where related_to = " + thisid);
+        for(int i=0; i<ob.length; i++){
+            setF3(ob[i][0].toString());
         }
     }
-    void setnull(String x){
-        String newqr = "Update covid_patient set condition = null where citizen_id = " + x;
-        db.update(newqr);
-        newqr = "select citizen_id, condition from covid_patient where related_to = "+ x;
-        Object[][] obj = db.getdata(newqr);
-        for(int i = 0; i< obj.length; i++){
-            if(!"F0".equals(obj[i][1].toString()) || !"F1".equals(obj[i][1].toString())|| !"F2".equals(obj[i][1].toString())|| !"F3".equals(obj[i][1].toString()))setnull(obj[i][0].toString());
+    void setF3(String thisid){
+        String newqr = " update covid_patient set condition = 'F3', where citizen_id = " + thisid;
+        newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF3', GETDATE()) ";
+        try {
+            db.insert(newqr);
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object[][] ob = db.getdata("select citizen_id from covid_patient where related_to = " + thisid);
+        for(int i=0; i<ob.length; i++){
+            removepatient(ob[i][0].toString());
         }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField d2id;
+    private javax.swing.JTextField d2related;
     private javax.swing.JButton d2update;
     private javax.swing.JComboBox<String> d3con;
     private javax.swing.JComboBox<String> d3place;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel textlabel;

@@ -434,6 +434,8 @@ public class Manager_addpatient extends javax.swing.JPanel {
         db.insert(query);
         query = "update treatment_place set current_holding = current_holding+ 1 where treatment_place_id = " + utplace;
         db.insert(query);
+        query = "INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+ uID + "', 'new', GETDATE())";
+        db.insert(query);
     }
     private boolean check() throws SQLException {
         Object[][] data = this.db.getdata(" select * from covid_patient join treatment_place on covid_patient.treatment_place_id = treatment_place.treatment_place_id ");
