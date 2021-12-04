@@ -8,7 +8,6 @@ import com.example.qlcovid.model.ManagerDB;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +23,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     /**
      * Creates new form Manager_updatepatient
      */
+    String ManagerID;
     ManagerDB db = new ManagerDB();
     JDialog d;
     DefaultComboBoxModel cbmodeltplace, cbmodelconditon;
@@ -31,7 +31,8 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     String treatmentid, conditionnow;
     Object[][] treatment, condition;
     String id, oldcondition, oldrelated;
-    public Manager_updatepatient(String i) throws SQLException{
+    public Manager_updatepatient(String i, String mgID) throws SQLException{
+        ManagerID = mgID;
         initComponents();
         id = i;
         initTreatment();
@@ -281,6 +282,12 @@ public class Manager_updatepatient extends javax.swing.JPanel {
                     }
                     else{
                         String relatedid = d2related.getText();
+                        String newqr = " update covid_patient set related_to = '"+ relatedid +"' where citizen_id = " + id;
+                        try {
+                            db.insert(newqr);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         String relatedcondition = db.get("select condition from covid_patient where citizen_id = " + relatedid);
                         if(relatedcondition.equals("F0")){
                             setF1(id);
@@ -330,8 +337,8 @@ public class Manager_updatepatient extends javax.swing.JPanel {
             removepatient(ob[i][0].toString());
         }
     }
-    void setF0(String thisid){
-        String newqr = " update covid_patient set condition = 'F0', where citizen_id = " + thisid;
+    void setF0(String thisid) throws SQLException{
+        String newqr = " update covid_patient set condition = 'F0', related_to = null where citizen_id = " + thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF0', GETDATE()) ";
         try {
             db.insert(newqr);
@@ -343,8 +350,8 @@ public class Manager_updatepatient extends javax.swing.JPanel {
             setF1(ob[i][0].toString());
         }
     }
-    void setF1(String thisid){
-        String newqr = " update covid_patient set condition = 'F1', where citizen_id = " + thisid;
+    void setF1(String thisid) throws SQLException{
+        String newqr = " update covid_patient set condition = 'F1' where citizen_id = " + thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF1', GETDATE()) ";
         try {
             db.insert(newqr);
@@ -356,8 +363,8 @@ public class Manager_updatepatient extends javax.swing.JPanel {
             setF2(ob[i][0].toString());
         }
     }
-    void setF2(String thisid){
-        String newqr = " update covid_patient set condition = 'F2', where citizen_id = " + thisid;
+    void setF2(String thisid) throws SQLException{
+        String newqr = " update covid_patient set condition = 'F2' where citizen_id = " + thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF2', GETDATE()) ";
         try {
             db.insert(newqr);
@@ -369,8 +376,8 @@ public class Manager_updatepatient extends javax.swing.JPanel {
             setF3(ob[i][0].toString());
         }
     }
-    void setF3(String thisid){
-        String newqr = " update covid_patient set condition = 'F3', where citizen_id = " + thisid;
+    void setF3(String thisid) throws SQLException{
+        String newqr = " update covid_patient set condition = 'F3' where citizen_id = " + thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF3', GETDATE()) ";
         try {
             db.insert(newqr);

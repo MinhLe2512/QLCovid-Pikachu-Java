@@ -5,13 +5,16 @@
 package com.example.qlcovid.jframe;
 
 import com.example.qlcovid.model.ManagerDB;
+import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,13 +22,15 @@ import javax.swing.table.DefaultTableModel;
  * @author nhonnhon
  */
 public class Manager_mainframe extends javax.swing.JFrame {
+    String ManagerID;
     Vector<String> Column1 = new Vector<String>();
     String [] columnNames2 = {"Package ID", "Name", "Limit", "Start date", "End date", "Price"};
     DefaultTableModel tbmodel1, tbmodel2;
     DefaultComboBoxModel cbmodel1search, cbmodel1sort, cbmodel2search, cbmodel2sort;
     ManagerDB db = new ManagerDB();
     String queryOfRelated;
-    public Manager_mainframe() {
+    public Manager_mainframe(String mgID) {
+        ManagerID = mgID;
         initComponents();
         this.setLocationRelativeTo(null);
         initUI();
@@ -1501,7 +1506,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                 d.setVisible(true);
                 return;
             }
-            Manager_addpatient cp = new Manager_addpatient();
+            Manager_addpatient cp = new Manager_addpatient(ManagerID);
             resettable1();
             initStat();
         } catch (SQLException ex) {
@@ -1521,7 +1526,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                     d.setVisible(true);
                     return;
                 }
-                Manager_updatepatient up = new Manager_updatepatient(tb1.getValueAt(tb1.getSelectedRow(), 1).toString());
+                Manager_updatepatient up = new Manager_updatepatient(tb1.getValueAt(tb1.getSelectedRow(), 1).toString(), ManagerID);
                 resettable1();
                 initStat();
             } catch (SQLException ex) {
@@ -1616,7 +1621,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Manager_mainframe().setVisible(true);
+                
             }
         });
     }

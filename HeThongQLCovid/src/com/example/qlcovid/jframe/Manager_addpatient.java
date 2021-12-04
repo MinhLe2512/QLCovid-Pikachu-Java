@@ -6,8 +6,6 @@ package com.example.qlcovid.jframe;
 
 import com.example.qlcovid.model.Hashing;
 import com.example.qlcovid.model.ManagerDB;
-import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -24,12 +22,14 @@ import javax.swing.JLabel;
  * @author nhonnhon
  */
 public class Manager_addpatient extends javax.swing.JPanel {
+    String ManagerID;
     public Manager_mainframe mf;
     JDialog d;
     ManagerDB db = new ManagerDB();
     DefaultComboBoxModel cbmodel_year, cbmodel_month, cbmodel_day, cbmodel_province, cbmodel_district, cbmodel_ward, cbmodel_tplace;
     Object[][] province, district, ward, tplace;
-    public Manager_addpatient() throws SQLException {
+    public Manager_addpatient(String mgID) throws SQLException {
+        ManagerID = mgID;
         initComponents();
         initTreatmentplace();
         initAddress();
@@ -180,6 +180,10 @@ public class Manager_addpatient extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        valpannel = new javax.swing.JPanel();
+        valpw = new javax.swing.JPasswordField();
+        valbtn = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         textlabel = new javax.swing.JLabel();
         d1id = new javax.swing.JTextField();
@@ -202,6 +206,42 @@ public class Manager_addpatient extends javax.swing.JPanel {
         d1error = new javax.swing.JLabel();
         d1pw = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
+
+        valpannel.setBackground(new java.awt.Color(255, 255, 255));
+
+        valpw.setText("jPasswordField1");
+
+        valbtn.setText("OK");
+
+        jLabel9.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel9.setText("Input your password:");
+
+        javax.swing.GroupLayout valpannelLayout = new javax.swing.GroupLayout(valpannel);
+        valpannel.setLayout(valpannelLayout);
+        valpannelLayout.setHorizontalGroup(
+            valpannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(valpannelLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(valpannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addGroup(valpannelLayout.createSequentialGroup()
+                        .addComponent(valpw, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(valbtn)))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        valpannelLayout.setVerticalGroup(
+            valpannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(valpannelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(valpannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(valbtn)
+                    .addComponent(valpw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
 
         jPanel3.setBackground(new java.awt.Color(0, 255, 255));
 
@@ -385,22 +425,23 @@ public class Manager_addpatient extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 330, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void d1addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_d1addMouseClicked
         try {
-            if(check()==true) {close(); d.setVisible(false); }
+            if(check()==true) {
+                close(); d.setVisible(false); 
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Manager_addpatient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_d1addMouseClicked
-  
     private void close() throws SQLException{
         JDialog d1 = new JDialog(d, "");
         d1.add(new JLabel("      "+"Add patient successfully!"));
@@ -487,8 +528,12 @@ public class Manager_addpatient extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel textlabel;
+    private javax.swing.JButton valbtn;
+    private javax.swing.JPanel valpannel;
+    private javax.swing.JPasswordField valpw;
     // End of variables declaration//GEN-END:variables
 
    
