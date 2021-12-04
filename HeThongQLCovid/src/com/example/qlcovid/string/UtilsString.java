@@ -12,7 +12,7 @@ public class UtilsString {
     public String DBURL = "jdbc:sqlserver://localhost";
     public String USER = "sa";
     public String PASSWORD = "123456";
-    public String DATABASENAME = "QLCovid";
+    public String DATABASENAME = "HeThongQuanLyCovid";
     public int maxyear=2022, minyear = 2021;
 }
 

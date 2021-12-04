@@ -4,6 +4,7 @@
  */
 package com.example.qlcovid.jframe;
 
+import com.example.qlcovid.model.Hashing;
 import com.example.qlcovid.model.ManagerDB;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -426,7 +427,7 @@ public class Manager_addpatient extends javax.swing.JPanel {
         }
         String utplace = tplace[d1tplace.getSelectedIndex()][0].toString();
         String uaddress = d1as.getText()+ ward[d1ward.getSelectedIndex()][1].toString() + ", " + district[d1dis.getSelectedIndex()][1].toString()+ ", " +province[d1pro.getSelectedIndex()][1].toString();
-        String query = "insert into ql_user \n values ("+ uID +", CONVERT(binary, HashBytes('MD5', '" + uPw +"'), 2), 'patient', NULL) \n";
+        String query = "insert into ql_user \n values ("+ uID +", '" + Hashing.getHash(uPw) +"', 'user', 'Y') \n";
         db.insert(query);
         query = "insert into covid_patient(citizen_id, full_name, date_of_birth, condition, treatment_place_id, related_to, citizen_address) \n" +
                         "values ("+ uID +", N'" + uName + "', '" + uYear + "-" +uMonth + "-" + uDay +"', '"+condition+"', " +  utplace+ ", "+ related+", N'"+ uaddress+"') ";

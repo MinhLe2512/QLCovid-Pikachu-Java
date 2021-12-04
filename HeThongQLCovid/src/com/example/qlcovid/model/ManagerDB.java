@@ -4,11 +4,8 @@
  */
 package com.example.qlcovid.model;
 
-import com.example.qlcovid.jframe.ManagerUI;
 import com.example.qlcovid.string.UtilsString;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -101,7 +98,7 @@ public class ManagerDB {
         return Integer.valueOf(data[0][0]);
     }
 
-    public void update(String query){
+    public void update(String query) throws SQLException{
         System.out.println(query);
         conn = DriverManager.getConnection(dburl+";databaseName=" + databaseName + ";user=" + user +";password=" + password);
         if (conn != null) {
@@ -112,7 +109,7 @@ public class ManagerDB {
         System.out.println("Updated");
         conn.close();
     }
-    public void insert(String query){
+    public void insert(String query) throws SQLException{
         System.out.println(query);
         conn = DriverManager.getConnection(dburl+";databaseName=" + databaseName + ";user=" + user +";password=" + password);
         if (conn != null) {
