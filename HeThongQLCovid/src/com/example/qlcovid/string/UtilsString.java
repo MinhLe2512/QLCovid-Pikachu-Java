@@ -9,9 +9,9 @@ package com.example.qlcovid.string;
  * @author nhonnhon
  */
 public class UtilsString {
-    public String DBURL = "jdbc:sqlserver://localhost";
-    public String USER = "sa";
-    public String PASSWORD = "123456";
+    public String dbURL  = "jdbc:sqlserver://localhost;databaseName=HeThongQuanLyCovid";
+    public String username = "sa";
+    public String password = "123456";
     public String DATABASENAME = "HeThongQuanLyCovid";
     public int maxyear=2022, minyear = 2021;
 }

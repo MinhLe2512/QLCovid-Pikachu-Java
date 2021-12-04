@@ -19,14 +19,14 @@ public class ManagerDB {
     String databaseName;
     public ManagerDB(){
         UtilsString ss = new UtilsString();
-        dburl = ss.DBURL;
-        user = ss.USER;
-        password = ss.PASSWORD;
+        dburl = ss.dbURL;
+        user = ss.username;
+        password = ss.password;
         databaseName = ss.DATABASENAME;
     }
     public Object [][] getdata(String query) throws SQLException{
         System.out.println(query);
-        conn = DriverManager.getConnection(dburl+";databaseName=" + databaseName + ";user=" + user +";password=" + password);
+        conn = DriverManager.getConnection(dburl+";user=" + user +";password=" + password);
         if (conn != null) {
             System.out.println("Connected DB.");
         }
@@ -50,7 +50,7 @@ public class ManagerDB {
     }
     public String get(String query) throws SQLException{
         System.out.println(query);
-        conn = DriverManager.getConnection(dburl+";databaseName=" + databaseName + ";user=" + user +";password=" + password);
+        conn = DriverManager.getConnection(dburl+";user=" + user +";password=" + password);
         if (conn != null) {
             System.out.println("Connected DB.");
         }
@@ -75,7 +75,7 @@ public class ManagerDB {
     }
     public int count(String query) throws SQLException{
         System.out.println(query);
-        conn = DriverManager.getConnection(dburl+";databaseName=" + databaseName + ";user=" + user +";password=" + password);
+        conn = DriverManager.getConnection(dburl+ ";user=" + user +";password=" + password);
         if (conn != null) {
             System.out.println("Connected DB.");
         }
@@ -100,7 +100,7 @@ public class ManagerDB {
 
     public void update(String query) throws SQLException{
         System.out.println(query);
-        conn = DriverManager.getConnection(dburl+";databaseName=" + databaseName + ";user=" + user +";password=" + password);
+        conn = DriverManager.getConnection(dburl+ ";user=" + user +";password=" + password);
         if (conn != null) {
             System.out.println("Connected DB.");
         }
@@ -111,7 +111,7 @@ public class ManagerDB {
     }
     public void insert(String query) throws SQLException{
         System.out.println(query);
-        conn = DriverManager.getConnection(dburl+";databaseName=" + databaseName + ";user=" + user +";password=" + password);
+        conn = DriverManager.getConnection(dburl+ ";user=" + user +";password=" + password);
         if (conn != null) {
             System.out.println("Connected DB.");
         }

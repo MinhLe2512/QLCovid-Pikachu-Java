@@ -14,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -1546,14 +1547,8 @@ public class Manager_mainframe extends javax.swing.JFrame {
             String pid = tb2.getValueAt(tb2.getSelectedRow(), 1).toString();
             String newqr = "delete from package where package_id = '" + pid +"'";
             db.insert(newqr);
-            
-            JDialog d = new JDialog(this, "");
-            d.add(new JLabel("    Package removed!"));
-            d.setSize(200, 100);
-            d.setModal(true);
-            d.setLocationRelativeTo(null);
-            d.setVisible(true);
             resettable2();
+            JOptionPane.showMessageDialog(null, "Remove package successfully!");
             initStat();
         }
     }//GEN-LAST:event_btnremove2MouseClicked

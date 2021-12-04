@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -424,14 +425,8 @@ public class Manager_addpackage extends javax.swing.JPanel {
         String newqr = "insert into package(package_id, name, limit, package_start, package_end, price) values( ";
         newqr += d1id.getText() + " , '" + d1name.getText() +"' , " + d1limit.getText() + " , '" +startdate +"', '" + enddate +"',"+ d1price.getText() + ")";
         db.insert(newqr);
-        
+        JOptionPane.showMessageDialog(null, "Add package successfully!");
         d.setVisible(false);
-        JDialog d1 = new JDialog(d, "");
-        d1.add(new JLabel("      "+"Add package successfully!"));
-        d1.setSize(200, 100);
-        d1.setModal(true);
-        d1.setLocationRelativeTo(null);
-        d1.setVisible(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Address;

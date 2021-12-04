@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -279,7 +280,7 @@ public class Manager_updatepackage extends javax.swing.JPanel {
         d1limit.setBackground(java.awt.Color.white);
         d1limit.setForeground(new java.awt.Color(102, 102, 102));
 
-        button.setText("Add package");
+        button.setText("Update");
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buttonMouseClicked(evt);
@@ -444,14 +445,8 @@ public class Manager_updatepackage extends javax.swing.JPanel {
         newqr += "name= N'" + d1name.getText() +"' , limit = " + d1limit.getText() + " , package_start='" +startdate +"', package_end='" + enddate +"',price="+ d1price.getText() + " ";
         newqr += "where package_id = '" + id +"'";
         db.insert(newqr);
-        
+        JOptionPane.showMessageDialog(null, "Update package successfully!");
         d.setVisible(false);
-        JDialog d1 = new JDialog(d, "");
-        d1.add(new JLabel("      "+"Add package successfully!"));
-        d1.setSize(200, 100);
-        d1.setModal(true);
-        d1.setLocationRelativeTo(null);
-        d1.setVisible(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Address;

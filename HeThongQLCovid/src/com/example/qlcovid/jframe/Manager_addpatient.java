@@ -16,6 +16,9 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -436,19 +439,32 @@ public class Manager_addpatient extends javax.swing.JPanel {
     private void d1addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_d1addMouseClicked
         try {
             if(check()==true) {
-                close(); d.setVisible(false); 
+                JPanel panel = new JPanel();
+                JLabel label = new JLabel("Enter a password:");
+                JPasswordField pass = new JPasswordField(10);
+                panel.add(label);
+                panel.add(pass);
+                String[] options = new String[]{"OK", "Cancel"};
+                int option = JOptionPane.showOptionDialog(null, panel, "Error",
+                                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                         null, options, options[1]);
+                if(option == 0) // pressing OK button
+                {
+                    if(db.count("select count(username) from ql_user where user_role = 'supevisor' and username = '"+ ManagerID + "' and user_password = '" + Hashing.getHash(pass.getText().toString())+"'")==1){
+                        close(); d.setVisible(false); 
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Wrong password!!");
+                    }
+                }
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(Manager_addpatient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_d1addMouseClicked
     private void close() throws SQLException{
-        JDialog d1 = new JDialog(d, "");
-        d1.add(new JLabel("      "+"Add patient successfully!"));
-        d1.setSize(200, 100);
-        d1.setModal(true);
-        d1.setLocationRelativeTo(null);
-        d1.setVisible(true);
+        JOptionPane.showMessageDialog(null, "Add patient successfully!!");
         this.d1error.setText("Successfully!");
         
         String uID = d1id.getText();

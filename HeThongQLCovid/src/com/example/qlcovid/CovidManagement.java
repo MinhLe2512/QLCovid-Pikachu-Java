@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
@@ -15,5 +18,6 @@ public class CovidManagement {
                 String MgID = "3112";
                 Manager_mainframe mf = new Manager_mainframe(MgID);
                 mf.setVisible(true);
+                
 	}
 }

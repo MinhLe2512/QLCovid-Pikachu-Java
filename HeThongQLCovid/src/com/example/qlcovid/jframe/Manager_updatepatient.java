@@ -4,6 +4,7 @@
  */
 package com.example.qlcovid.jframe;
 
+import com.example.qlcovid.model.Hashing;
 import com.example.qlcovid.model.ManagerDB;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,9 @@ import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 /**
  *
  * @author nhonnhon
@@ -228,6 +232,29 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void d2updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_d2updateMouseClicked
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel("Enter a password:");
+        JPasswordField pass = new JPasswordField(10);
+        panel.add(label);
+        panel.add(pass);
+        String[] options = new String[]{"OK", "Cancel"};
+        int option = JOptionPane.showOptionDialog(null, panel, "Error",
+                                 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                 null, options, options[1]);
+        if(option == 0) // pressing OK button
+        {
+            if(db.count("select count(username) from ql_user where user_role = 'supevisor' and username = '"+ ManagerID + "' and user_password = '" + Hashing.getHash(pass.getText().toString())+"'")==1){
+                
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Wrong password!!");
+                return;
+            }
+        }
+        else{
+            return;
+        }
+                
         String newtreatmentid = treatment[d3place.getSelectedIndex()][0].toString();
         if(!newtreatmentid.equals(treatmentid)){
             
@@ -313,12 +340,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
             }
         }
         System.out.println(newcondition);
-        JDialog d1 = new JDialog(d, "");
-        d1.add(new JLabel("   Update patient state successfully!"));
-        d1.setSize(200, 100);
-        d1.setModal(true);
-        d1.setLocationRelativeTo(null);
-        d1.setVisible(true);
+        JOptionPane.showMessageDialog(null, "Update patient successfully!");
         d.setVisible(false);
     }//GEN-LAST:event_d2updateMouseClicked
     
