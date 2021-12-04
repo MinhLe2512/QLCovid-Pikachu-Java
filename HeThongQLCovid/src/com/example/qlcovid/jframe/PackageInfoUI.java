@@ -1,17 +1,8 @@
-package User.View.UserAbility.BuyPackage;
-
-import DailyNecessityStorage.PackageClass;
-import User.CovidPatient.CovidPatient;
-import User.CovidPatient.PatientHistory;
-import User.DatabaseConnection;
+package com.example.qlcovid.jframe;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 public class PackageInfoUI extends JPanel{
 

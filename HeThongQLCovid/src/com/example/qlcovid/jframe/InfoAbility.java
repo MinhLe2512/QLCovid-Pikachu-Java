@@ -1,6 +1,6 @@
-package User.View.UserAbility;
+package com.example.qlcovid.jframe;
 
-import User.View.PatientGUI;
+import com.example.qlcovid.jframe.PatientGUI;
 
 import javax.swing.*;
 import java.awt.*;

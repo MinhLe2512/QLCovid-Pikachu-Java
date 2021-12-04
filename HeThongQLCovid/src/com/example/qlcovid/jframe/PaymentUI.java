@@ -1,36 +1,15 @@
-package User.View.UserAbility.BuyPackage;
+package com.example.qlcovid.jframe;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PackagePurchaseUI extends JPanel{
+public class PaymentUI extends JPanel{
 
-    public PackagePurchaseUI(){
+    public PaymentUI(){
         this.setLayout(new FlowLayout());/////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
         this.setBackground(new Color(0xC2FFF9)); // for debug
         this.setBounds(0,80,400,390);
-        this.add(new JButton("PackagePurchaseUI"));
+        this.add(new JButton("Payment"));
         this.setVisible(false);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

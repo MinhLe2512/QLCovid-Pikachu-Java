@@ -1,7 +1,7 @@
-package User.View.UserAbility.BuyPackage;
+package com.example.qlcovid.jframe;
 
-import DailyNecessityStorage.PackageClass;
-import User.DatabaseConnection;
+import com.example.qlcovid.model.PackageClass;
+import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.*;
 import java.util.List;
 
 public class PtablePackage  extends JPanel{

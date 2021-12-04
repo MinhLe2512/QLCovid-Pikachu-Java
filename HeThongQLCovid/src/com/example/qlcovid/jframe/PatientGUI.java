@@ -1,11 +1,4 @@
-package User.View;
-
-import User.View.UserAbility.BuyPackage.PackageInfoUI;
-import User.View.UserAbility.BuyPackage.PackageLookUpUI;
-import User.View.UserAbility.BuyPackage.PackagePurchaseUI;
-import User.View.UserAbility.InfoAbility;
-import User.View.UserAbility.PackageAbility;
-import User.View.UserAbility.showInfo.*;
+package com.example.qlcovid.jframe;
 
 import javax.swing.*;
 import java.awt.*;

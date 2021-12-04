@@ -1,6 +1,4 @@
-package User.View.UserAbility.BuyPackage;
-
-import DailyNecessityStorage.PackageClass;
+package com.example.qlcovid.jframe;
 
 import javax.swing.*;
 import java.awt.*;

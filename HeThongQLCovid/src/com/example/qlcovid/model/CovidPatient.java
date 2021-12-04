@@ -1,10 +1,6 @@
-package User.CovidPatient;
-import User.DatabaseConnection;
+package com.example.qlcovid.model;
+import com.example.qlcovid.string.DatabaseConnection;
 
-import ClassAttributes.Address;
-import ClassAttributes.Role;
-import TreatmentArea.TreatmentArea;
-import User.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

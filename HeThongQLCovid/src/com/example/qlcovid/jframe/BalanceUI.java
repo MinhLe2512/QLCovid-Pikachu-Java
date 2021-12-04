@@ -1,15 +1,15 @@
-package User.View.UserAbility.showInfo;
+package com.example.qlcovid.jframe;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PaymentUI extends JPanel{
+public class BalanceUI extends JPanel{
 
-    public PaymentUI(){
+    public BalanceUI(){
         this.setLayout(new FlowLayout());/////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
         this.setBackground(new Color(0xC2FFF9)); // for debug
         this.setBounds(0,80,400,390);
-        this.add(new JButton("Payment"));
+        this.add(new JButton("Balance"));
         this.setVisible(false);
     }
 }

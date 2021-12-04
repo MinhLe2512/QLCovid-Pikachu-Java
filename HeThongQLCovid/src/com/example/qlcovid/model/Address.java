@@ -1,6 +1,6 @@
-package ClassAttributes;
+package com.example.qlcovid.model;
 
-import User.DatabaseConnection;
+import com.example.qlcovid.string.DatabaseConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

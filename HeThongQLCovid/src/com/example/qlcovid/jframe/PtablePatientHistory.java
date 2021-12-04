@@ -1,8 +1,9 @@
-package User.View.UserAbility.showInfo;
+package com.example.qlcovid.jframe;
 
 
-import User.CovidPatient.PatientHistory;
-import User.DatabaseConnection;
+import com.example.qlcovid.jframe.ManagementUI;
+import com.example.qlcovid.model.PatientHistory;
+import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

@@ -1,4 +1,4 @@
-package User;
+package com.example.qlcovid.string;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

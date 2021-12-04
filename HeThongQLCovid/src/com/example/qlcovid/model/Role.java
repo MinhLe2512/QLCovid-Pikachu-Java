@@ -1,4 +1,4 @@
-package ClassAttributes;
+package com.example.qlcovid.model;
 
 public enum Role {
     ADMIN,

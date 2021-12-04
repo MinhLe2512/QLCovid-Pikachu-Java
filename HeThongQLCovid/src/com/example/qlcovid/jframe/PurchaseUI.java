@@ -1,9 +1,7 @@
-package User.View.UserAbility.showInfo;
+package com.example.qlcovid.jframe;
 
-import DailyNecessityStorage.PackagePurchase;
-import User.CovidPatient.PatientHistory;
-import User.DatabaseConnection;
-import User.View.UserAbility.BuyPackage.PtablePackage;
+import com.example.qlcovid.model.PackagePurchase;
+import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;
 import java.awt.*;

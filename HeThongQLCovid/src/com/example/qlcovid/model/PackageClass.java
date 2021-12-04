@@ -1,4 +1,4 @@
-package DailyNecessityStorage;
+package com.example.qlcovid.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

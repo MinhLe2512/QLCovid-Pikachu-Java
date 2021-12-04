@@ -1,6 +1,4 @@
-package User;
-
-import ClassAttributes.Role;
+package com.example.qlcovid.model;
 
 public abstract class User {
     // attributes
