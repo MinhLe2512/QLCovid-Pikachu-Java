@@ -1,7 +1,7 @@
 ﻿
 CREATE TABLE ql_user(
 	username VARCHAR(10) NOT NULL,
-	user_password BINARY(64) NOT NULL,
+	user_password VARCHAR(64) NOT NULL,
 	user_role NVARCHAR(20) NOT NULL,
 	user_validation VARCHAR(1),
 	PRIMARY KEY(username)
