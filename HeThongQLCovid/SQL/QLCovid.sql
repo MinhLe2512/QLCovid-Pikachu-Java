@@ -89,7 +89,7 @@ CREATE TABLE edit(
 	supevisor_action NVARCHAR(100),
 	supevisor_date DATETIME,
 	CONSTRAINT FK_SUPEVISOR_HISTORY_ID FOREIGN KEY(supevisor_id)
-	REFERENCES covid_patient(citizen_id),
+	REFERENCES ql_user(username),
 	PRIMARY KEY(edit_history_id)
 );
 --lịch sử thanh toán
