@@ -142,35 +142,6 @@ CREATE TABLE district_has_ward(
 
 
 
-alter table covid_patient
-drop constraint FK_RELATED_TO, FK_PATIENT_ID, FK_TREATMENT_PLACE
-alter table patient_history
-drop constraint FK_PATIENT_HISTORY_ID 
-alter table edit
-drop FK_SUPEVISOR_HISTORY_ID
-alter table ql_order
-drop FK_CUSTOMER_ORDER, FK_PACKAGE_ORDER
-
-
-drop table patient_history
-drop table ql_order
-drop table covid_patient
-drop table package
-drop table edit
-drop table treatment_place
-drop table ql_user
-DROP TRIGGER trigger_patient_history
-GO
-CREATE TRIGGER trigger_patient_history
-ON covid_patient
-AFTER UPDATE
-AS 
-BEGIN
-	SET NOCOUNT ON;
-	INSERT INTO patient_history(patient_id, patient_date) 
-	SELECT cp.citizen_id, GETDATE()
-	FROM covid_patient cp
-END;
 
 INSERT INTO ql_user VALUES('0323812311','12345678', 'User', null)
 INSERT INTO covid_patient VALUES('0323812311', 'Testing 1', '12/12/2019', N'đâu cũng được', null, null, null)
