@@ -1,6 +1,6 @@
-package com.example.qlcovid.jframe;
+package com.example.qlcovid.jframe.User;
 
-import com.example.qlcovid.model.PackageClass;
+import com.example.qlcovid.model.User.PackageClass;
 import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;

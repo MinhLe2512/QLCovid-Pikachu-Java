@@ -1,4 +1,4 @@
-package com.example.qlcovid.model;
+package com.example.qlcovid.model.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

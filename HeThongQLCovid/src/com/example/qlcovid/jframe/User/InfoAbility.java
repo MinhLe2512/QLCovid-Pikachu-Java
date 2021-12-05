@@ -1,4 +1,4 @@
-package com.example.qlcovid.jframe;
+package com.example.qlcovid.jframe.User;
 
 import com.example.qlcovid.jframe.PatientGUI;
 

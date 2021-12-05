@@ -1,4 +1,6 @@
-package com.example.qlcovid.jframe;
+package com.example.qlcovid.jframe.User.Package;
+
+import com.example.qlcovid.jframe.User.PtablePackage;
 
 import javax.swing.*;
 import java.awt.*;

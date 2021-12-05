@@ -1,8 +1,8 @@
-package com.example.qlcovid.jframe;
+package com.example.qlcovid.jframe.User;
 
 
-import com.example.qlcovid.jframe.ManagementUI;
-import com.example.qlcovid.model.PatientHistory;
+import com.example.qlcovid.jframe.User.Info.ManagementUI;
+import com.example.qlcovid.model.User.PatientHistory;
 import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;

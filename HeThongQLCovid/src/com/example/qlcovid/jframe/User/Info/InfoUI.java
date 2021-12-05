@@ -1,6 +1,6 @@
-package com.example.qlcovid.jframe;
+package com.example.qlcovid.jframe.User.Info;
 
-import com.example.qlcovid.model.CovidPatient;
+import com.example.qlcovid.model.User.CovidPatient;
 import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;
@@ -9,7 +9,6 @@ import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class InfoUI extends JPanel {

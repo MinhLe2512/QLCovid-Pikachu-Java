@@ -1,6 +1,7 @@
-package com.example.qlcovid.jframe;
+package com.example.qlcovid.jframe.User.Info;
 
-import com.example.qlcovid.model.PackagePurchase;
+import com.example.qlcovid.jframe.User.PtablePurchase;
+import com.example.qlcovid.model.User.PackagePurchase;
 import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;

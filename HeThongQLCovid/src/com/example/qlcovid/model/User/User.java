@@ -1,4 +1,4 @@
-package com.example.qlcovid.model;
+package com.example.qlcovid.model.User;
 
 public abstract class User {
     // attributes

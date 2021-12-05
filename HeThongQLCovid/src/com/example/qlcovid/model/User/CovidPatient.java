@@ -1,4 +1,4 @@
-package com.example.qlcovid.model;
+package com.example.qlcovid.model.User;
 import com.example.qlcovid.string.DatabaseConnection;
 
 

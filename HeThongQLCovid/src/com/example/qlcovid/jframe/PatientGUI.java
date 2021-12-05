@@ -1,5 +1,11 @@
 package com.example.qlcovid.jframe;
 
+import com.example.qlcovid.jframe.User.*;
+import com.example.qlcovid.jframe.User.Info.*;
+import com.example.qlcovid.jframe.User.Package.PackageInfoUI;
+import com.example.qlcovid.jframe.User.Package.PackageLookUpUI;
+import com.example.qlcovid.jframe.User.Package.PackagePurchaseUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

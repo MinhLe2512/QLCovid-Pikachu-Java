@@ -1,6 +1,7 @@
-package com.example.qlcovid.jframe;
+package com.example.qlcovid.jframe.User.Info;
 
-import com.example.qlcovid.model.PatientHistory;
+import com.example.qlcovid.jframe.User.PtablePatientHistory;
+import com.example.qlcovid.model.User.PatientHistory;
 import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;
@@ -8,7 +9,6 @@ import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 

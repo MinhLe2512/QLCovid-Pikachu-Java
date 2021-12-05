@@ -1,4 +1,4 @@
-package com.example.qlcovid.jframe;
+package com.example.qlcovid.jframe.User.Info;
 
 import javax.swing.*;
 import java.awt.*;

@@ -15,13 +15,6 @@ public class DatabaseConnection {
 
             String serverName = "DESKTOP-GN3V8MM";
             String mydatabase = "HeThongQuanLyCovid";
-           /* String url = "jdbc:mysql://" + serverName + "/" + mydatabase; // a JDBC url*/
-
-
-            /*Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");*/
-            /*connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=DESKTOP-GN3V8MM;" +
-                    "user=sa;" +
-                    "password=12345678");*/
 
             String url = "jdbc:sqlserver://localhost:1433;databaseName=HeThongQuanLyCovid;user=sa;password=12345678";
 
