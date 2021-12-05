@@ -45,18 +45,22 @@ public class PatientHistory {
         this._patientAction = _patientAction;
     }
 
-    public LocalDateTime get_startDate() {
-        return _startDate;
+    public String get_startDate() {
+        if(_startDate==null){
+            return "";
+        }
+
+        return _startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.s"));
     }
 
     public void set_startDate(String _startDate) {
-        this._startDate = LocalDateTime.parse(_startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this._startDate = LocalDateTime.parse(_startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.s"));
 
     }
 
     public String getInfo() {
         return this.get_treatment_ID() +", "+ this.get_patient_ID()+", " +this.get_patientAction() +", "+
-                this.get_startDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                this.get_startDate();
 
     }
 

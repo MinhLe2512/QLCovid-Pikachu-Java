@@ -62,26 +62,36 @@ public class CovidPatient extends User {
         this._name = _name;
     }
 
-    public LocalDate get_dob() {
-
-        return _dob;
+    public String get_dob() {
+        if(_dob == null){
+            return "";
+        }
+        return this._dob.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     public void set_dob(String _dob) {
-
+        if(_dob == null || _dob.trim().isEmpty()){
+            this._dob = null;
+        }
         this._dob = LocalDate.parse(_dob, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public Address get_address() {
-        return _address;
+    public String get_address() {
+        if(_address == null){
+            return "";
+        }
+        return _address.getInfo();
     }
 
     public void set_address(String _address) throws SQLException {
         this._address = new Address(_address);
     }
 
-    public TreatmentArea get_treatmentArea() {
-        return this._treatmentAreaID;
+    public String get_treatmentArea() {
+        if(_treatmentAreaID == null){
+            return "";
+        }
+        return this._treatmentAreaID.get_name();
     }
 
     public void set_treatmentArea(String _ID) throws SQLException {
@@ -105,7 +115,7 @@ public class CovidPatient extends User {
         }
 
         Statement statement = DatabaseConnection.getJDBC().createStatement();
-        String sql = "SELECT relavent.full_name,relavent.date_of_birth,relavent.citizen_address, relavent._condition, treatment.treatment_place_name FROM covid_patient as patient\n" +
+        String sql = "SELECT relavent.full_name,relavent.date_of_birth,relavent.citizen_address, relavent.condition, treatment.treatment_place_name FROM covid_patient as patient\n" +
                 "JOIN covid_patient as relavent\n" +
                 "ON patient.related_to = relavent.citizen_id\n" +
                 "JOIN treatment_place as treatment\n" +
@@ -120,7 +130,7 @@ public class CovidPatient extends User {
             temp.set_name(rs.getString("full_name"));
             temp.set_dob(rs.getString("date_of_birth"));
             temp.set_address(rs.getString("citizen_address"));
-            temp.set_status(rs.getString("_condition"));
+            temp.set_status(rs.getString("condition"));
             treatmentName = rs.getString("treatment_place_name");
 
         }
@@ -133,7 +143,7 @@ public class CovidPatient extends User {
                 "        <td>     DOB: "+temp.get_dob()+"</td>\n" +
                 "      </tr>\n" +
                 "      <tr>\n" +
-                "        <td>Address: "+temp.get_address().getInfo()+"</td>\n"+
+                "        <td>Address: "+temp.get_address()+"</td>\n"+
                 "      </tr>\n" +
                 "      <tr>\n" +
                 "        <td>Condition: "+temp.get_status()+"</td>\n" +
@@ -156,9 +166,10 @@ public class CovidPatient extends User {
     //--
 
     public String getInfo() {
+
         return this.get_citizen_id()+" "+
                 this.get_name()+" "+
-                this.get_dob().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+" "+
+                this.get_dob() +" "+
                 this.get_address()+" "+
                 this.get_status();
     }

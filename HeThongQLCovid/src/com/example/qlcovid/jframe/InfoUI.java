@@ -57,7 +57,7 @@ public class InfoUI extends JPanel {
             temp.set_name(rs.getString("full_name"));
             temp.set_dob(rs.getString("date_of_birth"));
             temp.set_address(rs.getString("citizen_address"));
-            temp.set_status(rs.getString("_condition"));
+            temp.set_status(rs.getString("condition"));
             temp.set_treatmentArea(rs.getString("treatment_place_id"));
             temp.set_patientRelavent(rs.getString("related_to"));
 
@@ -67,10 +67,10 @@ public class InfoUI extends JPanel {
 
         LID.setText("ID: "+temp.get_citizen_id());
         Lname.setText("Name: "+temp.get_name());
-        LDOB.setText("DOB: "+temp.get_dob().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        Ladd.setText("Address:      "+temp.get_address().getInfo());
+        LDOB.setText("DOB: "+temp.get_dob());
+        Ladd.setText("Address:      "+temp.get_address());
         Lstatus.setText("Condition: "+temp.get_status());
-        Ltreatment.setText("Treatment place: "+temp.get_treatmentArea().get_name());
+        Ltreatment.setText("Treatment place: "+temp.get_treatmentArea());
         Lrelevant.setText("<html><style>tr {\n" +
                 "    border-top: 1px solid black;\n" +
                 "    border-collapse: collapse;\n" +

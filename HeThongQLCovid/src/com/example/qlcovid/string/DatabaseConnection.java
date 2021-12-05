@@ -1,27 +1,35 @@
 package com.example.qlcovid.string;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseConnection {
     public static Connection getJDBC() {
 
-//MySQL
+
         Connection connection = null;
         try {
-            // Load the JDBC driver//org.gjt.mm.mysql.Driver
-            String driverName = "com.mysql.jdbc.Driver"; // MySQL MM JDBC driver
-            //Class.forName(driverName);
-            Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Create a connection to the database
-            String serverName = "localhost:3306";
-            String mydatabase = "student";
-            String url = "jdbc:mysql://" + serverName + "/" + mydatabase; // a JDBC url
-            String username = "root";
-            String password = "28022001jkem454";
-            connection = DriverManager.getConnection(url, username, password);
+            String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+            Class.forName(driverName);
+
+
+            String serverName = "DESKTOP-GN3V8MM";
+            String mydatabase = "HeThongQuanLyCovid";
+           /* String url = "jdbc:mysql://" + serverName + "/" + mydatabase; // a JDBC url*/
+
+
+            /*Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");*/
+            /*connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=DESKTOP-GN3V8MM;" +
+                    "user=sa;" +
+                    "password=12345678");*/
+
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=HeThongQuanLyCovid;user=sa;password=12345678";
+
+
+
+            String username = "sa";
+            String password = "12345678";
+            connection = DriverManager.getConnection(url);
             return connection;
         } catch (ClassNotFoundException e) {
             // Could not find the database driver
@@ -32,14 +40,13 @@ public class DatabaseConnection {
 
     }
 
-//    Connection x = new Connection();
-//    public static void main(String[] args) {
-//        if(x!=null){
-//            System.out.print("ok");
-//        }
-//        else{
-//            System.out.print("11");
-//        }
-//    }
+    public static void main(String[] args) throws SQLException {
+        PreparedStatement statement = DatabaseConnection.getJDBC().prepareStatement("SELECT * FROM patient_history " +
+                "WHERE patient_id=?");
+        statement.setString(1, "Khoidb");
+        statement.execute();
+    }
+
+
 }
 

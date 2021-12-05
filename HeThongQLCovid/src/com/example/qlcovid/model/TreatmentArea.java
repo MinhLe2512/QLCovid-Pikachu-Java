@@ -23,8 +23,9 @@ public class TreatmentArea {
         ResultSet res = statement.executeQuery(sql);
 
         while (res.next()) {
-            this.set_id(_ID);
+
             this.set_name(res.getString("treatment_place_name"));
+            this.set_id(_ID);
             this.set_capacity(res.getInt("capacity"));
             this.set_currentHoldingHolding(res.getInt("current_holding"));
         }

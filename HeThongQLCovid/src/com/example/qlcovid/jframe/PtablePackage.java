@@ -32,7 +32,7 @@ public class PtablePackage  extends JPanel{
             listPackage.add(new PackageClass(
                     rs.getString("package_id"),
                     rs.getString("name"),
-                    rs.getInt("_limit"),
+                    rs.getInt("limit"),
                     rs.getString("package_start"),
                     rs.getString("package_end"),
                     rs.getInt("price")));

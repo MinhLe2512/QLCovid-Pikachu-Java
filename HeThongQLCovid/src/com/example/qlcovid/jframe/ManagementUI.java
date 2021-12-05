@@ -71,7 +71,7 @@ public class ManagementUI extends JPanel {
      public static void selectRowData(PatientHistory x){
         Lid.setText("ID: "+x.get_treatment_ID());
         Lpatient_ID.setText("Patient ID: "+x.get_patient_ID());
-        Ldate.setText("Start Date: "+x.get_startDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        Ldate.setText("Start Date: "+x.get_startDate());
         Laction.setText("Action: "+x.get_patientAction());
 
     }
