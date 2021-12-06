@@ -47,6 +47,10 @@ public class LoginFrame extends JFrame {
 	/**
 	 * Create the application.
 	 */
+	void closeLogin() {
+		frame.setVisible(false);
+		frame.dispose();
+	}
 	public LoginFrame() {
 		initialize();
 	}
@@ -91,10 +95,17 @@ public class LoginFrame extends JFrame {
 							// check validation account
 							if (rs.getObject("user_validation").equals("Y")) {
 								JOptionPane.showMessageDialog(null, "Login Success!!");
+								closeLogin();
+
 								//Create account for constant role
 								if (rs.getObject("user_role").equals("User")) {
 									
 									thisAccount = new UserAccount(rs.getString("username"), rs.getString("user_password"));
+								}
+								if (rs.getObject("user_role").equals("admin")) {
+									
+									AdminFrame adminFrame = new AdminFrame();
+									adminFrame.setVisible(true);
 								}
 								else {
 									
@@ -146,10 +157,16 @@ public class LoginFrame extends JFrame {
 					if(rs.next()) {
 						if (rs.getObject("user_validation").equals("Y")) {
 							JOptionPane.showMessageDialog(null, "Login Success!!");
+							closeLogin();
 							//Create account for constant role
-							if (rs.getObject("user_role").equals("User")) {
+							if (rs.getObject("user_role").equals("user")) {
 								
 								thisAccount = new UserAccount(rs.getString("username"), rs.getString("user_password"));
+							}
+							if (rs.getObject("user_role").equals("admin")) {
+								
+								AdminFrame adminFrame = new AdminFrame();
+								adminFrame.setVisible(true);
 							}
 							else {
 								
