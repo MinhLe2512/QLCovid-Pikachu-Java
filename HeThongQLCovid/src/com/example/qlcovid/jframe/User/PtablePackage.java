@@ -16,6 +16,9 @@ import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,12 +64,12 @@ public class PtablePackage  extends JPanel{
         for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
         }
-        for(PackageClass x : listPackage){
+        /*for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
         }
         for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
-        }
+        }*/
 
         packageTalbe = new JTable(modelListPackage);//modelListPackage
         //packageTalbe.setBounds(10,10,400,200);
@@ -98,6 +101,34 @@ public class PtablePackage  extends JPanel{
 
 
 
+    }
+
+    public void refreshTalbe() throws SQLException {
+        Statement statement = DatabaseConnection.getJDBC().createStatement();
+        String sql = "SELECT * FROM package\n"+";";
+        ResultSet rs = statement.executeQuery(sql);
+
+        listPackage.clear();
+        while(rs.next()){
+
+            listPackage.add(new PackageClass(
+                    rs.getString("package_id"),
+                    rs.getString("name"),
+                    rs.getInt("limit"),
+                    rs.getString("package_start"),
+                    rs.getString("package_end"),
+                    rs.getInt("price")));
+        }
+
+        modelListPackage = new DefaultTableModel(
+                new String[] { "ID","Name","Limit","Start Date", "End Date", "Price"},
+                0
+        );
+        for(PackageClass x : listPackage){
+            modelListPackage.addRow(x.getObjects());
+        }
+
+        packageTalbe.setModel(modelListPackage);
     }
 
     public String getSelectedPackageID(){
@@ -192,27 +223,44 @@ public class PtablePackage  extends JPanel{
             else{
                 flag = true;
             }
-            str_condition +="_limit" +" = "+limit;
+            str_condition +="limit" +" = "+limit;
         }
 
-        if(!start.equals("Start Date") && start.length()!=0){
+        if(!start.equals("yyyy-mm-dd") && start.length()!=0){
+            try {
+                LocalDate.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }
+            catch(DateTimeParseException e){
+                JOptionPane.showMessageDialog(null,"Your start invalid\n form of date: yyyy-mm-dd"
+                        ,"message",JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             if(flag){
                 str_condition+=" AND ";
             }
             else{
                 flag = true;
             }
-            str_condition += "DATE(package_start)" +" = "+"'"+start+"'";
+            str_condition += "package_start" +" = "+"'"+start+"'";
         }
 
-        if(!end.equals("End Date") && end.length()!=0){
+        if(!end.equals("yyyy-mm-dd") && end.length()!=0){
+            try {
+                LocalDate.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }
+            catch(DateTimeParseException e){
+                JOptionPane.showMessageDialog(null,"Your end invalid\n form of date: yyyy-mm-dd"
+                        ,"message",JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             if(flag){
                 str_condition+=" AND ";
             }
             else{
                 flag = true;
             }
-            str_condition += "DATE(package_end)" +" = "+"'"+end+"'";
+            str_condition += "(package_end)" +" = "+"'"+end+"'";
         }
 
         if(!price.equals("Price") && price.length()!=0){
@@ -258,12 +306,12 @@ public class PtablePackage  extends JPanel{
         for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
         }
-        for(PackageClass x : listPackage){
+        /*for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
         }
         for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
-        }
+        }*/
         packageTalbe.setModel(modelListPackage);
     }
 
@@ -275,7 +323,7 @@ public class PtablePackage  extends JPanel{
         boolean flag = false;
         System.out.println(ID+name+limit);
         String str_condition="";
-        if(!ID.equals("ID") && ID.length()!=0){
+        if(ID.length()!=0){
             if(flag){
                 str_condition+=" AND ";
             }
@@ -285,7 +333,7 @@ public class PtablePackage  extends JPanel{
             str_condition += " "+"package_id" +" LIKE "+"'%"+ID+"%'";
         }
 
-        if(!name.equals("Name") && name.length()!=0){
+        if(name.length()!=0){
             if(flag){
                 str_condition+=" AND ";
             }
@@ -295,7 +343,7 @@ public class PtablePackage  extends JPanel{
             str_condition += "name" +" LIKE "+"'%"+name+"%'";
         }
 
-        if(!limit.equals("Limit") && limit.length()!=0){
+        if( limit.length()!=0){
             if(flag){
                 str_condition+=" AND ";
             }
@@ -311,7 +359,7 @@ public class PtablePackage  extends JPanel{
 
         }
 
-        if(!start.equals("Start Date") && start.length()!=0){
+        if(!start.equals("yyyy-mm-dd") && start.length()!=0){
             if(flag){
                 str_condition+=" AND ";
             }
@@ -320,15 +368,15 @@ public class PtablePackage  extends JPanel{
             }
 
             if(flagStart.equals(">")){
-                str_condition += "DATE(package_start)" +" > "+"'"+start+"'";
+                str_condition += "package_start" +" > "+"'"+start+"'";
             }
             else if(flagStart.equals("<=")){
-                str_condition += "DATE(package_start)" +" <= "+"'"+start+"'";
+                str_condition += "package_start" +" <= "+"'"+start+"'";
             }
 
         }
 
-        if(!end.equals("End Date") && end.length()!=0){
+        if(!end.equals("yyyy-mm-dd") && end.length()!=0){
             if(flag){
                 str_condition+=" AND ";
             }
@@ -337,15 +385,15 @@ public class PtablePackage  extends JPanel{
             }
 
             if(flagEnd.equals(">")){
-                str_condition += "DATE(package_end)" +" > "+"'"+end+"'";
+                str_condition += "package_end" +" > "+"'"+end+"'";
             }
             else if(flagEnd.equals("<=")){
-                str_condition += "DATE(package_end)" +" <= "+"'"+end+"'";
+                str_condition += "package_end" +" <= "+"'"+end+"'";
             }
 
         }
 
-        if(!price.equals("Price") && price.length()!=0){
+        if(price.length()!=0){
             if(flag){
                 str_condition+=" AND ";
             }
@@ -375,7 +423,7 @@ public class PtablePackage  extends JPanel{
             listPackage.add(new PackageClass(
                     rs.getString("package_id"),
                     rs.getString("name"),
-                    rs.getInt("_limit"),
+                    rs.getInt("limit"),
                     rs.getString("package_start"),
                     rs.getString("package_end"),
                     rs.getInt("price")));
@@ -394,12 +442,12 @@ public class PtablePackage  extends JPanel{
         for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
         }
-        for(PackageClass x : listPackage){
+        /*for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
         }
         for(PackageClass x : listPackage){
             modelListPackage.addRow(x.getObjects());
-        }
+        }*/
         packageTalbe.setModel(modelListPackage);
     }
 }

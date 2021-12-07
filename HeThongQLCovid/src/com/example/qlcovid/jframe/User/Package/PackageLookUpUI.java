@@ -22,13 +22,12 @@ public class PackageLookUpUI extends JPanel{
         Ptable = new PtablePackage();
 
         JButton Border = new JButton("Order");
-        Border.setBounds(0,100,60,30);
-        Border.setHorizontalAlignment(SwingConstants.LEADING );
+        Border.setBounds(280,280,100,30);
 
         JLabel Lid = new JLabel("ID: ");
         Lid.setBounds(10,110,50,30);
         JComboBox CBid = new JComboBox(new String[]{"\uD83D\uDD3A","\uD83D\uDD3B","--"});
-        CBid.setBounds(85,100,70,20);
+        CBid.setBounds(95,100,70,20);
         CBid.setSelectedItem("--");
 
         JLabel Lname = new JLabel("Name: ");
@@ -37,122 +36,111 @@ public class PackageLookUpUI extends JPanel{
         CBname.setBounds(310,100,70,20);
         CBname.setSelectedItem("--");
 
-        JLabel Llimit = new JLabel("Limit");
-        Llimit.setBounds(165,100,30,30);
+        JLabel Llimit = new JLabel("Limit: ");
+        Llimit.setBounds(5,160,50,30);
         JComboBox CBlimit = new JComboBox(new String[]{"\uD83D\uDD3A","\uD83D\uDD3B","--"});
-        CBlimit.setBounds(195,100,20,20);
+        CBlimit.setBounds(95,150,70,20);
         CBlimit.setSelectedItem("--");
 
-        JLabel Lstart = new JLabel("Start");
-        Lstart.setBounds(225,100,30,30);
+        JLabel Lstart = new JLabel("Start: ");
+        Lstart.setBounds(5,215,50,30);
         JComboBox CBstart = new JComboBox(new String[]{"\uD83D\uDD3A","\uD83D\uDD3B","--"});
-        CBstart.setBounds(255,100,20,20);
+        CBstart.setBounds(110,205,70,20);
         CBstart.setSelectedItem("--");
 
-        JLabel Lend = new JLabel("End");
-        Lend.setBounds(283,100,25,30);
+        JLabel Lend = new JLabel("End: ");
+        Lend.setBounds(210,215,50,30);
         JComboBox CBend = new JComboBox(new String[]{"\uD83D\uDD3A","\uD83D\uDD3B","--"});
-        CBend.setBounds(305,100,20,20);
+        CBend.setBounds(310,205,70,20);
         CBend.setSelectedItem("--");
 
-        JLabel Lprice = new JLabel("Price");
-        Lprice.setBounds(330,100,30,30);
+        JLabel Lprice = new JLabel("Price: ");
+        Lprice.setBounds(210,160,50,30);
         JComboBox CBprice = new JComboBox(new String[]{"\uD83D\uDD3A","\uD83D\uDD3B","--"});
-        CBprice.setBounds(362,100,20,20);
+        CBprice.setBounds(310,150,70,20);
         CBprice.setSelectedItem("--");
 
         // searching
         JButton Bsearch = new JButton("Search");
-        Bsearch.setBounds(0,140,70,30);
+        Bsearch.setBounds(20,280,100,30);
 
         JTextField Tid = new JTextField();
-        Tid.setBounds(30,110,50,30);
+        Tid.setBounds(40,110,50,30);
 
         JTextField Tname = new JTextField();
         Tname.setBounds(250,110,55,30);
 
-        JTextField Tlimit = new JTextField("Limit");
-        Tlimit.setBounds(165,140,50,30);
+        JTextField Tlimit = new JTextField();
+        Tlimit.setBounds(40,160,50,30);
 
-        JTextField Tstart = new JTextField("Start Date");
-        Tstart.setBounds(225,140,50,30);
+        JTextField Tstart = new JTextField("yyyy-mm-dd");
+        Tstart.setBounds(40,215,70,30);
 
-        JTextField Tend = new JTextField("End Date");
-        Tend.setBounds(283,140,42,30);
+        JTextField Tend = new JTextField("yyyy-mm-dd");
+        Tend.setBounds(240,215,70,30);
 
-        JTextField Tprice = new JTextField("Price");
-        Tprice.setBounds(330,140,52,30);
+        JTextField Tprice = new JTextField();
+        Tprice.setBounds(250,160,55,30);
 
 
         JButton Bfilter = new JButton("Filter");
-        Bfilter.setBounds(0,180,70,30);
+        Bfilter.setBounds(150,280,100,30);
 
         JComboBox CBlimitFilter = new JComboBox(new String[]{">","<=","--"});
-        CBlimitFilter.setBounds(195,180,20,20);
+        CBlimitFilter.setBounds(95,175,70,20);
         CBlimitFilter.setSelectedItem("--");
 
         JComboBox CBstartFilter = new JComboBox(new String[]{">","<=","--"});
-        CBstartFilter.setBounds(255,180,20,20);
+        CBstartFilter.setBounds(110,230,70,20);
         CBstartFilter.setSelectedItem("--");
 
         JComboBox CBendFilter = new JComboBox(new String[]{">","<=","--"});
-        CBendFilter.setBounds(305,180,20,20);
+        CBendFilter.setBounds(310,230,70,20);
         CBendFilter.setSelectedItem("--");
 
         JComboBox CBpriceFilter = new JComboBox(new String[]{">","<=","--"});
-        CBpriceFilter.setBounds(362,180,20,20);
+        CBpriceFilter.setBounds(310,175,70,20);
         CBpriceFilter.setSelectedItem("--");
 
+        /*showAdllButton*/
+        JButton BshowAll = new JButton("Show All");
+        BshowAll.setBounds(140,320,120,30);
 
-
-
-
-        /*JCalendar calendar = new JCalendar();*/
-
-
-        /*this.add(CBpriceFilter);
-        this.add(CBendFilter);
-        this.add(CBstartFilter);
-        this.add(CBlimitFilter);
-        this.add(Bfilter);
-
-        this.add(Tprice);
-        this.add(Tend);
-        this.add(Tstart);
-        this.add(Tlimit);
-
-
+        /*button*/
         this.add(Bsearch);
-
-
-        this.add(CBprice);
-        this.add(Lprice);
-        this.add(CBend);
-        this.add(Lend);
-        this.add(CBstart);
-        this.add(Lstart);
-        this.add(CBlimit);
-        this.add(Llimit);
-
-
-
-
-        this.add(Border);*/
+        this.add(Bfilter);
+        this.add(Border);
+        this.add(BshowAll);
 
         /*filter*/
-
+        this.add(CBlimitFilter);
+        this.add(CBpriceFilter);
+        this.add(CBstartFilter);
+        this.add(CBendFilter);
 
         /*combobox*/
         this.add(CBid);
         this.add(CBname);
+        this.add(CBlimit);
+        this.add(CBprice);
+        this.add(CBstart);
+        this.add(CBend);
 
         /*textfile*/
         this.add(Tid);
         this.add(Tname);
+        this.add(Tlimit);
+        this.add(Tprice);
+        this.add(Tstart);
+        this.add(Tend);
 
         /*label*/
         this.add(Lid);
         this.add(Lname);
+        this.add(Llimit);
+        this.add(Lprice);
+        this.add(Lstart);
+        this.add(Lend);
 
         this.add(Ptable);
 
@@ -216,5 +204,18 @@ public class PackageLookUpUI extends JPanel{
                 }
             }
         });
+
+
+        BshowAll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Ptable.refreshTalbe();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
     }
 }
