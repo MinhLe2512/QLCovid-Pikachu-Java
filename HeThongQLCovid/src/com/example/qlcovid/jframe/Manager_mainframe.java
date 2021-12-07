@@ -200,12 +200,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         
         if(btnsearch1.isSelected()){
             if(tbsearch1.getText().isEmpty() || tbsearch1.getText().length() ==0){
-                JDialog d = new JDialog(this, "ERROR!");
-                d.add(new JLabel("      Empty search!"));
-                d.setSize(200, 100);
-                d.setModal(true);
-                d.setLocationRelativeTo(null);
-                d.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Empty search!");
                 this.btnsearch1.setSelected(false);
                 return newqr;
             }
@@ -220,12 +215,8 @@ public class Manager_mainframe extends javax.swing.JFrame {
                     newqr+= tocolname(cbsearch1.getSelectedItem().toString()) + " = '" + String.valueOf(Integer.valueOf(tbsearch1.getText()))+ "' ";
                 }
                 catch (NumberFormatException ex){
-                    JDialog d = new JDialog(this, "ERROR!");
-                    d.add(new JLabel("      ID must be integer!"));
-                    d.setSize(200, 100);
-                    d.setModal(true);
-                    d.setLocationRelativeTo(null);
-                    d.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "ID must be integer!");
+                    newqr = " where condition  is not null ";
                 }
         }
         return newqr;
@@ -234,12 +225,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         String newqr = "";
         if(btnsearch2.isSelected()){
             if(tbsearch2.getText().isEmpty() || tbsearch2.getText().length() ==0){
-                JDialog d = new JDialog(this, "ERROR!");
-                d.add(new JLabel("      Empty search!"));
-                d.setSize(200, 100);
-                d.setModal(true);
-                d.setLocationRelativeTo(null);
-                d.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Empty search!");
                 this.btnsearch2.setSelected(false);
                 return newqr;
             }
@@ -247,17 +233,14 @@ public class Manager_mainframe extends javax.swing.JFrame {
             if(tocolname(cbsearch2.getSelectedItem().toString()).equals("name")) newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " like N'%" + tbsearch2.getText()+ "%' ";
             else if(tocolname(cbsearch2.getSelectedItem().toString()).equals("package_start")) newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " like N'%" + tbsearch2.getText()+ "%' ";
             else if(tocolname(cbsearch2.getSelectedItem().toString()).equals("package_end")) newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " like N'%" + tbsearch2.getText()+ "%' ";
+            else if(tocolname(cbsearch2.getSelectedItem().toString()).equals("package_id")) newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " = '" + tbsearch2.getText()+ "' ";
             else  
                 try{
                     newqr+= tocolname(cbsearch2.getSelectedItem().toString()) + " = '" + String.valueOf(Integer.valueOf(tbsearch2.getText()))+ "' ";
                 }
                 catch (NumberFormatException ex){
-                    JDialog d = new JDialog(this, "ERROR!");
-                    d.add(new JLabel("      ID must be integer!"));
-                    d.setSize(200, 100);
-                    d.setModal(true);
-                    d.setLocationRelativeTo(null);
-                    d.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "Limit and price must be integer!");
+                    newqr = "";
                 }
         }
         return newqr;
@@ -336,9 +319,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         cbsearch1 = new javax.swing.JComboBox<>();
-        btnsearchmore = new javax.swing.JButton();
         cbsort1 = new javax.swing.JComboBox<>();
-        btnsortmore1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         cksort1 = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
@@ -368,9 +349,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         cbsearch2 = new javax.swing.JComboBox<>();
-        btnsearchmore2 = new javax.swing.JButton();
         cbsort2 = new javax.swing.JComboBox<>();
-        btnsortmore2 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         cksort2 = new javax.swing.JRadioButton();
         btnsort2 = new javax.swing.JToggleButton();
@@ -560,21 +539,9 @@ public class Manager_mainframe extends javax.swing.JFrame {
         cbsearch1.setForeground(new java.awt.Color(102, 102, 102));
         cbsearch1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnsearchmore.setBackground(new java.awt.Color(204, 204, 204));
-        btnsearchmore.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnsearchmore.setForeground(new java.awt.Color(102, 102, 102));
-        btnsearchmore.setText("...");
-        btnsearchmore.setToolTipText("");
-
         cbsort1.setBackground(new java.awt.Color(255, 255, 255));
         cbsort1.setForeground(new java.awt.Color(102, 102, 102));
         cbsort1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btnsortmore1.setBackground(new java.awt.Color(204, 204, 204));
-        btnsortmore1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnsortmore1.setForeground(new java.awt.Color(102, 102, 102));
-        btnsortmore1.setText("...");
-        btnsortmore1.setToolTipText("");
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -684,7 +651,31 @@ public class Manager_mainframe extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbaddress1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbname1)
+                                    .addComponent(cbdob1)
+                                    .addComponent(cbid1))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbrelated1)
+                                    .addComponent(cbplace1)
+                                    .addComponent(cbcondition1)))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbsort1, 0, 134, Short.MAX_VALUE)
+                            .addComponent(cbsearch1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnsearch1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnsort1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnup1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -692,42 +683,11 @@ public class Manager_mainframe extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btncancel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tbsearch1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbaddress1)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cbname1)
-                                            .addComponent(cbdob1)
-                                            .addComponent(cbid1))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cbrelated1)
-                                            .addComponent(cbplace1)
-                                            .addComponent(cbcondition1)))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(cbsort1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnsort1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnsortmore1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cksort1))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(cbsearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnsearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnsearchmore, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cksort1))
+                    .addComponent(tbsearch1))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -740,8 +700,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbsearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnsearch1)
-                    .addComponent(btnsearchmore))
+                    .addComponent(btnsearch1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -749,8 +708,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbsort1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnsort1)
-                    .addComponent(btnsortmore1))
+                    .addComponent(btnsort1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -778,7 +736,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                         .addComponent(cbrelated1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbaddress1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
@@ -958,21 +916,9 @@ public class Manager_mainframe extends javax.swing.JFrame {
         cbsearch2.setForeground(new java.awt.Color(102, 102, 102));
         cbsearch2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnsearchmore2.setBackground(new java.awt.Color(204, 204, 204));
-        btnsearchmore2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnsearchmore2.setForeground(new java.awt.Color(102, 102, 102));
-        btnsearchmore2.setText("...");
-        btnsearchmore2.setToolTipText("");
-
         cbsort2.setBackground(new java.awt.Color(255, 255, 255));
         cbsort2.setForeground(new java.awt.Color(102, 102, 102));
         cbsort2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btnsortmore2.setBackground(new java.awt.Color(204, 204, 204));
-        btnsortmore2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnsortmore2.setForeground(new java.awt.Color(102, 102, 102));
-        btnsortmore2.setText("...");
-        btnsortmore2.setToolTipText("");
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1012,29 +958,22 @@ public class Manager_mainframe extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tbsearch2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addComponent(cbsort2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnsort2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnsortmore2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addComponent(jLabel13)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cksort2))
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addComponent(cbsearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnsearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnsearchmore2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel12)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(cbsort2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnsort2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(cbsearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnsearch2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cksort2))
+                    .addComponent(tbsearch2))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1046,8 +985,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbsearch2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnsearch2)
-                    .addComponent(btnsearchmore2))
+                    .addComponent(btnsearch2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
@@ -1055,8 +993,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbsort2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnsort2)
-                    .addComponent(btnsortmore2))
+                    .addComponent(btnsort2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1631,12 +1568,8 @@ public class Manager_mainframe extends javax.swing.JFrame {
     private javax.swing.JButton btnremove2;
     private javax.swing.JToggleButton btnsearch1;
     private javax.swing.JToggleButton btnsearch2;
-    private javax.swing.JButton btnsearchmore;
-    private javax.swing.JButton btnsearchmore2;
     private javax.swing.JToggleButton btnsort1;
     private javax.swing.JToggleButton btnsort2;
-    private javax.swing.JButton btnsortmore1;
-    private javax.swing.JButton btnsortmore2;
     private javax.swing.JButton btnup1;
     private javax.swing.JButton btnupdate1;
     private javax.swing.JButton btnupdate2;
