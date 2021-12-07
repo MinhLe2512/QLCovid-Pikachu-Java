@@ -91,14 +91,14 @@ public class PatientGUI extends JFrame {
         PbasicInfo = new InfoUI(username);
         PmanagementInfo = new ManagementUI(username);
         PpackageInfo = new PurchaseUI(username);
-        PbalanceInfo = new BalanceUI();
+        PbalanceInfo = new BalanceUI(username);
         PpaymentInfo= new PaymentUI();
         //--
 
         // package panel: PURCHASE ability
         //setup panel
         PpackageAbility = new PackageAbility();
-        PlistPackage = new PackageInfoUI();
+        PlistPackage = new PackageInfoUI(username);
         PlookupPackage = new PackageLookUpUI();
         PpurchasePackge = new PackagePurchaseUI();
         //--

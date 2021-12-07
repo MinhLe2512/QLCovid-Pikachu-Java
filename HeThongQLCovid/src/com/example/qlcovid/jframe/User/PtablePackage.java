@@ -1,9 +1,14 @@
 package com.example.qlcovid.jframe.User;
 
+import com.example.qlcovid.jframe.User.Info.BalanceUI;
+import com.example.qlcovid.jframe.User.Package.PackageInfoUI;
 import com.example.qlcovid.model.User.PackageClass;
+import com.example.qlcovid.model.User.PaymentHistory;
 import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -75,10 +80,34 @@ public class PtablePackage  extends JPanel{
 
 
 
+        packageTalbe.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                PackageInfoUI.turnOnButton();
+
+                for(PackageClass x: listPackage){
+                    System.out.println("selected: "+packageTalbe.convertRowIndexToModel(packageTalbe.getSelectedRow()));
+                    if(x.get_ID().equals(packageTalbe.getValueAt(packageTalbe.getSelectedRow(), 0).toString())){
+                        PackageInfoUI.selectRowData(x);
+                    }
+
+                }
+                System.out.println(packageTalbe.getValueAt(packageTalbe.getSelectedRow(), 0).toString());
+
+            }
+        });
 
 
 
+    }
 
+    public String getSelectedPackageID(){
+        String id = packageTalbe.getValueAt(packageTalbe.getSelectedRow(), 0).toString();
+        for(PackageClass x: listPackage){
+            if(x.get_ID().equals(packageTalbe.getValueAt(packageTalbe.getSelectedRow(), 0).toString())){
+                return x.get_ID();
+            }
+        }
+        return null;
     }
 
     public void sortTable(String ID, String name, String limit, String start, String end, String price){
@@ -210,7 +239,7 @@ public class PtablePackage  extends JPanel{
             listPackage.add(new PackageClass(
                     rs.getString("package_id"),
                     rs.getString("name"),
-                    rs.getInt("_limit"),
+                    rs.getInt("limit"),
                     rs.getString("package_start"),
                     rs.getString("package_end"),
                     rs.getInt("price")));

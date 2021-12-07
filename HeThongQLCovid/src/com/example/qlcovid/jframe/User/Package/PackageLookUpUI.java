@@ -25,16 +25,16 @@ public class PackageLookUpUI extends JPanel{
         Border.setBounds(0,100,60,30);
         Border.setHorizontalAlignment(SwingConstants.LEADING );
 
-        JLabel Lid = new JLabel("ID");
-        Lid.setBounds(60,100,15,30);
+        JLabel Lid = new JLabel("ID: ");
+        Lid.setBounds(10,110,50,30);
         JComboBox CBid = new JComboBox(new String[]{"\uD83D\uDD3A","\uD83D\uDD3B","--"});
-        CBid.setBounds(72,100,20,20);
+        CBid.setBounds(85,100,70,20);
         CBid.setSelectedItem("--");
 
-        JLabel Lname = new JLabel("Name");
-        Lname.setBounds(100,100,35,30);
+        JLabel Lname = new JLabel("Name: ");
+        Lname.setBounds(210,110,50,30);
         JComboBox CBname = new JComboBox(new String[]{"\uD83D\uDD3A","\uD83D\uDD3B","--"});
-        CBname.setBounds(135,100,20,20);
+        CBname.setBounds(310,100,70,20);
         CBname.setSelectedItem("--");
 
         JLabel Llimit = new JLabel("Limit");
@@ -65,11 +65,11 @@ public class PackageLookUpUI extends JPanel{
         JButton Bsearch = new JButton("Search");
         Bsearch.setBounds(0,140,70,30);
 
-        JTextField Tid = new JTextField("ID");
-        Tid.setBounds(70,140,22,30);
+        JTextField Tid = new JTextField();
+        Tid.setBounds(30,110,50,30);
 
-        JTextField Tname = new JTextField("Name");
-        Tname.setBounds(100,140,55,30);
+        JTextField Tname = new JTextField();
+        Tname.setBounds(250,110,55,30);
 
         JTextField Tlimit = new JTextField("Limit");
         Tlimit.setBounds(165,140,50,30);
@@ -104,7 +104,13 @@ public class PackageLookUpUI extends JPanel{
         CBpriceFilter.setSelectedItem("--");
 
 
-        this.add(CBpriceFilter);
+
+
+
+        /*JCalendar calendar = new JCalendar();*/
+
+
+        /*this.add(CBpriceFilter);
         this.add(CBendFilter);
         this.add(CBstartFilter);
         this.add(CBlimitFilter);
@@ -114,8 +120,8 @@ public class PackageLookUpUI extends JPanel{
         this.add(Tend);
         this.add(Tstart);
         this.add(Tlimit);
-        this.add(Tname);
-        this.add(Tid);
+
+
         this.add(Bsearch);
 
 
@@ -127,11 +133,27 @@ public class PackageLookUpUI extends JPanel{
         this.add(Lstart);
         this.add(CBlimit);
         this.add(Llimit);
-        this.add(CBname);
-        this.add(Lname);
+
+
+
+
+        this.add(Border);*/
+
+        /*filter*/
+
+
+        /*combobox*/
         this.add(CBid);
+        this.add(CBname);
+
+        /*textfile*/
+        this.add(Tid);
+        this.add(Tname);
+
+        /*label*/
         this.add(Lid);
-        this.add(Border);
+        this.add(Lname);
+
         this.add(Ptable);
 
 

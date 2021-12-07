@@ -16,11 +16,15 @@ import java.util.ArrayList;
 
 public class PtablePurchase extends JPanel{
 
-    ArrayList<PackagePurchase> listPurchase;
-    JTable purchaseTable;
-    DefaultTableModel modelListPurchase;
+    static ArrayList<PackagePurchase> listPurchase;
+    static JTable purchaseTable;
+    static DefaultTableModel modelListPurchase;
+
+    static String _username;
 
     public PtablePurchase(String username)  throws SQLException {
+
+        _username = username;
 
         // getting data from database
         Statement statement = DatabaseConnection.getJDBC().createStatement();
@@ -94,6 +98,34 @@ public class PtablePurchase extends JPanel{
 
 
 
+
+    }
+
+    public static void resetModel() throws SQLException {
+        Statement statement = DatabaseConnection.getJDBC().createStatement();
+        String sql = "SELECT * FROM ql_order\n"+
+                "WHERE customer_id="+_username+";";
+        ResultSet rs = statement.executeQuery(sql);
+
+        listPurchase.clear();
+        while(rs.next()){
+
+            listPurchase.add(new PackagePurchase(
+                    rs.getString("order_id"),
+                    rs.getString("customer_id"),
+                    rs.getString("package_id"),
+                    rs.getString("order_date")
+            ));
+        }
+
+        modelListPurchase = new DefaultTableModel(
+                new String[] { "ID","Customer ID","Package ID","Date"},
+                0
+        );
+        for(PackagePurchase x : listPurchase){
+            modelListPurchase.addRow(x.getObject());
+        }
+        purchaseTable.setModel(modelListPurchase);
 
     }
 }

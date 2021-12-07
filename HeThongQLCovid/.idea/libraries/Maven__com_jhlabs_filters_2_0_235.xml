@@ -2,6 +2,7 @@
   <library name="Maven: com.jhlabs:filters:2.0.235">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/jhlabs/filters/2.0.235/filters-2.0.235.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jcalendar-1.4/lib/jcalendar-1.4.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/com/jhlabs/filters/2.0.235/filters-2.0.235-javadoc.jar!/" />

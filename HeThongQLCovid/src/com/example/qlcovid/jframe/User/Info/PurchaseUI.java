@@ -22,12 +22,15 @@ public class PurchaseUI extends JPanel {
     static JLabel Ldate;
     static JLabel Lpackage_ID;
 
+    String _username;
+
     public PurchaseUI(String username) throws SQLException {
         this.setLayout(null); /////////////// REMEMBER REPLACE THIS LAYOUT!!!!!!!!!!!
         this.setBackground(new Color(0xC2FFF9)); // for debug
         this.setBounds(0, 80, 400, 390);
         this.setVisible(false);
 
+        _username = username;
         // getting data from database
         Statement statement = DatabaseConnection.getJDBC().createStatement();
         String sql = "SELECT * FROM ql_order\n"+
@@ -77,4 +80,6 @@ public class PurchaseUI extends JPanel {
         Lpackage_ID.setText("Package ID: "+x.get_package_ID());
 
     }
+
+
 }
