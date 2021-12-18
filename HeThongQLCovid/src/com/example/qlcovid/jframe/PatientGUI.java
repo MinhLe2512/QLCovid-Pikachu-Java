@@ -9,6 +9,7 @@ import com.example.qlcovid.jframe.User.Package.PackagePurchaseUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import java.awt.event.ActionListener;
@@ -25,6 +26,10 @@ public class PatientGUI extends JFrame {
     JButton _BinfoOption;
     JButton _BpackageOption;
     JButton _BpaymentOption;
+    
+    //logout
+    JButton _Blogout;
+    JButton _BchangePass;
 
     // barPanel
     JPanel _Poption;
@@ -56,7 +61,7 @@ public class PatientGUI extends JFrame {
 
 
     // constructor
-    public PatientGUI(String username) throws SQLException {
+    public PatientGUI(String username) throws SQLException, IOException {
 
         // title
         super("Covid Patient");
@@ -281,7 +286,7 @@ public class PatientGUI extends JFrame {
 
 //-------------------------------------------------------
 
-    public static void main(String[] args) throws InterruptedException, SQLException {
+    public static void main(String[] args) throws InterruptedException, SQLException, IOException {
         PatientGUI screen = new PatientGUI("787585656");
         screen.setVisible(true);
 //        TimeUnit.SECONDS.sleep(3);
