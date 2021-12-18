@@ -5,17 +5,24 @@ import com.example.qlcovid.jframe.User.Info.*;
 import com.example.qlcovid.jframe.User.Package.PackageInfoUI;
 import com.example.qlcovid.jframe.User.Package.PackageLookUpUI;
 import com.example.qlcovid.jframe.User.Package.PackagePurchaseUI;
+import com.example.qlcovid.string.DatabaseConnection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.awt.event.ActionListener;
+import java.sql.Statement;
+
+import static com.example.qlcovid.string.UtilsString.username;
 
 
 public class PatientGUI extends JFrame {
+
+    String _username;
 
     // attributes
     // default width and height
@@ -26,7 +33,7 @@ public class PatientGUI extends JFrame {
     JButton _BinfoOption;
     JButton _BpackageOption;
     JButton _BpaymentOption;
-    
+
     //logout
     JButton _Blogout;
     JButton _BchangePass;
@@ -65,6 +72,8 @@ public class PatientGUI extends JFrame {
 
         // title
         super("Covid Patient");
+
+        _username = username;
 
         // set up frame
         this.setLocationRelativeTo(null);
@@ -130,6 +139,16 @@ public class PatientGUI extends JFrame {
         _Pheader.setLayout(null);
         _Pheader.setBackground(new Color(0x009DAE)); // for debug
         _Pheader.setBounds(0,0,500,30);
+
+        // its option
+        _Blogout = new JButton("Log out");
+        _Blogout.setBounds(300,0,80,30);
+
+        _BchangePass = new JButton("Change Pass");
+        _BchangePass.setBounds(380,0,120,30);
+
+        _Pheader.add(_Blogout);
+        _Pheader.add(_BchangePass);
         //--
 
         //bar 3: SWAPPING
@@ -176,6 +195,67 @@ public class PatientGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("_BpackageOption");
                 showPurchaseAbility();
+            }
+        });
+
+
+        // header option++++++++++++++
+        //logout
+        _Blogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.print("_Blogout");
+
+                dispose();
+                setVisible(false);
+
+
+                /*PatientGUI screen1 = null;
+                try {
+                    screen1 = new PatientGUI("463463646");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                screen1.setVisible(true);*/
+            }
+        });
+
+        //change password
+        _BchangePass.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.print("_BchangePass");
+
+                String oldPass = JOptionPane.showInputDialog("What's your current password?");
+
+
+                Statement statement = null;
+
+                try {
+                    statement = DatabaseConnection.getJDBC().createStatement();
+
+                    System.out.println("Hashing:  "+Hashing.getHash(oldPass));
+                    String sql = "SELECT *  from ql_user\n" +
+                            "WHERE user_password = '"+Hashing.getHash(oldPass)+"'";
+                    System.out.println(sql);
+                    ResultSet rs = statement.executeQuery(sql);
+                    if (rs.next()) {
+                        System.out.println("start change");
+                        changePassword();
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null,"Wrong password","Warning",JOptionPane.WARNING_MESSAGE);
+                    }
+
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+
+                }
+
+
             }
         });
 
@@ -281,6 +361,43 @@ public class PatientGUI extends JFrame {
 
 
 
+    //change pass
+    public void changePassword() throws SQLException {
+        JTextField Tpass = new JTextField(10);
+
+        JTextField Tcomfirm = new JTextField(10);
+
+
+        JPanel myPanel = new JPanel();
+
+        myPanel.add(new JLabel("Password"));
+        myPanel.add(Tpass);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("Comfirm password"));
+        myPanel.add(Tcomfirm);
+
+        int result = JOptionPane.showConfirmDialog(null, myPanel,
+                "Enter new password", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+
+            if (Tpass.getText().equals(Tcomfirm.getText())){
+
+                Statement statement = DatabaseConnection.getJDBC().createStatement();
+                String sql = "UPDATE ql_user\n" +
+                        " SET user_password = '"+ Hashing.getHash(Tcomfirm.getText()) +"'\n" +
+                        " WHERE  username = '"+ _username +"'";
+                System.out.println(sql);
+                statement.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null,"Your password was changed successful","Message",JOptionPane.INFORMATION_MESSAGE);
+
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Comfirm passoword was incorrect!!","Warning",JOptionPane.WARNING_MESSAGE);
+
+            }
+        }
+    }
+
 
 
 
@@ -289,6 +406,8 @@ public class PatientGUI extends JFrame {
     public static void main(String[] args) throws InterruptedException, SQLException, IOException {
         PatientGUI screen = new PatientGUI("787585656");
         screen.setVisible(true);
+
+
 //        TimeUnit.SECONDS.sleep(3);
 //        screen.refresh();
         //TimeUnit.SECONDS.sleep(3);
