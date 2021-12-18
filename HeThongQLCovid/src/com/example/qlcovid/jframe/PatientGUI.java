@@ -6,6 +6,7 @@ import com.example.qlcovid.jframe.User.Package.PackageInfoUI;
 import com.example.qlcovid.jframe.User.Package.PackageLookUpUI;
 import com.example.qlcovid.jframe.User.Package.PackagePurchaseUI;
 import com.example.qlcovid.string.DatabaseConnection;
+import logintest.loginUserTesting;
 
 import javax.swing.*;
 import java.awt.*;
@@ -209,16 +210,8 @@ public class PatientGUI extends JFrame {
                 dispose();
                 setVisible(false);
 
-
-                /*PatientGUI screen1 = null;
-                try {
-                    screen1 = new PatientGUI("463463646");
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                screen1.setVisible(true);*/
+                loginUserTesting window = new loginUserTesting();
+                window.setVisibleLogin();
             }
         });
 
@@ -318,18 +311,6 @@ public class PatientGUI extends JFrame {
         setPackageInvisible();
         PpurchasePackge.setVisible(true);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
