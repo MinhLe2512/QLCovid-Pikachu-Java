@@ -1,5 +1,6 @@
 package com.example.qlcovid;
 
+import com.example.qlcovid.jframe.Manager_addpatient;
 import com.example.qlcovid.jframe.Manager_mainframe;
 import com.example.qlcovid.model.ManagerDB;
 import java.sql.SQLException;

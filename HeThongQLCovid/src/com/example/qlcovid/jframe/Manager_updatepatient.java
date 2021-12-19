@@ -233,18 +233,17 @@ public class Manager_updatepatient extends javax.swing.JPanel {
 
     private void d2updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_d2updateMouseClicked
         JPanel panel = new JPanel();
-        JLabel label = new JLabel("Enter a password:");
+        JLabel label = new JLabel("Enter your password:");
         JPasswordField pass = new JPasswordField(10);
         panel.add(label);
         panel.add(pass);
         String[] options = new String[]{"OK", "Cancel"};
-        int option = JOptionPane.showOptionDialog(null, panel, "Error",
+        int option = JOptionPane.showOptionDialog(null, panel, "Confirm password",
                                  JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                                  null, options, options[1]);
         if(option == 0) // pressing OK button
         {
             if(db.count("select count(username) from ql_user where user_role = 'supevisor' and username = '"+ ManagerID + "' and user_password = '" + Hashing.getHash(pass.getText().toString())+"'")==1){
-                
             }
             else{
                 JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -263,6 +262,8 @@ public class Manager_updatepatient extends javax.swing.JPanel {
                 newqr += " update treatment_place set current_holding = current_holding + 1 where treatment_place_id = " +newtreatmentid;
                 newqr += " update treatment_place set current_holding = current_holding - 1 where treatment_place_id = " +treatmentid;
                 db.insert(newqr);
+                String query = "INSERT INTO edit(supevisor_id, supevisor_action, supevisor_date) VALUES('"+ ManagerID + "', 'change treatment place "+id+"', GETDATE())";
+                db.insert(query);
             } catch (SQLException ex) {
                 Logger.getLogger(Manager_updatepatient.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -295,6 +296,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
                     String newqr = " update treatment_place set current_holding = current_holding - 1 where treatment_place_id = " +treatmentid;
                     newqr += " update covid_patient set condition = null, treatment_place_id = null where citizen_id = " +id;
                     newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+id+"', 'cured', GETDATE()) ";
+                    newqr += " INSERT INTO edit(supevisor_id, supevisor_action, supevisor_date) VALUES('"+ManagerID+"', 'cured "+id+"', GETDATE()) ";
                     try {
                         db.insert(newqr);
                     } catch (SQLException ex) {
@@ -349,6 +351,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
         String newqr = " update treatment_place set current_holding = current_holding - 1 where treatment_place_id = " +tid;
         newqr += " update covid_patient set condition = null, treatment_place_id = null where citizen_id = " +thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'removerelated', GETDATE()) ";
+        newqr += " INSERT INTO edit(supevisor_id, supevisor_action, supevisor_date) VALUES('"+ManagerID+"', 'removerelated "+id+"', GETDATE()) ";
         try {
             db.insert(newqr);
         } catch (SQLException ex) {
@@ -362,6 +365,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     void setF0(String thisid) throws SQLException{
         String newqr = " update covid_patient set condition = 'F0', related_to = null where citizen_id = " + thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF0', GETDATE()) ";
+        newqr += " INSERT INTO edit(supevisor_id, supevisor_action, supevisor_date) VALUES('"+ManagerID+"', 'toF0 "+id+"', GETDATE()) ";
         try {
             db.insert(newqr);
         } catch (SQLException ex) {
@@ -375,6 +379,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     void setF1(String thisid) throws SQLException{
         String newqr = " update covid_patient set condition = 'F1' where citizen_id = " + thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF1', GETDATE()) ";
+        newqr += " INSERT INTO edit(supevisor_id, supevisor_action, supevisor_date) VALUES('"+ManagerID+"', 'toF1 "+id+"', GETDATE()) ";
         try {
             db.insert(newqr);
         } catch (SQLException ex) {
@@ -388,6 +393,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     void setF2(String thisid) throws SQLException{
         String newqr = " update covid_patient set condition = 'F2' where citizen_id = " + thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF2', GETDATE()) ";
+        newqr += " INSERT INTO edit(supevisor_id, supevisor_action, supevisor_date) VALUES('"+ManagerID+"', 'toF2 "+id+"', GETDATE()) ";
         try {
             db.insert(newqr);
         } catch (SQLException ex) {
@@ -401,6 +407,7 @@ public class Manager_updatepatient extends javax.swing.JPanel {
     void setF3(String thisid) throws SQLException{
         String newqr = " update covid_patient set condition = 'F3' where citizen_id = " + thisid;
         newqr += " INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+thisid+"', 'toF3', GETDATE()) ";
+        newqr += " INSERT INTO edit(supevisor_id, supevisor_action, supevisor_date) VALUES('"+ManagerID+"', 'toF3 "+id+"', GETDATE()) ";
         try {
             db.insert(newqr);
         } catch (SQLException ex) {

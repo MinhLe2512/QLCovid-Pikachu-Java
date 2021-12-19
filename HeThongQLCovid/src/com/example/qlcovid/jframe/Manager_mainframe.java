@@ -706,9 +706,9 @@ public class Manager_mainframe extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(cksort1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbsort1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnsort1))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnsort1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cbsort1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1436,12 +1436,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
     private void btnadd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnadd1MouseClicked
         try {
             if(db.count("select count(ward_id) from district_has_ward")==0 || db.count("select count(district_id) from province_has_district")==0 || db.count("select count(treatment_place_id) from treatment_place")==0){
-                JDialog d = new JDialog(this, "ERROR!");
-                d.add(new JLabel("      Empty Address or Treatment place!"));
-                d.setSize(350, 100);
-                d.setModal(true);
-                d.setLocationRelativeTo(null);
-                d.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "Empty Address or Treatment place!");
                 return;
             }
             Manager_addpatient cp = new Manager_addpatient(ManagerID);
@@ -1456,12 +1451,7 @@ public class Manager_mainframe extends javax.swing.JFrame {
         if(tb1.getSelectedRow()!= -1){
             try {
                 if(db.count("select count(ward_id) from district_has_ward")==0 || db.count("select count(district_id) from province_has_district")==0 || db.count("select count(treatment_place_id) from treatment_place")==0){
-                    JDialog d = new JDialog(this, "ERROR!");
-                    d.add(new JLabel("      Empty Address or Treatment place!"));
-                    d.setSize(350, 100);
-                    d.setModal(true);
-                    d.setLocationRelativeTo(null);
-                    d.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "Empty Address or Treatment place!");
                     return;
                 }
                 Manager_updatepatient up = new Manager_updatepatient(tb1.getValueAt(tb1.getSelectedRow(), 1).toString(), ManagerID);

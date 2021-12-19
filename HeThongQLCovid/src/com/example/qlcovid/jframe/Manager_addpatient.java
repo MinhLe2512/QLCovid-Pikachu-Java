@@ -165,7 +165,7 @@ public class Manager_addpatient extends javax.swing.JPanel {
     }
     void initDialog(){
         d = new JDialog();
-        d.setSize(360, 530);
+        d.setSize(360, 600);
         d.add(this);
         d.setResizable(false);
         d.setModal(true);
@@ -209,6 +209,8 @@ public class Manager_addpatient extends javax.swing.JPanel {
         d1error = new javax.swing.JLabel();
         d1pw = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
+        d1b = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
 
         valpannel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -332,6 +334,13 @@ public class Manager_addpatient extends javax.swing.JPanel {
         jLabel18.setForeground(new java.awt.Color(102, 102, 102));
         jLabel18.setText("Password");
 
+        d1b.setBackground(java.awt.Color.white);
+        d1b.setForeground(new java.awt.Color(102, 102, 102));
+
+        jLabel19.setBackground(java.awt.Color.white);
+        jLabel19.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel19.setText("Balance");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -375,7 +384,13 @@ public class Manager_addpatient extends javax.swing.JPanel {
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(d1error, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(d1error, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
+                            .addComponent(d1b, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -413,13 +428,17 @@ public class Manager_addpatient extends javax.swing.JPanel {
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(d1tplace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(d1pw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(d1b, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(d1error)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(d1add, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
         );
@@ -428,11 +447,11 @@ public class Manager_addpatient extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 330, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -440,12 +459,12 @@ public class Manager_addpatient extends javax.swing.JPanel {
         try {
             if(check()==true) {
                 JPanel panel = new JPanel();
-                JLabel label = new JLabel("Enter a password:");
+                JLabel label = new JLabel("Enter your password:");
                 JPasswordField pass = new JPasswordField(10);
                 panel.add(label);
                 panel.add(pass);
                 String[] options = new String[]{"OK", "Cancel"};
-                int option = JOptionPane.showOptionDialog(null, panel, "Error",
+                int option = JOptionPane.showOptionDialog(null, panel, "Confirm password",
                                          JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                                          null, options, options[1]);
                 if(option == 0) // pressing OK button
@@ -475,6 +494,7 @@ public class Manager_addpatient extends javax.swing.JPanel {
         String uDay = d1day.getSelectedItem().toString();
         String related = d1relate.getText();
         String condition = "";
+        String balance = d1b.getText();
         if(d1relate.getText().isEmpty()||d1relate.getText().length()==0) {condition = "F0"; related = "NULL";}
         else{
             String relatedCon = db.get("select condition from covid_patient where citizen_id = "+ related);
@@ -486,12 +506,14 @@ public class Manager_addpatient extends javax.swing.JPanel {
         String uaddress = d1as.getText()+ ward[d1ward.getSelectedIndex()][1].toString() + ", " + district[d1dis.getSelectedIndex()][1].toString()+ ", " +province[d1pro.getSelectedIndex()][1].toString();
         String query = "insert into ql_user \n values ("+ uID +", '" + Hashing.getHash(uPw) +"', 'user', 'Y') \n";
         db.insert(query);
-        query = "insert into covid_patient(citizen_id, full_name, date_of_birth, condition, treatment_place_id, related_to, citizen_address) \n" +
-                        "values ("+ uID +", N'" + uName + "', '" + uYear + "-" +uMonth + "-" + uDay +"', '"+condition+"', " +  utplace+ ", "+ related+", N'"+ uaddress+"') ";
+        query = "insert into covid_patient(citizen_id, full_name, date_of_birth, condition, treatment_place_id, related_to, citizen_address, balance) \n" +
+                        "values ("+ uID +", N'" + uName + "', '" + uYear + "-" +uMonth + "-" + uDay +"', '"+condition+"', " +  utplace+ ", "+ related+", N'"+ uaddress+"', "+balance +") ";
         db.insert(query);
         query = "update treatment_place set current_holding = current_holding+ 1 where treatment_place_id = " + utplace;
         db.insert(query);
         query = "INSERT INTO patient_history(patient_id, patient_action, patient_date) VALUES('"+ uID + "', 'new', GETDATE())";
+        db.insert(query);
+        query = "INSERT INTO edit(supevisor_id, supevisor_action, supevisor_date) VALUES('"+ ManagerID + "', 'new patient "+uID+"', GETDATE())";
         db.insert(query);
     }
     private boolean check() throws SQLException {
@@ -520,6 +542,8 @@ public class Manager_addpatient extends javax.swing.JPanel {
         else{
             d1as.setText(d1as.getText() + ", ");
         }
+        if(d1b.getText().isEmpty() || this.d1b.getText().length() == 0){ d1b.setText("0"); }
+        try { int intValue = Integer.parseInt(this.d1id.getText()); } catch (NumberFormatException e) { this.d1error.setText("Invalid Balance!"); return false; }
         return true;
     }
     
@@ -527,6 +551,7 @@ public class Manager_addpatient extends javax.swing.JPanel {
     private javax.swing.JLabel Address;
     private javax.swing.JButton d1add;
     private javax.swing.JTextField d1as;
+    private javax.swing.JTextField d1b;
     private javax.swing.JComboBox<String> d1day;
     private javax.swing.JComboBox<String> d1dis;
     private javax.swing.JLabel d1error;
@@ -542,6 +567,7 @@ public class Manager_addpatient extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
